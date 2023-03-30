@@ -6,7 +6,7 @@
 
 ```
 /horn give [类型] [玩家名] [数量]
-/horn reload
+/horn reload 重载配置
 /lb [类型] [消息]
 ```
 
