@@ -1,0 +1,26 @@
+name: RiceHorn
+main: cn.handyplus.horn.RiceHorn
+version: 1.0.0
+author: handy
+api-version: 1.13
+softdepend: [ PlaceholderAPI ]
+description: 大喇叭
+commands:
+  riceHorn:
+    description: 大喇叭
+    aliases: [ horn ]
+  lb:
+    description: 大喇叭
+    aliases: [ lb ]
+permissions:
+  riceHorn.*:
+    description: 大喇叭
+    children:
+      riceHorn.reload: true
+      riceHorn.give: true
+  riceHorn.reload:
+    description: 重新加载配置
+    default: op
+  riceHorn.give:
+    description: 给予喇叭
+    default: op

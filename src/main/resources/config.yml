@@ -1,0 +1,16 @@
+# 子服标识，先配置这个
+server: "lobby"
+
+lb:
+  # 喇叭的类型-要保证唯一
+  全服大喇叭:
+    name: "$#ffffff全服大喇叭"
+    enable: true
+    rgb: "$#ffffff"
+    server:
+      - "lobby1"
+      - "pvp"
+    message: true
+    actionbar: true
+    boss: true
+    title: true
