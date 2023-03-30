@@ -17,8 +17,8 @@ public class RiceHorn extends JavaPlugin {
     @Override
     public void onEnable() {
         INSTANCE = this;
-        ConfigUtil.init();
         InitApi initApi = InitApi.getInstance(this);
+        ConfigUtil.init();
         initApi.initCommand("cn.handyplus.horn.command")
                 .initListener("cn.handyplus.horn.listener")
                 .enableSql("cn.handyplus.horn.enter")
