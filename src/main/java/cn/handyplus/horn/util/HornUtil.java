@@ -1,14 +1,10 @@
 package cn.handyplus.horn.util;
 
-import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BossBarUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.boss.KeyedBossBar;
 
 /**
  * 消息工具
@@ -33,9 +29,8 @@ public class HornUtil {
         String name = ConfigUtil.CONFIG.getString("lb." + type + ".name");
         boolean message = ConfigUtil.CONFIG.getBoolean("lb." + type + ".message");
         boolean actionbar = ConfigUtil.CONFIG.getBoolean("lb." + type + ".actionbar");
-        boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss");
+        boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
-
         msg = BaseUtil.replaceChatColor(msg);
         if (message) {
             MessageApi.sendAllMessage(msg);
@@ -47,16 +42,10 @@ public class HornUtil {
             MessageApi.sendAllTitle(name, msg);
         }
         if (boss) {
-            BossBar bossBar = BossBarUtil.createBossBar(msg);
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                bossBar.addPlayer(onlinePlayer);
-            }
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    bossBar.removeAll();
-                }
-            }.runTaskLater(RiceHorn.getInstance(), 3 * 20);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", msg);
+            BossBarUtil.addAllPlayer(bossBar);
+            int time = ConfigUtil.CONFIG.getInt("lb." + type + ".boss.time", 3);
+            BossBarUtil.removeBossBar(bossBar.getKey(), time);
         }
     }
 

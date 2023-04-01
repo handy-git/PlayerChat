@@ -12,5 +12,9 @@ lb:
       - "pvp"
     message: true
     actionbar: true
-    boss: true
+    boss:
+      enable: true
+      color: "PINK"
+      style: "SOLID"
+      time: 3
     title: true
