@@ -47,6 +47,7 @@ public class HornPluginMessageListener implements PluginMessageListener {
         }
         // 判断是否包含该子服
         if (!serverList.contains(server)) {
+            MessageApi.sendConsoleMessage(server + "子服不发消息");
             return;
         }
         // 发送消息
