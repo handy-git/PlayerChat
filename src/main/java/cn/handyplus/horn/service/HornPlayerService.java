@@ -37,7 +37,7 @@ public class HornPlayerService {
     public HornPlayerEnter findByUidAndType(String playerUuid, String type) {
         Db<HornPlayerEnter> use = Db.use(HornPlayerEnter.class);
         use.where().eq(HornPlayerEnter::getPlayerUuid, playerUuid)
-                .eq(HornPlayerEnter::getPlayerUuid, type);
+                .eq(HornPlayerEnter::getType, type);
         return use.execution().selectOne();
     }
 

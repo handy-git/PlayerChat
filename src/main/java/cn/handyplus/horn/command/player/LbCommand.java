@@ -57,13 +57,17 @@ public class LbCommand implements TabExecutor {
         // 进行扣除
         HornPlayerService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
         // 获取消息
-        String message = args[1];
+        StringBuilder message = new StringBuilder();
+        for (int i = 1; i < args.length; i++) {
+            message.append(args[i]).append(" ");
+        }
+
         LbMessage lbMessage = new LbMessage();
         lbMessage.setType(type);
-        lbMessage.setMessage(message);
+        lbMessage.setMessage(message.toString());
         BcUtil.sendForward(player, JsonUtil.toJson(lbMessage));
         // 发送消息
-        HornUtil.sendMsg(type, message);
+        HornUtil.sendMsg(type, message.toString());
         return true;
     }
 
@@ -76,7 +80,7 @@ public class LbCommand implements TabExecutor {
             commands = new ArrayList<>(lb.keySet());
         }
         if (commands == null) {
-            return null;
+            return new ArrayList<>();
         }
         StringUtil.copyPartialMatches(args[args.length - 1].toLowerCase(), commands, completions);
         Collections.sort(completions);

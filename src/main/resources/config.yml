@@ -4,9 +4,9 @@ server: "lobby"
 lb:
   # 喇叭的类型-要保证唯一
   全服大喇叭:
-    name: "$#ffffff全服大喇叭"
+    name: "&#FF0000全&#FF0033服&#FF0066大&#FF0099喇&#FF00B4叭"
     enable: true
-    rgb: "$#ffffff"
+    rgb: "&#FF0000"
     server:
       - "lobby1"
       - "pvp"

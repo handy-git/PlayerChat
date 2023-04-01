@@ -1,11 +1,15 @@
 package cn.handyplus.horn.constants;
 
+import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.lib.util.HandyPermissionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * tab提醒
@@ -18,9 +22,10 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give"), 0, null, 1),
 
-    ;
+    GIVE_THREE(null, 1, "give", 3),
+    GIVE_FOUR(Collections.singletonList("请输入数量"), 1, "give", 4);
 
     /**
      * 返回的List
@@ -48,6 +53,10 @@ public enum TabListEnum {
      */
     public static List<String> returnList(String[] args, int argsLength) {
         List<String> completions = new ArrayList<>();
+        if (argsLength == 2 && "give".equalsIgnoreCase(args[0])) {
+            Map<String, String> lb = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
+            return new ArrayList<>(lb.keySet());
+        }
         for (TabListEnum tabListEnum : TabListEnum.values()) {
             if (tabListEnum.getBefPos() - 1 >= args.length) {
                 continue;
