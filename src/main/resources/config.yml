@@ -11,7 +11,9 @@ lb:
       - "lobby1"
       - "pvp"
     message: true
-    actionbar: true
+    actionbar:
+      enable: true
+      rgb: "&a"
     boss:
       enable: true
       color: "PINK"

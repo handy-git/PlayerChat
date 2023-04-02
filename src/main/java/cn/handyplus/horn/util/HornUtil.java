@@ -25,24 +25,25 @@ public class HornUtil {
             return;
         }
         String rgb = ConfigUtil.CONFIG.getString("lb." + type + ".rgb");
-        msg = rgb + msg;
         String name = ConfigUtil.CONFIG.getString("lb." + type + ".name");
         boolean message = ConfigUtil.CONFIG.getBoolean("lb." + type + ".message");
-        boolean actionbar = ConfigUtil.CONFIG.getBoolean("lb." + type + ".actionbar");
+        boolean actionbar = ConfigUtil.CONFIG.getBoolean("lb." + type + ".actionbar.enable");
         boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
-        msg = BaseUtil.replaceChatColor(msg);
+
+        String megRgb = BaseUtil.replaceChatColor(rgb + msg);
         if (message) {
-            MessageApi.sendAllMessage(msg);
+            MessageApi.sendAllMessage(megRgb);
         }
         if (actionbar) {
-            MessageApi.sendAllActionbar(msg);
+            String actionbarRgb = ConfigUtil.CONFIG.getString("lb." + type + ".actionbar.rgb");
+            MessageApi.sendAllActionbar(BaseUtil.replaceChatColor(actionbarRgb + msg));
         }
         if (title) {
-            MessageApi.sendAllTitle(name, msg);
+            MessageApi.sendAllTitle(name, megRgb);
         }
         if (boss) {
-            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", msg);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", megRgb);
             BossBarUtil.addAllPlayer(bossBar);
             int time = ConfigUtil.CONFIG.getInt("lb." + type + ".boss.time", 3);
             BossBarUtil.removeBossBar(bossBar.getKey(), time);
