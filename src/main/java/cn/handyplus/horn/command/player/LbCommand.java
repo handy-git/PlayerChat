@@ -75,7 +75,7 @@ public class LbCommand implements TabExecutor {
         lbMessage.setMessage(message.toString());
         BcUtil.sendForward(player, JsonUtil.toJson(lbMessage));
         // 发送消息
-        HornUtil.sendMsg(type, message.toString());
+        HornUtil.sendMsg(player, type, message.toString());
         return true;
     }
 

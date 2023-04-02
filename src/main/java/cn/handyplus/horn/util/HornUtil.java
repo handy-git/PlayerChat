@@ -1,10 +1,12 @@
 package cn.handyplus.horn.util;
 
+import cn.handyplus.horn.hook.PlaceholderApiUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BossBarUtil;
 import org.bukkit.boss.KeyedBossBar;
+import org.bukkit.entity.Player;
 
 /**
  * 消息工具
@@ -16,10 +18,11 @@ public class HornUtil {
     /**
      * 发送消息
      *
-     * @param type 类型
-     * @param msg  消息
+     * @param player 玩家
+     * @param type   类型
+     * @param msg    消息
      */
-    public static void sendMsg(String type, String msg) {
+    public static void sendMsg(Player player, String type, String msg) {
         if (StrUtil.isEmpty(type) || StrUtil.isEmpty(msg)) {
             MessageApi.sendConsoleMessage("消息错误:入参错误,type:" + type + ",msg:" + msg);
             return;
@@ -31,6 +34,9 @@ public class HornUtil {
         boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
 
+        // 解析变量
+        msg = PlaceholderApiUtil.set(player, msg);
+        // 加载rgb颜色
         String megRgb = BaseUtil.replaceChatColor(rgb + msg);
         if (message) {
             MessageApi.sendAllMessage(megRgb);

@@ -51,7 +51,7 @@ public class HornPluginMessageListener implements PluginMessageListener {
             return;
         }
         // 发送消息
-        HornUtil.sendMsg(lbMessage.getType(), lbMessage.getMessage());
+        HornUtil.sendMsg(player, lbMessage.getType(), lbMessage.getMessage());
     }
 
 }

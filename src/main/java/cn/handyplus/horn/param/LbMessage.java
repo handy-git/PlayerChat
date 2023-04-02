@@ -7,6 +7,14 @@ import lombok.Data;
  */
 @Data
 public class LbMessage {
+
+    /**
+     * 类型
+     */
     private String type;
+
+    /**
+     * 消息
+     */
     private String message;
 }
