@@ -22,7 +22,9 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look"), 0, null, 1),
+
+    LOOK_TWO(null, 1, "look", 2),
 
     GIVE_THREE(null, 1, "give", 3),
     GIVE_FOUR(Collections.singletonList("请输入数量"), 1, "give", 4),
