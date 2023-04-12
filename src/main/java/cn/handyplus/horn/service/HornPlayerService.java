@@ -3,6 +3,8 @@ package cn.handyplus.horn.service;
 import cn.handyplus.horn.enter.HornPlayerEnter;
 import cn.handyplus.lib.db.Db;
 
+import java.util.List;
+
 /**
  * 玩家喇叭
  *
@@ -42,6 +44,18 @@ public class HornPlayerService {
     }
 
     /**
+     * 根据uid查询
+     *
+     * @param playerUuid uid
+     * @return 数据
+     */
+    public List<HornPlayerEnter> findByUid(String playerUuid) {
+        Db<HornPlayerEnter> use = Db.use(HornPlayerEnter.class);
+        use.where().eq(HornPlayerEnter::getPlayerUuid, playerUuid);
+        return use.execution().list();
+    }
+
+    /**
      * 根据id 减少数量
      *
      * @param id ID
@@ -49,6 +63,17 @@ public class HornPlayerService {
     public void subtractNumber(Integer id, int number) {
         Db<HornPlayerEnter> db = Db.use(HornPlayerEnter.class);
         db.update().subtract(HornPlayerEnter::getNumber, HornPlayerEnter::getNumber, number);
+        db.execution().updateById(id);
+    }
+
+    /**
+     * 根据id 设置数量
+     *
+     * @param id ID
+     */
+    public void setNumber(Integer id, int number) {
+        Db<HornPlayerEnter> db = Db.use(HornPlayerEnter.class);
+        db.update().set(HornPlayerEnter::getNumber, number);
         db.execution().updateById(id);
     }
 

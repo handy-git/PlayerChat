@@ -13,15 +13,15 @@ import org.bukkit.command.CommandSender;
 /**
  * @author handy
  */
-public class GiveCommand implements IHandyCommandEvent {
+public class SetCommand implements IHandyCommandEvent {
     @Override
     public String command() {
-        return "give";
+        return "set";
     }
 
     @Override
     public String permission() {
-        return "riceHorn.give";
+        return "riceHorn.set";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class GiveCommand implements IHandyCommandEvent {
             hornPlayer.setNumber(number);
             HornPlayerService.getInstance().add(hornPlayer);
         } else {
-            HornPlayerService.getInstance().addNumber(hornPlayerEnter.getId(), number);
+            HornPlayerService.getInstance().setNumber(hornPlayerEnter.getId(), number);
         }
         MessageApi.sendMessage(sender, "给予成功");
     }

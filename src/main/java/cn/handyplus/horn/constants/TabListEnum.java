@@ -22,10 +22,17 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set"), 0, null, 1),
 
     GIVE_THREE(null, 1, "give", 3),
-    GIVE_FOUR(Collections.singletonList("请输入数量"), 1, "give", 4);
+    GIVE_FOUR(Collections.singletonList("请输入数量"), 1, "give", 4),
+
+    TAKE_THREE(null, 1, "take", 3),
+    TAKE_FOUR(Collections.singletonList("请输入数量"), 1, "take", 4),
+
+    SET_THREE(null, 1, "set", 3),
+    SET_FOUR(Collections.singletonList("请输入数量"), 1, "set", 4),
+    ;
 
     /**
      * 返回的List
@@ -53,7 +60,7 @@ public enum TabListEnum {
      */
     public static List<String> returnList(String[] args, int argsLength) {
         List<String> completions = new ArrayList<>();
-        if (argsLength == 2 && "give".equalsIgnoreCase(args[0])) {
+        if (argsLength == 2 && ("give".equalsIgnoreCase(args[0]) || "take".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
             Map<String, String> lb = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
             return new ArrayList<>(lb.keySet());
         }

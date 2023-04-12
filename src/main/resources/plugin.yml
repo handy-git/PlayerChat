@@ -18,9 +18,21 @@ permissions:
     children:
       riceHorn.reload: true
       riceHorn.give: true
+      riceHorn.take: true
+      riceHorn.set: true
+      riceHorn.look: true
   riceHorn.reload:
     description: 重新加载配置
     default: op
   riceHorn.give:
     description: 给予喇叭
+    default: op
+  riceHorn.take:
+    description: 拿走喇叭
+    default: op
+  riceHorn.set:
+    description: 设置喇叭
+    default: op
+  riceHorn.look:
+    description: 查看喇叭
     default: op
