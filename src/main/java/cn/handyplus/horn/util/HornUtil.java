@@ -34,16 +34,18 @@ public class HornUtil {
         boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
 
-        // 解析变量
-        msg = PlaceholderApiUtil.set(player, msg);
         // 加载rgb颜色
         String megRgb = BaseUtil.replaceChatColor(rgb + msg);
+        // 解析变量
+        msg = PlaceholderApiUtil.set(player, megRgb);
         if (message) {
             MessageApi.sendAllMessage(megRgb);
         }
         if (actionbar) {
             String actionbarRgb = ConfigUtil.CONFIG.getString("lb." + type + ".actionbar.rgb");
-            MessageApi.sendAllActionbar(BaseUtil.replaceChatColor(actionbarRgb + msg));
+            String actionbarRgbMsg = BaseUtil.replaceChatColor(actionbarRgb + msg);
+            actionbarRgbMsg = PlaceholderApiUtil.set(player, actionbarRgbMsg);
+            MessageApi.sendAllActionbar(actionbarRgbMsg);
         }
         if (title) {
             MessageApi.sendAllTitle(name, megRgb);
