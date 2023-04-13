@@ -37,21 +37,22 @@ public class HornPluginMessageListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         String server = ConfigUtil.CONFIG.getString("server");
-        MessageApi.sendConsoleMessage("子服:" + server + "收到消息");
+        MessageApi.sendConsoleDebugMessage("子服:" + server + "收到消息");
         String json = BcUtil.getContentByForward(message);
         if (StrUtil.isEmpty(json)) {
             return;
         }
-        MessageApi.sendConsoleMessage("消息内容为:" + json);
+        MessageApi.sendConsoleDebugMessage("消息内容为:" + json);
         LbMessage lbMessage = JsonUtil.toBean(json, LbMessage.class);
         // 获取喇叭配置
         List<String> serverList = ConfigUtil.CONFIG.getStringList("lb." + lbMessage.getType() + ".server");
         if (CollUtil.isEmpty(serverList)) {
-            MessageApi.sendConsoleMessage(lbMessage.getType() + "的server配置错误");
+            MessageApi.sendConsoleDebugMessage(lbMessage.getType() + "的server配置错误");
+            return;
         }
         // 判断是否包含该子服
         if (!serverList.contains(server)) {
-            MessageApi.sendConsoleMessage(server + "子服不发消息");
+            MessageApi.sendConsoleDebugMessage(server + "子服不发消息");
             return;
         }
         // 发送消息
