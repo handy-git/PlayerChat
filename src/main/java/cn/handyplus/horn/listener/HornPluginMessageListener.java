@@ -8,6 +8,7 @@ import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,6 +39,9 @@ public class HornPluginMessageListener implements PluginMessageListener {
         String server = ConfigUtil.CONFIG.getString("server");
         MessageApi.sendConsoleMessage("子服:" + server + "收到消息");
         String json = BcUtil.getContentByForward(message);
+        if (StrUtil.isEmpty(json)) {
+            return;
+        }
         MessageApi.sendConsoleMessage("消息内容为:" + json);
         LbMessage lbMessage = JsonUtil.toBean(json, LbMessage.class);
         // 获取喇叭配置
