@@ -37,7 +37,7 @@ public class HornUtil {
         // 加载rgb颜色
         String megRgb = BaseUtil.replaceChatColor(rgb + msg);
         // 解析变量
-        msg = PlaceholderApiUtil.set(player, megRgb);
+        megRgb = PlaceholderApiUtil.set(player, megRgb);
         if (message) {
             MessageApi.sendAllMessage(megRgb);
         }
@@ -48,6 +48,7 @@ public class HornUtil {
             MessageApi.sendAllActionbar(actionbarRgbMsg);
         }
         if (title) {
+            name = PlaceholderApiUtil.set(player, name);
             MessageApi.sendAllTitle(name, megRgb);
         }
         if (boss) {
