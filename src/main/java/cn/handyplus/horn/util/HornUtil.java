@@ -8,6 +8,8 @@ import cn.handyplus.lib.util.BossBarUtil;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
  * 消息工具
  *
@@ -29,17 +31,20 @@ public class HornUtil {
         }
         String rgb = ConfigUtil.CONFIG.getString("lb." + type + ".rgb");
         String name = ConfigUtil.CONFIG.getString("lb." + type + ".name");
-        boolean message = ConfigUtil.CONFIG.getBoolean("lb." + type + ".message");
+        boolean message = ConfigUtil.CONFIG.getBoolean("lb." + type + ".message.enable");
         boolean actionbar = ConfigUtil.CONFIG.getBoolean("lb." + type + ".actionbar.enable");
         boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
 
         // 加载rgb颜色
-        String megRgb = BaseUtil.replaceChatColor(rgb + msg);
+        String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
         // 解析变量
-        megRgb = PlaceholderApiUtil.set(player, megRgb);
+        msgRgb = PlaceholderApiUtil.set(player, msgRgb);
         if (message) {
-            MessageApi.sendAllMessage(megRgb);
+            List<String> messageFormatList = ConfigUtil.CONFIG.getStringList("lb." + type + ".message.format");
+            for (String messageFormat : messageFormatList) {
+                MessageApi.sendAllMessage(messageFormat.replace("${message}", msgRgb));
+            }
         }
         if (actionbar) {
             String actionbarRgb = ConfigUtil.CONFIG.getString("lb." + type + ".actionbar.rgb");
@@ -49,12 +54,13 @@ public class HornUtil {
         }
         if (title) {
             name = PlaceholderApiUtil.set(player, name);
-            MessageApi.sendAllTitle(name, megRgb);
+            MessageApi.sendAllTitle(name, msgRgb);
         }
         if (boss) {
-            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", megRgb);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", msgRgb);
             BossBarUtil.addAllPlayer(bossBar);
             int time = ConfigUtil.CONFIG.getInt("lb." + type + ".boss.time", 3);
+            BossBarUtil.setProgress(bossBar.getKey(), time);
             BossBarUtil.removeBossBar(bossBar.getKey(), time);
         }
     }

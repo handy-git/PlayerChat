@@ -10,7 +10,12 @@ lb:
     server:
       - "lobby1"
       - "pvp"
-    message: true
+    message:
+      enable: true
+      format:
+        - "&a------------------------"
+        - "${message}"
+        - "&a------------------------"
     actionbar:
       enable: true
       rgb: "&a"
