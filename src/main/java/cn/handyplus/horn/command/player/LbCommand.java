@@ -1,14 +1,14 @@
 package cn.handyplus.horn.command.player;
 
+import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.enter.HornPlayerEnter;
-import cn.handyplus.horn.param.LbMessage;
 import cn.handyplus.horn.service.HornPlayerService;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
@@ -70,10 +70,11 @@ public class LbCommand implements TabExecutor {
             message.append(args[i]).append(" ");
         }
 
-        LbMessage lbMessage = new LbMessage();
-        lbMessage.setType(type);
-        lbMessage.setMessage(message.toString());
-        BcUtil.sendForward(player, JsonUtil.toJson(lbMessage));
+        BcMessageParam param = new BcMessageParam();
+        param.setPluginName(RiceHorn.getInstance().getName());
+        param.setType(type);
+        param.setMessage(message.toString());
+        BcUtil.sendParamForward(player, param);
         // 发送消息
         HornUtil.sendMsg(player, type, message.toString());
         return true;

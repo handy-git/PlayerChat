@@ -2,13 +2,11 @@ package cn.handyplus.horn.listener;
 
 import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.constants.RiceHornConstants;
-import cn.handyplus.horn.param.LbMessage;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.core.JsonUtil;
-import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,12 +36,10 @@ public class HornPluginMessageListener implements PluginMessageListener {
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         String server = ConfigUtil.CONFIG.getString("server");
         MessageApi.sendConsoleDebugMessage("子服:" + server + "收到消息");
-        String json = BcUtil.getContentByForward(message);
-        if (StrUtil.isEmpty(json)) {
+        BcMessageParam lbMessage = BcUtil.getParamByForward(message);
+        if (lbMessage == null) {
             return;
         }
-        MessageApi.sendConsoleDebugMessage("消息内容为:" + json);
-        LbMessage lbMessage = JsonUtil.toBean(json, LbMessage.class);
         // 获取喇叭配置
         List<String> serverList = ConfigUtil.CONFIG.getStringList("lb." + lbMessage.getType() + ".server");
         if (CollUtil.isEmpty(serverList)) {
