@@ -1,7 +1,6 @@
 package cn.handyplus.horn.constants;
 
-import cn.handyplus.horn.util.ConfigUtil;
-import cn.handyplus.lib.util.HandyPermissionUtil;
+import cn.handyplus.horn.util.HornUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * tab提醒
@@ -63,8 +61,7 @@ public enum TabListEnum {
     public static List<String> returnList(String[] args, int argsLength) {
         List<String> completions = new ArrayList<>();
         if (argsLength == 2 && ("give".equalsIgnoreCase(args[0]) || "take".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
-            Map<String, String> lb = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
-            return new ArrayList<>(lb.keySet());
+            return HornUtil.getTabTitle();
         }
         for (TabListEnum tabListEnum : TabListEnum.values()) {
             if (tabListEnum.getBefPos() - 1 >= args.length) {

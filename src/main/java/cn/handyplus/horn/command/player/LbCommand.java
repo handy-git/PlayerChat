@@ -53,6 +53,12 @@ public class LbCommand implements TabExecutor {
             MessageApi.sendMessage(sender, "配置错误");
             return true;
         }
+        boolean enable = ConfigUtil.CONFIG.getBoolean("lb." + type + ".enable");
+        if (!enable) {
+            MessageApi.sendMessage(player, type + " &7已经被管理员禁用");
+            return true;
+        }
+
         HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId().toString(), type);
         if (hornPlayerEnter == null) {
             MessageApi.sendMessage(player, "&a你没有可使用的喇叭");
@@ -85,8 +91,7 @@ public class LbCommand implements TabExecutor {
         List<String> completions = new ArrayList<>();
         List<String> commands = null;
         if (args.length == 1) {
-            Map<String, String> lb = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
-            commands = new ArrayList<>(lb.keySet());
+            commands = HornUtil.getTabTitle();
         }
         if (commands == null) {
             return new ArrayList<>();

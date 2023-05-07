@@ -5,10 +5,13 @@ import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BossBarUtil;
+import cn.handyplus.lib.util.HandyPermissionUtil;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息工具
@@ -63,6 +66,24 @@ public class HornUtil {
             BossBarUtil.setProgress(bossBar.getKey(), time);
             BossBarUtil.removeBossBar(bossBar.getKey(), time);
         }
+    }
+
+    /**
+     * 获取启动的喇叭
+     *
+     * @return 喇叭列表
+     */
+    public static List<String> getTabTitle() {
+        Map<String, String> map = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
+        List<String> list = new ArrayList<>();
+        for (String key : map.keySet()) {
+            boolean enable = ConfigUtil.CONFIG.getBoolean("lb." + key + ".enable");
+            if (!enable) {
+                continue;
+            }
+            list.add(key);
+        }
+        return list;
     }
 
 }
