@@ -60,7 +60,7 @@ public class HornUtil {
             MessageApi.sendAllTitle(name, msgRgb);
         }
         if (boss) {
-            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb.boss", msgRgb);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb." + type + ".boss", msgRgb);
             BossBarUtil.addAllPlayer(bossBar);
             int time = ConfigUtil.CONFIG.getInt("lb." + type + ".boss.time", 3);
             BossBarUtil.setProgress(bossBar.getKey(), time);

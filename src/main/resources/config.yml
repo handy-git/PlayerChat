@@ -21,7 +21,9 @@ lb:
       rgb: "&a"
     boss:
       enable: true
+      # 血条颜色 https://bukkit.windit.net/javadoc/org/bukkit/boss/BarColor.html
       color: "PINK"
+      # 血条样式 https://bukkit.windit.net/javadoc/org/bukkit/boss/BarStyle.html
       style: "SOLID"
       time: 3
     title: true
