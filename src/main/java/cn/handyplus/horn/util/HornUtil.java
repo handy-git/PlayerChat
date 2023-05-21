@@ -39,10 +39,10 @@ public class HornUtil {
         boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
 
+        // 解析变量
+        rgb = PlaceholderApiUtil.set(player, rgb);
         // 加载rgb颜色
         String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
-        // 解析变量
-        msgRgb = PlaceholderApiUtil.set(player, msgRgb);
         if (message) {
             List<String> messageFormatList = ConfigUtil.CONFIG.getStringList("lb." + type + ".message.format");
             for (String messageFormat : messageFormatList) {
