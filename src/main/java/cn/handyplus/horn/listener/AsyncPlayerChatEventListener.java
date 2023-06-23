@@ -12,6 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Date;
+
 /**
  * 当玩家聊天时触发这个事件
  * 称号聊天显示
@@ -43,7 +45,10 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setPluginName(RiceHorn.getInstance().getName());
         param.setType(RiceHornConstants.CHAT_TYPE);
         param.setMessage(event.getMessage());
+        param.setSendTime(new Date());
         BcUtil.sendParamForward(event.getPlayer(), param);
+        // 发送人数消息
+        BcUtil.sendPlayerCount();
     }
 
 }

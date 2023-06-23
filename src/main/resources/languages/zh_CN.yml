@@ -1,0 +1,40 @@
+# placeholderAPI提醒
+placeholderAPISucceedMsg: "&a已成功加载placeholderApi"
+placeholderAPIFailureMsg: "&7你的服务端没有安装PlaceholderApi哦 未启用自定义变量功能."
+
+# 指令帮助
+helps:
+  - ""
+  - " &3Rice&bHorn &8&l▪ &7米饭出品～"
+  - ""
+  - " &7命令: &f/horn &8[...]"
+  - " &7参数:"
+  - "   &8&l- &f reload   &7重载配置文件"
+  - "   &8&l- &f give [喇叭类型] [玩家名] [数量]   &7给与玩家喇叭数量"
+  - "   &8&l- &f take [喇叭类型] [玩家名] [数量]   &7拿走玩家喇叭数量"
+  - "   &8&l- &f set [喇叭类型] [玩家名] [数量]   &7设置玩家喇叭数量"
+  - "   &8&l- &f look [玩家名] &7查看玩家喇叭数量"
+  - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
+
+noPermission: "&c你没有权限执行此命令..."
+reloadMsg: "&a插件重载完毕..."
+paramFailureMsg: "&c参数错误."
+amountFailureMsg: "&7此参数只能为大于0的数字."
+giveSucceedMsg: "&8[&a✔&8] &a给予成功"
+setSucceedMsg: "&8[&a✔&8] &a给予成功"
+takeSucceedMsg: "&8[&a✔&8] &a拿走成功"
+noLook: "&8[&c✘&8] &7玩家 ${player} 没有喇叭"
+noHave: "&8[&c✘&8] &7你没有可使用的喇叭"
+noHaveNumber: "&8[&c✘&8] &7你的喇叭数量不足"
+
+
+# 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
+tabHelp:
+  guildName: "&7请输入公会名称,可使用颜色代码&"
+  price: "&7请输入需要贡献值."
+  pvpName: "&7请输入pvp场地名."
+  spawnName: "&7请输入场地出生点名."
+  number: "&7请输入一个整数"
+  level: "&7请输入一个公会等级"
+  limit: "&7请输入可购买次数"
+  logoId: "&7请输入LogoId,可/plg view logo查看"

@@ -13,8 +13,13 @@ public abstract class RiceHornConstants {
     public final static String RICE_HORN_CHANNEL = "BungeeCord";
 
     /**
-     * 聊天类型
+     * 消息类型
      */
     public final static String CHAT_TYPE = "RICE_CHAT";
+
+    /**
+     * 密钥
+     */
+    public static String SECRET_KEY = "1672244650668797952";
 
 }

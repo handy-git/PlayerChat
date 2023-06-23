@@ -2,6 +2,7 @@ package cn.handyplus.horn.command.admin;
 
 import cn.handyplus.horn.enter.HornPlayerEnter;
 import cn.handyplus.horn.service.HornPlayerService;
+import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.CollUtil;
@@ -32,7 +33,7 @@ public class LookCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, "参数错误");
+        AssertUtil.notTrue(args.length < 2, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
         String playerName = args[1];
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
@@ -43,7 +44,7 @@ public class LookCommand implements IHandyCommandEvent {
                 MessageApi.sendMessage(sender, playerName + "拥有 " + type + " 喇叭:" + hornPlayerMap.get(type));
             }
         } else {
-            MessageApi.sendMessage(sender, playerName + ",没有喇叭");
+            MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("noLook", "").replace("${player}", playerName));
         }
     }
 

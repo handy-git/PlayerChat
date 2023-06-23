@@ -12,7 +12,6 @@ import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
-import cn.handyplus.lib.util.HandyPermissionUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -23,7 +22,6 @@ import org.bukkit.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 发送消息
@@ -61,11 +59,11 @@ public class LbCommand implements TabExecutor {
 
         HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId().toString(), type);
         if (hornPlayerEnter == null) {
-            MessageApi.sendMessage(player, "&a你没有可使用的喇叭");
+            MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
             return true;
         }
         if (hornPlayerEnter.getNumber() < 1) {
-            MessageApi.sendMessage(player, "&a你的喇叭数量不足");
+            MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHaveNumber"));
             return true;
         }
         // 进行扣除

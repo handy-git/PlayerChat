@@ -1,6 +1,17 @@
 # 子服标识，先配置这个
 server: "lobby"
 
+# 第一次修改语言文件,需重启生效
+language: zh_CN
+
+# 是否开启更新提醒,建议开启
+isCheckUpdate: true
+
+# op登录时候是否发送更新提醒
+isCheckUpdateToOpMsg: true
+
+sign: "123456"
+
 # 聊天管理
 chat:
   # 是否开启

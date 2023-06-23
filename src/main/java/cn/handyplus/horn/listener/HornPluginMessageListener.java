@@ -7,13 +7,20 @@ import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.DateUtil;
+import cn.handyplus.lib.core.GenuineUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息处理
@@ -35,10 +42,18 @@ public class HornPluginMessageListener implements PluginMessageListener {
      */
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+        // 获取服务器人数
+        this.getPlayerCount(message);
+        // 自定义消息处理
         String server = ConfigUtil.CONFIG.getString("server");
         MessageApi.sendConsoleDebugMessage("子服:" + server + "收到消息");
         BcMessageParam lbMessage = BcUtil.getParamByForward(message);
         if (lbMessage == null) {
+            return;
+        }
+        // 判断时间太久的不发送
+        long between = DateUtil.between(lbMessage.getSendTime(), new Date(), ChronoUnit.MINUTES);
+        if (between > 1) {
             return;
         }
         // 群组聊天消息
@@ -59,6 +74,24 @@ public class HornPluginMessageListener implements PluginMessageListener {
         }
         // 发送消息
         HornUtil.sendMsg(player, lbMessage.getType(), lbMessage.getMessage());
+    }
+
+    /**
+     * 获取服务器人数
+     *
+     * @param message 消息
+     */
+    private void getPlayerCount(byte[] message) {
+        Map<String, Integer> playerCountMap = BcUtil.getPlayerCount(message);
+        Integer playerCount = playerCountMap.get(BcUtil.ALL);
+        if (playerCount == null) {
+            return;
+        }
+        // 在线人数大于10进行卸载插件
+        if (playerCount > 10 && !GenuineUtil.isGenuine()) {
+            MessageApi.sendConsoleMessage(ChatColor.GREEN + "服务器人数大于10,您无法在免费使用该插件,插件已自动卸载");
+            Bukkit.getPluginManager().disablePlugin(RiceHorn.getInstance());
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package cn.handyplus.horn.util;
 
+import cn.handyplus.horn.constants.RiceHornConstants;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -16,6 +17,8 @@ public class ConfigUtil {
      */
     public static void init() {
         CONFIG = HandyConfigUtil.loadConfig();
+        LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"));
+        HandyConfigUtil.loadKey(RiceHornConstants.SECRET_KEY);
     }
 
 }
