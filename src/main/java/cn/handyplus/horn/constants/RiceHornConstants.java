@@ -12,4 +12,9 @@ public abstract class RiceHornConstants {
      */
     public final static String RICE_HORN_CHANNEL = "BungeeCord";
 
+    /**
+     * 聊天类型
+     */
+    public final static String CHAT_TYPE = "RICE_CHAT";
+
 }

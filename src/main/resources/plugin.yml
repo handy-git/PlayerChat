@@ -1,9 +1,10 @@
 name: RiceHorn
 main: cn.handyplus.horn.RiceHorn
-version: 1.0.0
+version: 1.0.1
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
+website: https://ricedoc.handyplus.cn/
 description: 大喇叭
 commands:
   riceHorn:

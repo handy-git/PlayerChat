@@ -2,6 +2,7 @@ package cn.handyplus.horn.listener;
 
 import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.constants.RiceHornConstants;
+import cn.handyplus.horn.util.ChatUtil;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
@@ -38,6 +39,11 @@ public class HornPluginMessageListener implements PluginMessageListener {
         MessageApi.sendConsoleDebugMessage("子服:" + server + "收到消息");
         BcMessageParam lbMessage = BcUtil.getParamByForward(message);
         if (lbMessage == null) {
+            return;
+        }
+        // 群组聊天消息
+        if (RiceHornConstants.CHAT_TYPE.equals(lbMessage.getType())) {
+            ChatUtil.sendMsg(player, lbMessage.getMessage());
             return;
         }
         // 获取喇叭配置

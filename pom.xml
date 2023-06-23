@@ -6,14 +6,14 @@
 
     <groupId>cn.handyplus.horn</groupId>
     <artifactId>RiceHorn</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>米饭大喇叭插件</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spigot-api.vesion>1.19.2-R0.1-SNAPSHOT</spigot-api.vesion>
         <lombok.version>1.18.26</lombok.version>
-        <HandyLib.version>3.6.3</HandyLib.version>
+        <HandyLib.version>3.6.8</HandyLib.version>
         <placeholderapi.version>2.10.5</placeholderapi.version>
     </properties>
 
