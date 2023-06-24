@@ -1,9 +1,11 @@
 package cn.handyplus.horn.util;
 
 import cn.handyplus.horn.RiceHorn;
+import cn.handyplus.horn.constants.RiceHornConstants;
 import cn.handyplus.horn.hook.PlaceholderApiUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.TextUtil;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -25,7 +27,7 @@ public class ChatUtil {
      * @param player 玩家
      * @param msg    消息内容
      */
-    public static void sendMsg(Player player, String msg) {
+    public static void sendMsg(Player player, BcMessageParam msg) {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -40,7 +42,7 @@ public class ChatUtil {
      * @param player 玩家
      * @param msg    消息内容
      */
-    private synchronized static void sendTextMsg(Player player, String msg) {
+    private synchronized static void sendTextMsg(Player player, BcMessageParam msg) {
         // 功能是否开启
         boolean chatEnable = ConfigUtil.CONFIG.getBoolean("chat.enable");
         if (!chatEnable) {
@@ -79,8 +81,12 @@ public class ChatUtil {
         TextUtil playerTextComponent = TextUtil.getInstance().init(playerText);
         playerTextComponent.addHoverText(CollUtil.listToStr(playerHover, "\n"));
         // 消息
-        TextUtil msgTextComponent = TextUtil.getInstance().init(msgText + msg);
-        msgTextComponent.addHoverText(CollUtil.listToStr(msgHover, "\n"));
+        TextUtil msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
+        if (RiceHornConstants.CHAT_TYPE.equals(msg.getType())) {
+            msgTextComponent.addHoverText(CollUtil.listToStr(msgHover, "\n"));
+        } else if (RiceHornConstants.ITEM_TYPE.equals(msg.getType())) {
+            msgTextComponent.addHoverText(msg.getHover());
+        }
         // 发送消息
         TextComponent textComponent = prefixTextComponent
                 .addExtra(playerTextComponent.build())

@@ -17,7 +17,7 @@ public class ConfigUtil {
      */
     public static void init() {
         CONFIG = HandyConfigUtil.loadConfig();
-        LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"));
+        LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
         HandyConfigUtil.loadKey(RiceHornConstants.SECRET_KEY);
     }
 

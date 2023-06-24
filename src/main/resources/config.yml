@@ -10,6 +10,7 @@ isCheckUpdate: true
 # op登录时候是否发送更新提醒
 isCheckUpdateToOpMsg: true
 
+# 激活码
 sign: "123456"
 
 # 聊天管理
@@ -26,7 +27,7 @@ chat:
           - '&8▪ &6称号币数量: %playerTitle_coin%'
     # 聊天玩家名
     player:
-        text: '&f%player_name%'
+        text: '&f%player_name%&7: '
         hover:
           - '&8▪ &6所在世界: %multiverse_world_alias%'
           - '&8▪ &6所属公会: %playerGuild_name%'
@@ -39,6 +40,13 @@ chat:
       text: '&f'
       hover:
         - '&7时间: %server_time_h:mm:ss a%'
+
+# 展示物品
+item:
+  # 是否开启
+  enable: true
+  # 需求内容
+  format: "[i]"
 
 # 喇叭管理
 lb:

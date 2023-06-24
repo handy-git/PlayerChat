@@ -56,8 +56,8 @@ public class HornPluginMessageListener implements PluginMessageListener {
             return;
         }
         // 群组聊天消息
-        if (RiceHornConstants.CHAT_TYPE.equals(lbMessage.getType())) {
-            ChatUtil.sendMsg(player, lbMessage.getMessage());
+        if (RiceHornConstants.CHAT_TYPE.equals(lbMessage.getType()) || RiceHornConstants.ITEM_TYPE.equals(lbMessage.getType())) {
+            ChatUtil.sendMsg(player, lbMessage);
             return;
         }
         // 获取喇叭配置

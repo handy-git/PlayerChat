@@ -18,6 +18,11 @@ public abstract class RiceHornConstants {
     public final static String CHAT_TYPE = "RICE_CHAT";
 
     /**
+     * 物品类型
+     */
+    public final static String ITEM_TYPE = "RICE_ITEM";
+
+    /**
      * 密钥
      */
     public static String SECRET_KEY = "1672244650668797952";
