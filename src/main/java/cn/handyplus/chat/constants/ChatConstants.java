@@ -14,6 +14,11 @@ import java.util.List;
 public abstract class ChatConstants {
 
     /**
+     * 检查更新网址
+     */
+    public final static String PLUGIN_VERSION_URL = "https://api.github.com/repos/handy-git/PlayerChat/releases/latest";
+
+    /**
      * 渠道
      */
     public final static String RICE_HORN_CHANNEL = "BungeeCord";

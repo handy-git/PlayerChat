@@ -33,7 +33,9 @@ public class PlayerChat extends JavaPlugin {
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")
                 .enableSql("cn.handyplus.chat.enter")
-                .enableBc();
+                .addMetrics(18860)
+                .enableBc()
+                .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
         new HornPluginMessageListener();
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
