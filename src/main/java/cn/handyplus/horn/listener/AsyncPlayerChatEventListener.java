@@ -3,6 +3,7 @@ package cn.handyplus.horn.listener;
 import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.constants.RiceHornConstants;
 import cn.handyplus.horn.util.ChatUtil;
+import cn.handyplus.horn.util.CheckUtil;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.CollUtil;
@@ -43,6 +44,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (!chatEnable) {
             return;
         }
+        // 取消事件
         event.setCancelled(true);
         // 参数构建
         BcMessageParam param = new BcMessageParam();
@@ -51,11 +53,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setMessage(event.getMessage());
         param.setSendTime(new Date());
         // 发送本服消息
-        ChatUtil.sendMsg(event.getPlayer(), param);
-        // 发送BC消息
-        BcUtil.sendParamForward(event.getPlayer(), param);
-        // 发送人数消息
-        BcUtil.sendPlayerCount();
+        sendMsg(event, param);
     }
 
     /**
@@ -92,12 +90,24 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setMessage(displayName);
         param.setHover(loreStr);
         param.setSendTime(new Date());
+        sendMsg(event, param);
+    }
+
+    /**
+     * 发送对应BC消息
+     *
+     * @param event 事件
+     * @param param 参数
+     */
+    private static void sendMsg(AsyncPlayerChatEvent event, BcMessageParam param) {
         // 发送本服消息
         ChatUtil.sendMsg(event.getPlayer(), param);
         // 发送BC消息
         BcUtil.sendParamForward(event.getPlayer(), param);
         // 发送人数消息
         BcUtil.sendPlayerCount();
+        // 校验本服人数
+        CheckUtil.check();
     }
 
 }

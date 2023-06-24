@@ -3,6 +3,7 @@ package cn.handyplus.horn.command.player;
 import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.enter.HornPlayerEnter;
 import cn.handyplus.horn.service.HornPlayerService;
+import cn.handyplus.horn.util.CheckUtil;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
@@ -81,6 +82,8 @@ public class LbCommand implements TabExecutor {
         BcUtil.sendParamForward(player, param);
         // 发送消息
         HornUtil.sendMsg(player, type, message.toString());
+        // 进行校验
+        CheckUtil.check();
         return true;
     }
 

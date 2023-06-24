@@ -1,6 +1,7 @@
 package cn.handyplus.horn.constants;
 
 import cn.handyplus.horn.util.HornUtil;
+import cn.handyplus.lib.util.BaseUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,18 +21,18 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "getIp"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
     GIVE_THREE(null, 1, "give", 3),
-    GIVE_FOUR(Collections.singletonList("请输入数量"), 1, "give", 4),
+    GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "give", 4),
 
     TAKE_THREE(null, 1, "take", 3),
-    TAKE_FOUR(Collections.singletonList("请输入数量"), 1, "take", 4),
+    TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "take", 4),
 
     SET_THREE(null, 1, "set", 3),
-    SET_FOUR(Collections.singletonList("请输入数量"), 1, "set", 4),
+    SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "set", 4),
     ;
 
     /**

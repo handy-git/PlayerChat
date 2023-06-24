@@ -1,5 +1,6 @@
 package cn.handyplus.horn;
 
+import cn.handyplus.horn.constants.RiceHornConstants;
 import cn.handyplus.horn.listener.HornPluginMessageListener;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
@@ -23,6 +24,8 @@ public class RiceHorn extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
         InitApi initApi = InitApi.getInstance(this);
+        BaseConstants.VERIFY_SIGN_SUCCEED_MSG = RiceHornConstants.VERIFY_SIGN_SUCCEED_MSG;
+        BaseConstants.VERIFY_SIGN_FAILURE_MSG = RiceHornConstants.VERIFY_SIGN_FAILURE_MSG;
         ConfigUtil.init();
         // 加载PlaceholderApi
         this.loadPlaceholder();
@@ -34,6 +37,7 @@ public class RiceHorn extends JavaPlugin {
         new HornPluginMessageListener();
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
+
     }
 
     @Override

@@ -3,16 +3,15 @@ package cn.handyplus.horn.listener;
 import cn.handyplus.horn.RiceHorn;
 import cn.handyplus.horn.constants.RiceHornConstants;
 import cn.handyplus.horn.util.ChatUtil;
+import cn.handyplus.horn.util.CheckUtil;
 import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.horn.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
-import cn.handyplus.lib.core.GenuineUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -86,11 +85,7 @@ public class HornPluginMessageListener implements PluginMessageListener {
         if (playerCount == null) {
             return;
         }
-        // 在线人数大于10进行卸载插件
-        if (playerCount > 10 && !GenuineUtil.isGenuine()) {
-            MessageApi.sendConsoleMessage(ChatColor.GREEN + "服务器人数大于10,您无法在免费使用该插件,插件已自动卸载");
-            Bukkit.getPluginManager().disablePlugin(RiceHorn.getInstance());
-        }
+        CheckUtil.check(playerCount);
     }
 
 }
