@@ -1,6 +1,6 @@
-package cn.handyplus.horn.constants;
+package cn.handyplus.chat.constants;
 
-import cn.handyplus.horn.util.HornUtil;
+import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

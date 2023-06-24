@@ -1,6 +1,6 @@
-package cn.handyplus.horn.util;
+package cn.handyplus.chat.util;
 
-import cn.handyplus.horn.hook.PlaceholderApiUtil;
+import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;

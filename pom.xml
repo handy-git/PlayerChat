@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.handyplus.horn</groupId>
-    <artifactId>RiceHorn</artifactId>
-    <version>1.0.1</version>
-    <description>米饭大喇叭插件</description>
+    <groupId>cn.handyplus.chat</groupId>
+    <artifactId>PlayerChat</artifactId>
+    <version>1.0.0</version>
+    <description>米饭聊天</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,7 +70,7 @@
                     <relocations>
                         <relocation>
                             <pattern>cn.handyplus.lib</pattern>
-                            <shadedPattern>cn.handyplus.horn.lib</shadedPattern>
+                            <shadedPattern>cn.handyplus.chat.lib</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

@@ -1,7 +1,7 @@
-package cn.handyplus.horn.command.admin;
+package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import org.bukkit.command.Command;
@@ -22,7 +22,7 @@ public class ReloadCommand implements IHandyCommandEvent {
 
     @Override
     public String permission() {
-        return "riceHorn.reload";
+        return "playerChat.reload";
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ReloadCommand implements IHandyCommandEvent {
                 ConfigUtil.init();
                 MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("reloadMsg"));
             }
-        }.runTaskAsynchronously(RiceHorn.getInstance());
+        }.runTaskAsynchronously(PlayerChat.getInstance());
     }
 
 }

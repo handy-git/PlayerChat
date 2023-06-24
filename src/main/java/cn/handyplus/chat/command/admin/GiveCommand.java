@@ -1,8 +1,8 @@
-package cn.handyplus.horn.command.admin;
+package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.horn.enter.HornPlayerEnter;
-import cn.handyplus.horn.service.HornPlayerService;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.enter.HornPlayerEnter;
+import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.util.AssertUtil;
@@ -14,15 +14,15 @@ import org.bukkit.command.CommandSender;
 /**
  * @author handy
  */
-public class TakeCommand implements IHandyCommandEvent {
+public class GiveCommand implements IHandyCommandEvent {
     @Override
     public String command() {
-        return "take";
+        return "give";
     }
 
     @Override
     public String permission() {
-        return "riceHorn.take";
+        return "playerChat.give";
     }
 
     @Override
@@ -40,12 +40,12 @@ public class TakeCommand implements IHandyCommandEvent {
             hornPlayer.setPlayerName(offlinePlayer.getName());
             hornPlayer.setPlayerUuid(offlinePlayer.getUniqueId().toString());
             hornPlayer.setType(type);
-            hornPlayer.setNumber(-number);
+            hornPlayer.setNumber(number);
             HornPlayerService.getInstance().add(hornPlayer);
         } else {
-            HornPlayerService.getInstance().subtractNumber(hornPlayerEnter.getId(), number);
+            HornPlayerService.getInstance().addNumber(hornPlayerEnter.getId(), number);
         }
-        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("takeSucceedMsg"));
+        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
     }
 
 }

@@ -1,6 +1,6 @@
-package cn.handyplus.horn.util;
+package cn.handyplus.chat.util;
 
-import cn.handyplus.horn.constants.RiceHornConstants;
+import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -18,7 +18,7 @@ public class ConfigUtil {
     public static void init() {
         CONFIG = HandyConfigUtil.loadConfig();
         LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
-        HandyConfigUtil.loadKey(RiceHornConstants.SECRET_KEY);
+        HandyConfigUtil.loadKey(ChatConstants.SECRET_KEY);
     }
 
 }

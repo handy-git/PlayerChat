@@ -1,6 +1,6 @@
-package cn.handyplus.horn.command.admin;
+package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.horn.RiceHorn;
+import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
@@ -27,7 +27,7 @@ public class GetIpCommand implements IHandyCommandEvent {
 
     @Override
     public String permission() {
-        return "riceHorn.getIp";
+        return "playerChat.getIp";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class GetIpCommand implements IHandyCommandEvent {
                 }
                 MessageApi.sendMessage(sender, mac);
             }
-        }.runTaskAsynchronously(RiceHorn.getInstance());
+        }.runTaskAsynchronously(PlayerChat.getInstance());
     }
 
 }

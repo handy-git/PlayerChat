@@ -1,4 +1,4 @@
-package cn.handyplus.horn.enter;
+package cn.handyplus.chat.enter;
 
 import cn.handyplus.lib.annotation.TableField;
 import cn.handyplus.lib.annotation.TableName;

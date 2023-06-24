@@ -1,11 +1,11 @@
-package cn.handyplus.horn.command.player;
+package cn.handyplus.chat.command.player;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.enter.HornPlayerEnter;
-import cn.handyplus.horn.service.HornPlayerService;
-import cn.handyplus.horn.util.CheckUtil;
-import cn.handyplus.horn.util.ConfigUtil;
-import cn.handyplus.horn.util.HornUtil;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.enter.HornPlayerEnter;
+import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.util.CheckUtil;
+import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author handy
  */
-@HandyCommand(name = "lb", permission = "riceHorn.lb", PERMISSION_DEFAULT = PermissionDefault.TRUE)
+@HandyCommand(name = "lb", permission = "playerChat.lb", PERMISSION_DEFAULT = PermissionDefault.TRUE)
 public class LbCommand implements TabExecutor {
 
     @Override
@@ -76,7 +76,7 @@ public class LbCommand implements TabExecutor {
         }
 
         BcMessageParam param = new BcMessageParam();
-        param.setPluginName(RiceHorn.getInstance().getName());
+        param.setPluginName(PlayerChat.getInstance().getName());
         param.setType(type);
         param.setMessage(message.toString());
         BcUtil.sendParamForward(player, param);

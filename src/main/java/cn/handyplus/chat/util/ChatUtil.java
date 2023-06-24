@@ -1,8 +1,8 @@
-package cn.handyplus.horn.util;
+package cn.handyplus.chat.util;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.constants.RiceHornConstants;
-import cn.handyplus.horn.hook.PlaceholderApiUtil;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.param.BcMessageParam;
@@ -36,7 +36,7 @@ public class ChatUtil {
             public void run() {
                 sendTextMsg(player, msg, isConsoleMsg);
             }
-        }.runTaskAsynchronously(RiceHorn.getInstance());
+        }.runTaskAsynchronously(PlayerChat.getInstance());
     }
 
     /**
@@ -86,9 +86,9 @@ public class ChatUtil {
         playerTextComponent.addHoverText(CollUtil.listToStr(playerHover, "\n"));
         // 消息
         TextUtil msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
-        if (RiceHornConstants.CHAT_TYPE.equals(msg.getType())) {
+        if (ChatConstants.CHAT_TYPE.equals(msg.getType())) {
             msgTextComponent.addHoverText(CollUtil.listToStr(msgHover, "\n"));
-        } else if (RiceHornConstants.ITEM_TYPE.equals(msg.getType())) {
+        } else if (ChatConstants.ITEM_TYPE.equals(msg.getType())) {
             msgTextComponent.addHoverText(msg.getHover());
         }
         // 发送消息

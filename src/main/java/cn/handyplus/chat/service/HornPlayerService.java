@@ -1,6 +1,6 @@
-package cn.handyplus.horn.service;
+package cn.handyplus.chat.service;
 
-import cn.handyplus.horn.enter.HornPlayerEnter;
+import cn.handyplus.chat.enter.HornPlayerEnter;
 import cn.handyplus.lib.db.Db;
 
 import java.util.List;

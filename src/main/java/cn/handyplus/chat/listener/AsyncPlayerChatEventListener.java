@@ -1,10 +1,10 @@
-package cn.handyplus.horn.listener;
+package cn.handyplus.chat.listener;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.constants.RiceHornConstants;
-import cn.handyplus.horn.util.ChatUtil;
-import cn.handyplus.horn.util.CheckUtil;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.util.ChatUtil;
+import cn.handyplus.chat.util.CheckUtil;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.param.BcMessageParam;
@@ -48,8 +48,8 @@ public class AsyncPlayerChatEventListener implements Listener {
         event.setCancelled(true);
         // 参数构建
         BcMessageParam param = new BcMessageParam();
-        param.setPluginName(RiceHorn.getInstance().getName());
-        param.setType(RiceHornConstants.CHAT_TYPE);
+        param.setPluginName(PlayerChat.getInstance().getName());
+        param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(event.getMessage());
         param.setSendTime(new Date());
         // 发送本服消息
@@ -85,8 +85,8 @@ public class AsyncPlayerChatEventListener implements Listener {
         String loreStr = CollUtil.listToStr(loreList, "\n");
         // 参数构建
         BcMessageParam param = new BcMessageParam();
-        param.setPluginName(RiceHorn.getInstance().getName());
-        param.setType(RiceHornConstants.ITEM_TYPE);
+        param.setPluginName(PlayerChat.getInstance().getName());
+        param.setType(ChatConstants.ITEM_TYPE);
         param.setMessage(displayName);
         param.setHover(loreStr);
         param.setSendTime(new Date());

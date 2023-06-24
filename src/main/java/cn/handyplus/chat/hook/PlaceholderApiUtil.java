@@ -1,6 +1,6 @@
-package cn.handyplus.horn.hook;
+package cn.handyplus.chat.hook;
 
-import cn.handyplus.horn.RiceHorn;
+import cn.handyplus.chat.PlayerChat;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
@@ -21,7 +21,7 @@ public class PlaceholderApiUtil {
      * @return 新字符串
      */
     public static String set(Player player, String str) {
-        if (!RiceHorn.USE_PAPI || player == null) {
+        if (!PlayerChat.USE_PAPI || player == null) {
             return str;
         }
         // 是否包含变量
@@ -43,7 +43,7 @@ public class PlaceholderApiUtil {
      * @return 新字符串集合
      */
     public static List<String> set(Player player, List<String> strList) {
-        if (!RiceHorn.USE_PAPI || player == null) {
+        if (!PlayerChat.USE_PAPI || player == null) {
             return strList;
         }
         return PlaceholderAPI.setPlaceholders(player, strList);

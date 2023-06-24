@@ -1,11 +1,11 @@
-package cn.handyplus.horn.listener;
+package cn.handyplus.chat.listener;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.constants.RiceHornConstants;
-import cn.handyplus.horn.util.ChatUtil;
-import cn.handyplus.horn.util.CheckUtil;
-import cn.handyplus.horn.util.ConfigUtil;
-import cn.handyplus.horn.util.HornUtil;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.util.ChatUtil;
+import cn.handyplus.chat.util.CheckUtil;
+import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class HornPluginMessageListener implements PluginMessageListener {
 
     public HornPluginMessageListener() {
-        Bukkit.getMessenger().registerIncomingPluginChannel(RiceHorn.getInstance(), RiceHornConstants.RICE_HORN_CHANNEL, this);
+        Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.getInstance(), ChatConstants.RICE_HORN_CHANNEL, this);
     }
 
     /**
@@ -55,7 +55,7 @@ public class HornPluginMessageListener implements PluginMessageListener {
             return;
         }
         // 群组聊天消息
-        if (RiceHornConstants.CHAT_TYPE.equals(lbMessage.getType()) || RiceHornConstants.ITEM_TYPE.equals(lbMessage.getType())) {
+        if (ChatConstants.CHAT_TYPE.equals(lbMessage.getType()) || ChatConstants.ITEM_TYPE.equals(lbMessage.getType())) {
             ChatUtil.sendMsg(player, lbMessage, false);
             return;
         }

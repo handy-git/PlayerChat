@@ -1,4 +1,4 @@
-package cn.handyplus.horn.constants;
+package cn.handyplus.chat.constants;
 
 import cn.handyplus.lib.InitApi;
 import org.bukkit.ChatColor;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author handy
  */
-public abstract class RiceHornConstants {
+public abstract class ChatConstants {
 
     /**
      * 渠道

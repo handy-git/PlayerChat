@@ -1,8 +1,8 @@
-package cn.handyplus.horn;
+package cn.handyplus.chat;
 
-import cn.handyplus.horn.constants.RiceHornConstants;
-import cn.handyplus.horn.listener.HornPluginMessageListener;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.listener.HornPluginMessageListener;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.constants.BaseConstants;
@@ -16,23 +16,23 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author handy
  */
-public class RiceHorn extends JavaPlugin {
-    private static RiceHorn INSTANCE;
+public class PlayerChat extends JavaPlugin {
+    private static PlayerChat INSTANCE;
     public static boolean USE_PAPI;
 
     @Override
     public void onEnable() {
         INSTANCE = this;
         InitApi initApi = InitApi.getInstance(this);
-        BaseConstants.VERIFY_SIGN_SUCCEED_MSG = RiceHornConstants.VERIFY_SIGN_SUCCEED_MSG;
-        BaseConstants.VERIFY_SIGN_FAILURE_MSG = RiceHornConstants.VERIFY_SIGN_FAILURE_MSG;
+        BaseConstants.VERIFY_SIGN_SUCCEED_MSG = ChatConstants.VERIFY_SIGN_SUCCEED_MSG;
+        BaseConstants.VERIFY_SIGN_FAILURE_MSG = ChatConstants.VERIFY_SIGN_FAILURE_MSG;
         ConfigUtil.init();
         // 加载PlaceholderApi
         this.loadPlaceholder();
         // 加载主数据
-        initApi.initCommand("cn.handyplus.horn.command")
-                .initListener("cn.handyplus.horn.listener")
-                .enableSql("cn.handyplus.horn.enter")
+        initApi.initCommand("cn.handyplus.chat.command")
+                .initListener("cn.handyplus.chat.listener")
+                .enableSql("cn.handyplus.chat.enter")
                 .enableBc();
         new HornPluginMessageListener();
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
@@ -48,7 +48,7 @@ public class RiceHorn extends JavaPlugin {
         MessageApi.sendConsoleMessage("§aAuthor:handy QQ群:1064982471");
     }
 
-    public static RiceHorn getInstance() {
+    public static PlayerChat getInstance() {
         return INSTANCE;
     }
 

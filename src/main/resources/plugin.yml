@@ -1,39 +1,39 @@
-name: RiceHorn
-main: cn.handyplus.horn.RiceHorn
-version: 1.0.1
+name: PlayerChat
+main: cn.handyplus.chat.PlayerChat
+version: 1.0.0
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
-website: https://ricedoc.handyplus.cn/
-description: 大喇叭
+website: https://ricedoc.handyplus.cn/wiki/PlayerChat/log/
+description: 米饭聊天
 commands:
-  riceHorn:
-    description: 大喇叭
-    aliases: [ horn ]
+  playerChat:
+    description: 米饭聊天
+    aliases: [ plc ]
   lb:
-    description: 大喇叭
+    description: 米饭聊天
     aliases: [ lb ]
 permissions:
-  riceHorn.*:
+  playerChat.*:
     description: 大喇叭
     children:
-      riceHorn.reload: true
-      riceHorn.give: true
-      riceHorn.take: true
-      riceHorn.set: true
-      riceHorn.look: true
-  riceHorn.reload:
+      playerChat.reload: true
+      playerChat.give: true
+      playerChat.take: true
+      playerChat.set: true
+      playerChat.look: true
+  playerChat.reload:
     description: 重新加载配置
     default: op
-  riceHorn.give:
+  playerChat.give:
     description: 给予喇叭
     default: op
-  riceHorn.take:
+  playerChat.take:
     description: 拿走喇叭
     default: op
-  riceHorn.set:
+  playerChat.set:
     description: 设置喇叭
     default: op
-  riceHorn.look:
+  playerChat.look:
     description: 查看喇叭
     default: op

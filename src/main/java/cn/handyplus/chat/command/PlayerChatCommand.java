@@ -1,7 +1,7 @@
-package cn.handyplus.horn.command;
+package cn.handyplus.chat.command;
 
-import cn.handyplus.horn.constants.TabListEnum;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.constants.TabListEnum;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.command.HandyCommandFactory;
 import cn.handyplus.lib.util.BaseUtil;
@@ -19,9 +19,9 @@ import java.util.List;
  *
  * @author handy
  */
-@HandyCommand(name = "riceHorn")
-public class RiceHornCommand implements TabExecutor {
-    private final static String PERMISSION = "riceHorn.reload";
+@HandyCommand(name = "playerChat")
+public class PlayerChatCommand implements TabExecutor {
+    private final static String PERMISSION = "playerChat.reload";
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

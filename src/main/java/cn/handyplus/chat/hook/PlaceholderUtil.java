@@ -1,8 +1,8 @@
-package cn.handyplus.horn.hook;
+package cn.handyplus.chat.hook;
 
-import cn.handyplus.horn.RiceHorn;
-import cn.handyplus.horn.enter.HornPlayerEnter;
-import cn.handyplus.horn.service.HornPlayerService;
+import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.enter.HornPlayerEnter;
+import cn.handyplus.chat.service.HornPlayerService;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
@@ -12,9 +12,9 @@ import org.bukkit.OfflinePlayer;
  * @author handy
  */
 public class PlaceholderUtil extends PlaceholderExpansion {
-    private final RiceHorn plugin;
+    private final PlayerChat plugin;
 
-    public PlaceholderUtil(RiceHorn plugin) {
+    public PlaceholderUtil(PlayerChat plugin) {
         this.plugin = plugin;
     }
 
@@ -25,7 +25,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
      */
     @Override
     public String getIdentifier() {
-        return "riceHorn";
+        return "playerChat";
     }
 
     /**
@@ -40,7 +40,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
         if (player == null) {
             return null;
         }
-        // %riceHorn_[类型]%
+        // %playerChat_[类型]%
         HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId().toString(), placeholder);
         return hornPlayerEnter != null ? hornPlayerEnter.getNumber().toString() : "0";
     }

@@ -1,8 +1,8 @@
-package cn.handyplus.horn.command.admin;
+package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.horn.enter.HornPlayerEnter;
-import cn.handyplus.horn.service.HornPlayerService;
-import cn.handyplus.horn.util.ConfigUtil;
+import cn.handyplus.chat.enter.HornPlayerEnter;
+import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.CollUtil;
@@ -27,7 +27,7 @@ public class LookCommand implements IHandyCommandEvent {
 
     @Override
     public String permission() {
-        return "riceHorn.look";
+        return "playerChat.look";
     }
 
     @Override
