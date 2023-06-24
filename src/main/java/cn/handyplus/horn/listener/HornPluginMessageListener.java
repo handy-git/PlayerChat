@@ -9,7 +9,6 @@ import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.core.GenuineUtil;
-import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;

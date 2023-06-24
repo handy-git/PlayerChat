@@ -5,7 +5,6 @@ import cn.handyplus.horn.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.constants.BaseConstants;
-import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.SqlManagerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,8 +32,6 @@ public class RiceHorn extends JavaPlugin {
                 .enableSql("cn.handyplus.horn.enter")
                 .enableBc();
         new HornPluginMessageListener();
-        // 获取服务器名称
-        BcUtil.sendGetServer();
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
     }
