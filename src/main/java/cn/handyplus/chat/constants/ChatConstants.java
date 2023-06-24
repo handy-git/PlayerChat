@@ -36,7 +36,7 @@ public abstract class ChatConstants {
     /**
      * 密钥
      */
-    public static String SECRET_KEY = "1672244650668797952";
+    public static String SECRET_KEY = "1672499433220681728";
 
     /**
      * 最大数量
