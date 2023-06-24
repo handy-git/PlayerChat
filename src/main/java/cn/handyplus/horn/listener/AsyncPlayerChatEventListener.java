@@ -101,7 +101,7 @@ public class AsyncPlayerChatEventListener implements Listener {
      */
     private static void sendMsg(AsyncPlayerChatEvent event, BcMessageParam param) {
         // 发送本服消息
-        ChatUtil.sendMsg(event.getPlayer(), param);
+        ChatUtil.sendMsg(event.getPlayer(), param, true);
         // 发送BC消息
         BcUtil.sendParamForward(event.getPlayer(), param);
         // 发送人数消息

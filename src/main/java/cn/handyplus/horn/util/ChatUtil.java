@@ -14,6 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
+import static org.bukkit.Bukkit.getServer;
+
 /**
  * 聊天解析工具
  *
@@ -24,14 +26,15 @@ public class ChatUtil {
     /**
      * 解析并发送消息
      *
-     * @param player 玩家
-     * @param msg    消息内容
+     * @param player       玩家
+     * @param msg          消息内容
+     * @param isConsoleMsg 打印消息
      */
-    public static void sendMsg(Player player, BcMessageParam msg) {
+    public static void sendMsg(Player player, BcMessageParam msg, boolean isConsoleMsg) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                sendTextMsg(player, msg);
+                sendTextMsg(player, msg, isConsoleMsg);
             }
         }.runTaskAsynchronously(RiceHorn.getInstance());
     }
@@ -39,10 +42,11 @@ public class ChatUtil {
     /**
      * 解析并发送消息
      *
-     * @param player 玩家
-     * @param msg    消息内容
+     * @param player       玩家
+     * @param msg          消息内容
+     * @param isConsoleMsg 打印消息
      */
-    private synchronized static void sendTextMsg(Player player, BcMessageParam msg) {
+    private synchronized static void sendTextMsg(Player player, BcMessageParam msg, boolean isConsoleMsg) {
         // 功能是否开启
         boolean chatEnable = ConfigUtil.CONFIG.getBoolean("chat.enable");
         if (!chatEnable) {
@@ -92,6 +96,9 @@ public class ChatUtil {
                 .addExtra(playerTextComponent.build())
                 .addExtra(msgTextComponent.build()).build();
         MessageApi.sendAllMessage(textComponent);
+        if (isConsoleMsg) {
+            getServer().getConsoleSender().sendMessage(textComponent.toLegacyText());
+        }
     }
 
 }
