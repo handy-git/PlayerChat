@@ -85,7 +85,7 @@ public class ChatUtil {
         TextUtil playerTextComponent = TextUtil.getInstance().init(playerText);
         playerTextComponent.addHoverText(CollUtil.listToStr(playerHover, "\n"));
         // 消息
-        TextUtil msgTextComponent;
+        TextUtil msgTextComponent = null;
         // 聊天处理
         if (ChatConstants.CHAT_TYPE.equals(msg.getType())) {
             msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
