@@ -85,11 +85,16 @@ public class ChatUtil {
         TextUtil playerTextComponent = TextUtil.getInstance().init(playerText);
         playerTextComponent.addHoverText(CollUtil.listToStr(playerHover, "\n"));
         // 消息
-        msg.setMessage(BaseUtil.replaceChatColor(msg.getMessage()));
-        TextUtil msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
+        TextUtil msgTextComponent;
+        // 聊天处理
         if (ChatConstants.CHAT_TYPE.equals(msg.getType())) {
+            msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
             msgTextComponent.addHoverText(CollUtil.listToStr(msgHover, "\n"));
-        } else if (ChatConstants.ITEM_TYPE.equals(msg.getType())) {
+        }
+        // 物品展示处理
+        if (ChatConstants.ITEM_TYPE.equals(msg.getType())) {
+            String legacyText = TextUtil.getInstance().init(msg.getMessage()).build().toLegacyText();
+            msgTextComponent = TextUtil.getInstance().init(msgText + legacyText);
             msgTextComponent.addHoverText(msg.getHover());
         }
         // 发送消息

@@ -51,6 +51,10 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(event.getMessage());
+        // 有权限进行颜色代码处理
+        if (event.getPlayer().hasPermission("playerChat.color")) {
+            param.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
+        }
         param.setSendTime(new Date());
         // 发送本服消息
         sendMsg(event, param);
