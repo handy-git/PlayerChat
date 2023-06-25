@@ -85,6 +85,7 @@ public class ChatUtil {
         TextUtil playerTextComponent = TextUtil.getInstance().init(playerText);
         playerTextComponent.addHoverText(CollUtil.listToStr(playerHover, "\n"));
         // 消息
+        msg.setMessage(BaseUtil.replaceChatColor(msg.getMessage()));
         TextUtil msgTextComponent = TextUtil.getInstance().init(msgText + msg.getMessage());
         if (ChatConstants.CHAT_TYPE.equals(msg.getType())) {
             msgTextComponent.addHoverText(CollUtil.listToStr(msgHover, "\n"));
