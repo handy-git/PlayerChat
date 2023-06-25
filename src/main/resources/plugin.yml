@@ -40,4 +40,4 @@ permissions:
     default: op
   playerChat.color:
     description: 颜色权限
-    default: op
+    default: true
