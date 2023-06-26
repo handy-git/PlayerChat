@@ -3,7 +3,6 @@ package cn.handyplus.chat.command.player;
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.enter.HornPlayerEnter;
 import cn.handyplus.chat.service.HornPlayerService;
-import cn.handyplus.chat.util.CheckUtil;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
@@ -47,12 +46,12 @@ public class LbCommand implements TabExecutor {
         Player player = AssertUtil.notPlayer(sender, "只能玩家执行");
         // 获取类型
         String type = args[0];
-        List<String> serverList = ConfigUtil.CONFIG.getStringList("lb." + type + ".server");
+        List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");
         if (CollUtil.isEmpty(serverList)) {
             MessageApi.sendMessage(sender, "配置错误");
             return true;
         }
-        boolean enable = ConfigUtil.CONFIG.getBoolean("lb." + type + ".enable");
+        boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".enable");
         if (!enable) {
             MessageApi.sendMessage(player, type + " &7已经被管理员禁用");
             return true;
@@ -82,8 +81,6 @@ public class LbCommand implements TabExecutor {
         BcUtil.sendParamForward(player, param);
         // 发送消息
         HornUtil.sendMsg(player, type, message.toString());
-        // 进行校验
-        CheckUtil.check();
         return true;
     }
 

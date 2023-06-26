@@ -45,7 +45,7 @@ public class SetCommand implements IHandyCommandEvent {
         } else {
             HornPlayerService.getInstance().setNumber(hornPlayerEnter.getId(), number);
         }
-        MessageApi.sendMessage(sender, "给予成功");
+        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
     }
 
 }

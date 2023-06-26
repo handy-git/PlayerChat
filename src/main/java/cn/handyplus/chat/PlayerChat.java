@@ -24,8 +24,6 @@ public class PlayerChat extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
         InitApi initApi = InitApi.getInstance(this);
-        BaseConstants.VERIFY_SIGN_SUCCEED_MSG = ChatConstants.VERIFY_SIGN_SUCCEED_MSG;
-        BaseConstants.VERIFY_SIGN_FAILURE_MSG = ChatConstants.VERIFY_SIGN_FAILURE_MSG;
         ConfigUtil.init();
         // 加载PlaceholderApi
         this.loadPlaceholder();

@@ -3,7 +3,6 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ChatUtil;
-import cn.handyplus.chat.util.CheckUtil;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.CollUtil;
@@ -40,7 +39,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        boolean chatEnable = ConfigUtil.CONFIG.getBoolean("chat.enable");
+        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat.enable");
         if (!chatEnable) {
             return;
         }
@@ -70,11 +69,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        boolean itemEnable = ConfigUtil.CONFIG.getBoolean("item.enable");
+        boolean itemEnable = ConfigUtil.CHAT_CONFIG.getBoolean("item.enable");
         if (!itemEnable) {
             return;
         }
-        String format = ConfigUtil.CONFIG.getString("item.format");
+        String format = ConfigUtil.CHAT_CONFIG.getString("item.format");
         if (!event.getMessage().equals(format)) {
             return;
         }
@@ -108,10 +107,6 @@ public class AsyncPlayerChatEventListener implements Listener {
         ChatUtil.sendMsg(event.getPlayer(), param, true);
         // 发送BC消息
         BcUtil.sendParamForward(event.getPlayer(), param);
-        // 发送人数消息
-        BcUtil.sendPlayerCount();
-        // 校验本服人数
-        CheckUtil.check();
     }
 
 }

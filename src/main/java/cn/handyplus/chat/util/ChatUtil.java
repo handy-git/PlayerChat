@@ -48,19 +48,19 @@ public class ChatUtil {
      */
     private synchronized static void sendTextMsg(Player player, BcMessageParam msg, boolean isConsoleMsg) {
         // 功能是否开启
-        boolean chatEnable = ConfigUtil.CONFIG.getBoolean("chat.enable");
+        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat.enable");
         if (!chatEnable) {
             return;
         }
         // 前缀
-        String prefixText = ConfigUtil.CONFIG.getString("chat.format.prefix.text");
-        List<String> prefixHover = ConfigUtil.CONFIG.getStringList("chat.format.prefix.hover");
+        String prefixText = ConfigUtil.CHAT_CONFIG.getString("chat.format.prefix.text");
+        List<String> prefixHover = ConfigUtil.CHAT_CONFIG.getStringList("chat.format.prefix.hover");
         // 玩家信息
-        String playerText = ConfigUtil.CONFIG.getString("chat.format.player.text");
-        List<String> playerHover = ConfigUtil.CONFIG.getStringList("chat.format.player.hover");
+        String playerText = ConfigUtil.CHAT_CONFIG.getString("chat.format.player.text");
+        List<String> playerHover = ConfigUtil.CHAT_CONFIG.getStringList("chat.format.player.hover");
         // 消息
-        String msgText = ConfigUtil.CONFIG.getString("chat.format.msg.text");
-        List<String> msgHover = ConfigUtil.CONFIG.getStringList("chat.format.msg.hover");
+        String msgText = ConfigUtil.CHAT_CONFIG.getString("chat.format.msg.text");
+        List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat.format.msg.hover");
 
         // 解析变量
         prefixText = PlaceholderApiUtil.set(player, prefixText);

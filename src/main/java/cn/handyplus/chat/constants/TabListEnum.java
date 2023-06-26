@@ -21,7 +21,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "getIp"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 消息工具
+ * 喇叭消息工具
  *
  * @author handy
  */
@@ -32,25 +32,25 @@ public class HornUtil {
             MessageApi.sendConsoleMessage("消息错误:入参错误,type:" + type + ",msg:" + msg);
             return;
         }
-        String rgb = ConfigUtil.CONFIG.getString("lb." + type + ".rgb");
-        String name = ConfigUtil.CONFIG.getString("lb." + type + ".name");
-        boolean message = ConfigUtil.CONFIG.getBoolean("lb." + type + ".message.enable");
-        boolean actionbar = ConfigUtil.CONFIG.getBoolean("lb." + type + ".actionbar.enable");
-        boolean boss = ConfigUtil.CONFIG.getBoolean("lb." + type + ".boss.enable");
-        boolean title = ConfigUtil.CONFIG.getBoolean("lb." + type + ".title");
+        String rgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".rgb");
+        String name = ConfigUtil.LB_CONFIG.getString("lb." + type + ".name");
+        boolean message = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".message.enable");
+        boolean actionbar = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".actionbar.enable");
+        boolean boss = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".boss.enable");
+        boolean title = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".title");
 
         // 解析变量
         rgb = PlaceholderApiUtil.set(player, rgb);
         // 加载rgb颜色
         String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
         if (message) {
-            List<String> messageFormatList = ConfigUtil.CONFIG.getStringList("lb." + type + ".message.format");
+            List<String> messageFormatList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".message.format");
             for (String messageFormat : messageFormatList) {
                 MessageApi.sendAllMessage(messageFormat.replace("${message}", msgRgb));
             }
         }
         if (actionbar) {
-            String actionbarRgb = ConfigUtil.CONFIG.getString("lb." + type + ".actionbar.rgb");
+            String actionbarRgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.rgb");
             String actionbarRgbMsg = BaseUtil.replaceChatColor(actionbarRgb + msg);
             actionbarRgbMsg = PlaceholderApiUtil.set(player, actionbarRgbMsg);
             MessageApi.sendAllActionbar(actionbarRgbMsg);
@@ -60,9 +60,9 @@ public class HornUtil {
             MessageApi.sendAllTitle(name, msgRgb);
         }
         if (boss) {
-            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.CONFIG, "lb." + type + ".boss", msgRgb);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.LB_CONFIG, "lb." + type + ".boss", msgRgb);
             BossBarUtil.addAllPlayer(bossBar);
-            int time = ConfigUtil.CONFIG.getInt("lb." + type + ".boss.time", 3);
+            int time = ConfigUtil.LB_CONFIG.getInt("lb." + type + ".boss.time", 3);
             BossBarUtil.setProgress(bossBar.getKey(), time);
             BossBarUtil.removeBossBar(bossBar.getKey(), time);
         }
@@ -74,10 +74,10 @@ public class HornUtil {
      * @return 喇叭列表
      */
     public static List<String> getTabTitle() {
-        Map<String, String> map = HandyPermissionUtil.getStringMapChild(ConfigUtil.CONFIG, "lb");
+        Map<String, String> map = HandyPermissionUtil.getStringMapChild(ConfigUtil.LB_CONFIG, "lb");
         List<String> list = new ArrayList<>();
         for (String key : map.keySet()) {
-            boolean enable = ConfigUtil.CONFIG.getBoolean("lb." + key + ".enable");
+            boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + key + ".enable");
             if (!enable) {
                 continue;
             }
