@@ -1,6 +1,7 @@
 package cn.handyplus.chat.hook;
 
 import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.enter.HornPlayerEnter;
 import cn.handyplus.chat.service.HornPlayerService;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -40,8 +41,12 @@ public class PlaceholderUtil extends PlaceholderExpansion {
         if (player == null) {
             return null;
         }
+        // %playerChat_channel%
+        if ("channel".equals(placeholder)) {
+            return ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        }
         // %playerChat_[类型]%
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId().toString(), placeholder);
+        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);
         return hornPlayerEnter != null ? hornPlayerEnter.getNumber().toString() : "0";
     }
 

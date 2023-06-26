@@ -9,6 +9,7 @@ import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.TextUtil;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -100,7 +101,14 @@ public class ChatUtil {
         TextComponent textComponent = prefixTextComponent
                 .addExtra(playerTextComponent.build())
                 .addExtra(msgTextComponent.build()).build();
-        MessageApi.sendAllMessage(textComponent);
+        // 根据渠道发送消息
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            String channel = ChatConstants.CHANNEL_MAP.getOrDefault(onlinePlayer.getUniqueId(), "default");
+            if (!msg.getChannel().equals(channel)) {
+                continue;
+            }
+            MessageApi.sendMessage(onlinePlayer, textComponent);
+        }
         if (isConsoleMsg) {
             getServer().getConsoleSender().sendMessage(textComponent.toLegacyText());
         }

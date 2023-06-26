@@ -2,14 +2,14 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.util.ChatUtil;
+import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
-import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -55,8 +55,11 @@ public class AsyncPlayerChatEventListener implements Listener {
             param.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
         }
         param.setSendTime(new Date());
-        // 发送本服消息
-        sendMsg(event, param);
+        // 发送事件
+        Player player = event.getPlayer();
+        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        param.setChannel(channel);
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
     }
 
     /**
@@ -93,20 +96,10 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setMessage(displayName);
         param.setHover(loreStr);
         param.setSendTime(new Date());
-        sendMsg(event, param);
-    }
-
-    /**
-     * 发送对应BC消息
-     *
-     * @param event 事件
-     * @param param 参数
-     */
-    private static void sendMsg(AsyncPlayerChatEvent event, BcMessageParam param) {
-        // 发送本服消息
-        ChatUtil.sendMsg(event.getPlayer(), param, true);
-        // 发送BC消息
-        BcUtil.sendParamForward(event.getPlayer(), param);
+        // 发送事件 
+        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        param.setChannel(channel);
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
     }
 
 }

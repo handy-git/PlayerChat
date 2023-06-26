@@ -37,7 +37,7 @@ public class LookCommand implements IHandyCommandEvent {
         String playerName = args[1];
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
-        List<HornPlayerEnter> hornPlayerList = HornPlayerService.getInstance().findByUid(offlinePlayer.getUniqueId().toString());
+        List<HornPlayerEnter> hornPlayerList = HornPlayerService.getInstance().findByUid(offlinePlayer.getUniqueId());
         if (CollUtil.isNotEmpty(hornPlayerList)) {
             Map<String, Integer> hornPlayerMap = hornPlayerList.stream().collect(Collectors.toMap(HornPlayerEnter::getType, v -> v.getNumber()));
             for (String type : hornPlayerMap.keySet()) {

@@ -17,6 +17,7 @@ helps:
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
 
 noPermission: "&c你没有权限执行此命令..."
+noPlayerFailureMsg: "&c该命令只能玩家执行."
 reloadMsg: "&a插件重载完毕..."
 paramFailureMsg: "&c参数错误."
 amountFailureMsg: "&7此参数只能为大于0的数字."

@@ -19,13 +19,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 消息处理
+ * BC消息处理
  *
  * @author handy
  */
-public class HornPluginMessageListener implements PluginMessageListener {
+public class ChatPluginMessageListener implements PluginMessageListener {
 
-    public HornPluginMessageListener() {
+    public ChatPluginMessageListener() {
         Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.getInstance(), ChatConstants.RICE_HORN_CHANNEL, this);
     }
 

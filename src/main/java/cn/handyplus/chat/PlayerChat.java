@@ -1,7 +1,7 @@
 package cn.handyplus.chat;
 
 import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.listener.HornPluginMessageListener;
+import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.api.MessageApi;
@@ -34,7 +34,7 @@ public class PlayerChat extends JavaPlugin {
                 .addMetrics(18860)
                 .enableBc()
                 .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
-        new HornPluginMessageListener();
+        new ChatPluginMessageListener();
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
         MessageApi.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
 

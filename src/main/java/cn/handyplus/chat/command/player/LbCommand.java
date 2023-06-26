@@ -34,16 +34,9 @@ public class LbCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        if (args.length < 2) {
-            MessageApi.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
-            return true;
-        }
+        AssertUtil.notTrue(args.length < 2, sender, "参数错误 /lb [喇叭类型] [消息内容]");
         // 是否为玩家
-        if (BaseUtil.isNotPlayer(sender)) {
-            MessageApi.sendMessage(sender, "只能玩家执行");
-            return true;
-        }
-        Player player = AssertUtil.notPlayer(sender, "只能玩家执行");
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 获取类型
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");
@@ -57,7 +50,7 @@ public class LbCommand implements TabExecutor {
             return true;
         }
 
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId().toString(), type);
+        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (hornPlayerEnter == null) {
             MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
             return true;

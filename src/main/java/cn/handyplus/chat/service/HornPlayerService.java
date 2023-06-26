@@ -4,6 +4,7 @@ import cn.handyplus.chat.enter.HornPlayerEnter;
 import cn.handyplus.lib.db.Db;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 玩家喇叭
@@ -36,7 +37,7 @@ public class HornPlayerService {
      * @param type       类型
      * @return 数据
      */
-    public HornPlayerEnter findByUidAndType(String playerUuid, String type) {
+    public HornPlayerEnter findByUidAndType(UUID playerUuid, String type) {
         Db<HornPlayerEnter> use = Db.use(HornPlayerEnter.class);
         use.where().eq(HornPlayerEnter::getPlayerUuid, playerUuid)
                 .eq(HornPlayerEnter::getType, type);
@@ -49,7 +50,7 @@ public class HornPlayerService {
      * @param playerUuid uid
      * @return 数据
      */
-    public List<HornPlayerEnter> findByUid(String playerUuid) {
+    public List<HornPlayerEnter> findByUid(UUID playerUuid) {
         Db<HornPlayerEnter> use = Db.use(HornPlayerEnter.class);
         use.where().eq(HornPlayerEnter::getPlayerUuid, playerUuid);
         return use.execution().list();

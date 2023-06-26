@@ -34,7 +34,7 @@ public class GiveCommand implements IHandyCommandEvent {
         Integer number = AssertUtil.isNumericToInt(args[3], sender, ConfigUtil.LANG_CONFIG.getString("amountFailureMsg"));
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(offlinePlayer.getUniqueId().toString(), type);
+        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
         if (hornPlayerEnter == null) {
             HornPlayerEnter hornPlayer = new HornPlayerEnter();
             hornPlayer.setPlayerName(offlinePlayer.getName());

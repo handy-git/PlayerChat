@@ -1,5 +1,9 @@
 package cn.handyplus.chat.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * 常量
  *
@@ -26,5 +30,10 @@ public abstract class ChatConstants {
      * 物品类型
      */
     public final static String ITEM_TYPE = "RICE_ITEM";
+
+    /**
+     * 玩家当前渠道
+     */
+    public static Map<UUID, String> CHANNEL_MAP = new HashMap<>();
 
 }
