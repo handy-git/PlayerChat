@@ -1,7 +1,9 @@
 package cn.handyplus.chat.constants;
 
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.HandyPermissionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * tab提醒
@@ -21,7 +24,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
@@ -61,6 +64,12 @@ public enum TabListEnum {
      */
     public static List<String> returnList(String[] args, int argsLength) {
         List<String> completions = new ArrayList<>();
+        // 渠道特殊处理
+        if (argsLength == 2 && ("channel".equalsIgnoreCase(args[0]))) {
+            Map<String, Object> chatChannel = HandyPermissionUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
+            return new ArrayList<>(chatChannel.keySet());
+        }
+
         if (argsLength == 2 && ("give".equalsIgnoreCase(args[0]) || "take".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
             return HornUtil.getTabTitle();
         }
