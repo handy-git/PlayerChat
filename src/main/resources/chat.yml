@@ -15,26 +15,21 @@ chat:
     format:
       # 聊天前缀
       prefix:
-        text: '[%ip2region_provincial%]%playerTitle_use%'
+        text: '[变量]'
         hover:
-          - '&8▪ &6称号数量: %playerTitle_number%'
-          - '&8▪ &6称号币数量: %playerTitle_coin%'
+          - '个人信息一'
+          - '个人信息二'
       # 聊天玩家名
       player:
         text: '&f%player_name%&7: '
         hover:
-          - '&8▪ &6所在世界: %multiverse_world_alias%'
-          - '&8▪ &6所属公会: %playerGuild_name%'
-          - '&8▪ &6任务币: %playerTask_coin%'
-          - '&8▪ &6精英币: %elitemobs_player_money%'
-          - '&8▪ &6精英等级: %elitemobs_player_active_guild_rank_name%'
-          - '&8▪ &6战斗等级:  %elitemobs_player_combat_tier%'
+          - '&8▪ &6当前渠道: %playerChat_channel%'
       # 聊天内容
       msg:
         text: '&f'
         hover:
-          - '&7时间: %server_time_h:mm:ss a%'
-  # 扩展公会渠道
+          - '&7时间: 发送时间'
+  # 扩展渠道一
   guild:
     # 是否开启
     enable: true
@@ -49,7 +44,7 @@ chat:
       player:
         text: '&f%player_name%&7: '
         hover:
-          - 'xxx个人信息'
+          - '&8▪ &6当前渠道: %playerChat_channel%'
       # 聊天内容
       msg:
         text: '&f'
