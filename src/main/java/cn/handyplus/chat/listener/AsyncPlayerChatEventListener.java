@@ -59,7 +59,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         Player player = event.getPlayer();
         String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
         param.setChannel(channel);
-        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
+        Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
     }
 
     /**
@@ -99,7 +99,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 发送事件 
         String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
         param.setChannel(channel);
-        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
+        Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
     }
 
 }
