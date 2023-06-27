@@ -2,8 +2,10 @@ package cn.handyplus.chat.hook;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.enter.HornPlayerEnter;
-import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
+import cn.handyplus.chat.enter.ChatPlayerHornEnter;
+import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.chat.service.ChatPlayerHornService;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
@@ -43,10 +45,11 @@ public class PlaceholderUtil extends PlaceholderExpansion {
         }
         // %playerChat_channel%
         if ("channel".equals(placeholder)) {
-            return ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+            ChatPlayerChannelEnter enter = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
+            return ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), enter != null ? enter.getChannel() : "default");
         }
         // %playerChat_[类型]%
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);
+        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);
         return hornPlayerEnter != null ? hornPlayerEnter.getNumber().toString() : "0";
     }
 

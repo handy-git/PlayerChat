@@ -59,7 +59,7 @@ public class PlayerChat extends JavaPlugin {
     public void loadPlaceholder() {
         if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLACEHOLDER_API) != null) {
             USE_PAPI = true;
-            new PlaceholderUtil(this);
+            new PlaceholderUtil(this).register();
             MessageApi.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPISucceedMsg"));
             return;
         }

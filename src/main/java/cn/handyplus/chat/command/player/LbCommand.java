@@ -1,8 +1,8 @@
 package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.PlayerChat;
-import cn.handyplus.chat.enter.HornPlayerEnter;
-import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.enter.ChatPlayerHornEnter;
+import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
@@ -50,7 +50,7 @@ public class LbCommand implements TabExecutor {
             return true;
         }
 
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(player.getUniqueId(), type);
+        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (hornPlayerEnter == null) {
             MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
             return true;
@@ -60,7 +60,7 @@ public class LbCommand implements TabExecutor {
             return true;
         }
         // 进行扣除
-        HornPlayerService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
+        ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
         // 获取消息
         StringBuilder message = new StringBuilder();
         for (int i = 1; i < args.length; i++) {

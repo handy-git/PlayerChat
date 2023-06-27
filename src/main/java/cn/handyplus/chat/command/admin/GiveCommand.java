@@ -1,7 +1,7 @@
 package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.chat.enter.HornPlayerEnter;
-import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.enter.ChatPlayerHornEnter;
+import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
@@ -34,16 +34,16 @@ public class GiveCommand implements IHandyCommandEvent {
         Integer number = AssertUtil.isNumericToInt(args[3], sender, ConfigUtil.LANG_CONFIG.getString("amountFailureMsg"));
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
-        HornPlayerEnter hornPlayerEnter = HornPlayerService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
+        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
         if (hornPlayerEnter == null) {
-            HornPlayerEnter hornPlayer = new HornPlayerEnter();
+            ChatPlayerHornEnter hornPlayer = new ChatPlayerHornEnter();
             hornPlayer.setPlayerName(offlinePlayer.getName());
             hornPlayer.setPlayerUuid(offlinePlayer.getUniqueId().toString());
             hornPlayer.setType(type);
             hornPlayer.setNumber(number);
-            HornPlayerService.getInstance().add(hornPlayer);
+            ChatPlayerHornService.getInstance().add(hornPlayer);
         } else {
-            HornPlayerService.getInstance().addNumber(hornPlayerEnter.getId(), number);
+            ChatPlayerHornService.getInstance().addNumber(hornPlayerEnter.getId(), number);
         }
         MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
     }

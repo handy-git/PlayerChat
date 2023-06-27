@@ -7,14 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 玩家喇叭
+ * 玩家渠道
  *
  * @author handy
  */
 @Getter
 @Setter
-@TableName(value = "horn_player", comment = "玩家喇叭")
-public class HornPlayerEnter {
+@TableName(value = "chat_player_channel", comment = "玩家渠道")
+public class ChatPlayerChannelEnter {
 
     @TableField(value = "id", comment = "ID")
     private Integer id;
@@ -25,10 +25,7 @@ public class HornPlayerEnter {
     @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.INDEX)
     private String playerUuid;
 
-    @TableField(value = "type", comment = "类型")
-    private String type;
-
-    @TableField(value = "number", comment = "数量")
-    private Integer number;
+    @TableField(value = "channel", comment = "渠道")
+    private String channel;
 
 }

@@ -1,7 +1,7 @@
 package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.chat.enter.HornPlayerEnter;
-import cn.handyplus.chat.service.HornPlayerService;
+import cn.handyplus.chat.enter.ChatPlayerHornEnter;
+import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
@@ -37,9 +37,9 @@ public class LookCommand implements IHandyCommandEvent {
         String playerName = args[1];
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
-        List<HornPlayerEnter> hornPlayerList = HornPlayerService.getInstance().findByUid(offlinePlayer.getUniqueId());
+        List<ChatPlayerHornEnter> hornPlayerList = ChatPlayerHornService.getInstance().findByUid(offlinePlayer.getUniqueId());
         if (CollUtil.isNotEmpty(hornPlayerList)) {
-            Map<String, Integer> hornPlayerMap = hornPlayerList.stream().collect(Collectors.toMap(HornPlayerEnter::getType, v -> v.getNumber()));
+            Map<String, Integer> hornPlayerMap = hornPlayerList.stream().collect(Collectors.toMap(ChatPlayerHornEnter::getType, v -> v.getNumber()));
             for (String type : hornPlayerMap.keySet()) {
                 MessageApi.sendMessage(sender, playerName + "拥有 " + type + " 喇叭:" + hornPlayerMap.get(type));
             }
