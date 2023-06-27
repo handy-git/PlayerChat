@@ -39,7 +39,9 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat.enable");
+        Player player = event.getPlayer();
+        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
         if (!chatEnable) {
             return;
         }
@@ -55,10 +57,8 @@ public class AsyncPlayerChatEventListener implements Listener {
             param.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
         }
         param.setSendTime(new Date());
-        // 发送事件
-        Player player = event.getPlayer();
-        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
         param.setChannel(channel);
+        // 发送事件
         Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
     }
 
