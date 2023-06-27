@@ -1,6 +1,7 @@
 package cn.handyplus.chat;
 
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.hook.PlaceholderUtil;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
@@ -58,6 +59,7 @@ public class PlayerChat extends JavaPlugin {
     public void loadPlaceholder() {
         if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLACEHOLDER_API) != null) {
             USE_PAPI = true;
+            new PlaceholderUtil(this);
             MessageApi.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPISucceedMsg"));
             return;
         }

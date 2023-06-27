@@ -46,6 +46,9 @@ public class PlaceholderApiUtil {
         if (!PlayerChat.USE_PAPI || player == null) {
             return strList;
         }
+        // 解析变量
+        strList = PlaceholderAPI.setPlaceholders(player, strList);
+        // 双重解析,处理变量嵌套变量
         return PlaceholderAPI.setPlaceholders(player, strList);
     }
 
