@@ -29,13 +29,13 @@ public enum TabListEnum {
     LOOK_TWO(null, 1, "look", 2),
 
     GIVE_THREE(null, 1, "give", 3),
-    GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "give", 4),
+    GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "give", 4),
 
     TAKE_THREE(null, 1, "take", 3),
-    TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "take", 4),
+    TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "take", 4),
 
     SET_THREE(null, 1, "set", 3),
-    SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tab.number")), 1, "set", 4),
+    SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "set", 4),
     ;
 
     /**
