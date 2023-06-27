@@ -21,6 +21,7 @@ import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +72,8 @@ public class LbCommand implements TabExecutor {
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setType(type);
         param.setMessage(message.toString());
+        param.setSendTime(new Date());
+        param.setPlayerName(player.getName());
         BcUtil.sendParamForward(player, param);
         // 发送消息
         HornUtil.sendMsg(player, type, message.toString());

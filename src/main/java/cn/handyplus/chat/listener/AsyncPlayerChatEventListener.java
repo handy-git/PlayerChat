@@ -3,9 +3,11 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
+import cn.handyplus.chat.param.ChatParam;
+import cn.handyplus.chat.util.ChatUtil;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
-import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
@@ -19,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 当玩家聊天时触发这个事件
@@ -47,17 +48,25 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // 取消事件
         event.setCancelled(true);
+
         // 参数构建
         BcMessageParam param = new BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
-        param.setType(ChatConstants.CHAT_TYPE);
-        param.setMessage(event.getMessage());
+        param.setPlayerName(player.getName());
+        param.setSendTime(new Date());
+        // 构建消息参数
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        if (chatParam == null) {
+            return;
+        }
         // 有权限进行颜色代码处理
         if (event.getPlayer().hasPermission("playerChat.color")) {
             param.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
         }
-        param.setSendTime(new Date());
-        param.setChannel(channel);
+        chatParam.setMessage(event.getMessage());
+        chatParam.setChannel(channel);
+        param.setType(ChatConstants.CHAT_TYPE);
+        param.setMessage(JsonUtil.toJson(chatParam));
         // 发送事件
         Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
     }
@@ -86,19 +95,24 @@ public class AsyncPlayerChatEventListener implements Listener {
         Player player = event.getPlayer();
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
-        String displayName = BaseUtil.getDisplayName(itemInMainHand);
-        List<String> loreList = itemMeta.getLore();
-        String loreStr = CollUtil.listToStr(loreList, "\n");
+
         // 参数构建
         BcMessageParam param = new BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
-        param.setType(ChatConstants.ITEM_TYPE);
-        param.setMessage(displayName);
-        param.setHover(loreStr);
+        param.setPlayerName(player.getName());
         param.setSendTime(new Date());
-        // 发送事件 
         String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
-        param.setChannel(channel);
+        // 构建消息参数
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        if (chatParam == null) {
+            return;
+        }
+        chatParam.setChannel(channel);
+        chatParam.setItemText(BaseUtil.getDisplayName(itemInMainHand));
+        chatParam.setItemHover(itemMeta.getLore());
+        param.setMessage(JsonUtil.toJson(chatParam));
+        param.setType(ChatConstants.ITEM_TYPE);
+        // 发送事件
         Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
     }
 

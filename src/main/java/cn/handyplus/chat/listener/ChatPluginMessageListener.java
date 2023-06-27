@@ -52,7 +52,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         }
         // 群组聊天消息
         if (ChatConstants.CHAT_TYPE.equals(lbMessage.getType()) || ChatConstants.ITEM_TYPE.equals(lbMessage.getType())) {
-            ChatUtil.sendMsg(player, lbMessage, false);
+            ChatUtil.sendMsg(lbMessage, false);
             return;
         }
         // 获取喇叭配置
