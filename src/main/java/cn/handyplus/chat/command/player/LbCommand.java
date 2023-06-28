@@ -9,7 +9,6 @@ import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.param.BcMessageParam;
-import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.command.Command;
@@ -35,9 +34,16 @@ public class LbCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, "参数错误 /lb [喇叭类型] [消息内容]");
+        if (args.length < 2) {
+            MessageApi.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
+            return true;
+        }
         // 是否为玩家
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
+        if (BaseUtil.isNotPlayer(sender)) {
+            MessageApi.sendMessage(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
+            return true;
+        }
+        Player player = (Player) sender;
         // 获取类型
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");

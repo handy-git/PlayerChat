@@ -1,4 +1,5 @@
 # 喇叭管理(可按照下面格式无限扩展喇叭)
+# &#FF0000 这种格式只能 1.16+使用
 lb:
   # 喇叭的类型-要保证唯一
   全服大喇叭:
@@ -16,11 +17,11 @@ lb:
         - "&a------------------------"
         - "${message}"
         - "&a------------------------"
-    # 物品栏上方消息
+    # 物品栏上方消息 1.9+ 才可使用
     actionbar:
       enable: true
       rgb: "&a"
-    # boss血条消息
+    # boss血条消息 1.13+ 才可使用
     boss:
       enable: true
       # 血条颜色 https://bukkit.windit.net/javadoc/org/bukkit/boss/BarColor.html
@@ -28,5 +29,5 @@ lb:
       # 血条样式 https://bukkit.windit.net/javadoc/org/bukkit/boss/BarStyle.html
       style: "SOLID"
       time: 3
-    # 公告消息
+    # 公告消息 1.9+ 才可使用
     title: true
