@@ -28,7 +28,7 @@ public class SetCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 3, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 4, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
         String type = args[1];
         String playerName = args[2];
         Integer number = AssertUtil.isNumericToInt(args[3], sender, ConfigUtil.LANG_CONFIG.getString("amountFailureMsg"));

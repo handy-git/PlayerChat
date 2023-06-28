@@ -16,6 +16,7 @@ chat:
       # 聊天前缀
       prefix:
         text: '[变量]'
+        # 1.16+可用hover
         hover:
           - '个人信息一'
           - '个人信息二'
