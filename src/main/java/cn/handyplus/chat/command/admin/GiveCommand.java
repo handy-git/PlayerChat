@@ -45,7 +45,7 @@ public class GiveCommand implements IHandyCommandEvent {
         } else {
             ChatPlayerHornService.getInstance().addNumber(hornPlayerEnter.getId(), number);
         }
-        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
+        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("giveSucceedMsg"));
     }
 
 }
