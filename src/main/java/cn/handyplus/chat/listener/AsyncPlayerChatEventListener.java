@@ -60,10 +60,10 @@ public class AsyncPlayerChatEventListener implements Listener {
             return;
         }
         // 有权限进行颜色代码处理
-        if (event.getPlayer().hasPermission("playerChat.color")) {
-            param.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
-        }
         chatParam.setMessage(event.getMessage());
+        if (event.getPlayer().hasPermission("playerChat.color")) {
+            chatParam.setMessage(BaseUtil.replaceChatColor(event.getMessage()));
+        }
         chatParam.setChannel(channel);
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));
