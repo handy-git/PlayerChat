@@ -6,11 +6,11 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -35,12 +35,12 @@ public class LbCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
         if (args.length < 2) {
-            MessageApi.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
+            MessageUtil.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
             return true;
         }
         // 是否为玩家
         if (BaseUtil.isNotPlayer(sender)) {
-            MessageApi.sendMessage(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
             return true;
         }
         Player player = (Player) sender;
@@ -48,22 +48,22 @@ public class LbCommand implements TabExecutor {
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");
         if (CollUtil.isEmpty(serverList)) {
-            MessageApi.sendMessage(sender, "配置错误");
+            MessageUtil.sendMessage(sender, "配置错误");
             return true;
         }
         boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".enable");
         if (!enable) {
-            MessageApi.sendMessage(player, type + " &7已经被管理员禁用");
+            MessageUtil.sendMessage(player, type + " &7已经被管理员禁用");
             return true;
         }
 
         ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (hornPlayerEnter == null) {
-            MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
+            MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
             return true;
         }
         if (hornPlayerEnter.getNumber() < 1) {
-            MessageApi.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHaveNumber"));
+            MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHaveNumber"));
             return true;
         }
         // 进行扣除
@@ -82,7 +82,7 @@ public class LbCommand implements TabExecutor {
         param.setPlayerName(player.getName());
         BcUtil.sendParamForward(player, param);
         // 发送消息
-        HornUtil.sendMsg(player, type, message.toString());
+        HornUtil.sendMsg(player, param);
         return true;
     }
 

@@ -5,9 +5,9 @@ import cn.handyplus.chat.hook.PlaceholderUtil;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.constants.BaseConstants;
-import cn.handyplus.lib.util.SqlManagerUtil;
+import cn.handyplus.lib.db.SqlManagerUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,8 +36,8 @@ public class PlayerChat extends JavaPlugin {
                 .enableBc()
                 .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
         new ChatPluginMessageListener();
-        MessageApi.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
-        MessageApi.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
 
     }
 
@@ -45,8 +45,8 @@ public class PlayerChat extends JavaPlugin {
     public void onDisable() {
         // 关闭数据源
         SqlManagerUtil.getInstance().close();
-        MessageApi.sendConsoleMessage("§a已成功卸载！");
-        MessageApi.sendConsoleMessage("§aAuthor:handy QQ群:1064982471");
+        MessageUtil.sendConsoleMessage("§a已成功卸载！");
+        MessageUtil.sendConsoleMessage("§aAuthor:handy QQ群:1064982471");
     }
 
     public static PlayerChat getInstance() {
@@ -60,11 +60,11 @@ public class PlayerChat extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLACEHOLDER_API) != null) {
             USE_PAPI = true;
             new PlaceholderUtil(this).register();
-            MessageApi.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPISucceedMsg"));
+            MessageUtil.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPISucceedMsg"));
             return;
         }
         USE_PAPI = false;
-        MessageApi.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPIFailureMsg"));
+        MessageUtil.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPIFailureMsg"));
     }
 
 }

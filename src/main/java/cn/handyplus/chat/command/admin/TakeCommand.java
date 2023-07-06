@@ -3,9 +3,9 @@ package cn.handyplus.chat.command.admin;
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.util.AssertUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -45,7 +45,7 @@ public class TakeCommand implements IHandyCommandEvent {
         } else {
             ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), number);
         }
-        MessageApi.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("takeSucceedMsg"));
+        MessageUtil.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("takeSucceedMsg"));
     }
 
 }

@@ -1,13 +1,14 @@
 package cn.handyplus.chat.util;
 
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.constants.VersionCheckEnum;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BossBarUtil;
-import cn.handyplus.lib.util.HandyPermissionUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
 
@@ -25,16 +26,17 @@ public class HornUtil {
     /**
      * 发送消息
      *
-     * @param player 玩家
-     * @param type   类型
-     * @param msg    消息
+     * @param player         玩家
+     * @param bcMessageParam 消息
      */
-    public static void sendMsg(Player player, String type, String msg) {
+    public static void sendMsg(Player player, BcMessageParam bcMessageParam) {
+        String type = bcMessageParam.getType();
+        String msg = bcMessageParam.getMessage();
         if (StrUtil.isEmpty(type) || StrUtil.isEmpty(msg)) {
-            MessageApi.sendConsoleMessage("消息错误:入参错误,type:" + type + ",msg:" + msg);
+            MessageUtil.sendConsoleMessage("消息错误:入参错误,type:" + type + ",msg:" + msg);
             return;
         }
-        String rgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".rgb");
+        String rgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".rgb","");
         String name = ConfigUtil.LB_CONFIG.getString("lb." + type + ".name");
         boolean message = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".message.enable");
         boolean actionbar = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".actionbar.enable");
@@ -42,13 +44,14 @@ public class HornUtil {
         boolean title = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".title");
 
         // 解析变量
+        rgb = rgb.replace("${player}",bcMessageParam.getPlayerName());
         rgb = PlaceholderApiUtil.set(player, rgb);
         // 加载rgb颜色
         String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
         if (message) {
             List<String> messageFormatList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".message.format");
             for (String messageFormat : messageFormatList) {
-                MessageApi.sendAllMessage(messageFormat.replace("${message}", msgRgb));
+                MessageUtil.sendAllMessage(messageFormat.replace("${message}", msgRgb));
             }
         }
         // 1.9+ 才可使用
@@ -56,12 +59,12 @@ public class HornUtil {
             String actionbarRgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.rgb");
             String actionbarRgbMsg = BaseUtil.replaceChatColor(actionbarRgb + msg);
             actionbarRgbMsg = PlaceholderApiUtil.set(player, actionbarRgbMsg);
-            MessageApi.sendAllActionbar(actionbarRgbMsg);
+            MessageUtil.sendAllActionbar(actionbarRgbMsg);
         }
         // 1.9+ 才可使用
         if (title && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
             name = PlaceholderApiUtil.set(player, name);
-            MessageApi.sendAllTitle(name, msgRgb);
+            MessageUtil.sendAllTitle(name, msgRgb);
         }
         // 1.13+ 才可使用
         if (boss && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_12.getVersionId()) {
@@ -79,7 +82,7 @@ public class HornUtil {
      * @return 喇叭列表
      */
     public static List<String> getTabTitle() {
-        Map<String, String> map = HandyPermissionUtil.getStringMapChild(ConfigUtil.LB_CONFIG, "lb");
+        Map<String, String> map = HandyConfigUtil.getStringMapChild(ConfigUtil.LB_CONFIG, "lb");
         List<String> list = new ArrayList<>();
         for (String key : map.keySet()) {
             boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + key + ".enable");

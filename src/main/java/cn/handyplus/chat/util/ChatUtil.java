@@ -4,11 +4,11 @@ import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.TextUtil;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -63,7 +63,7 @@ public class ChatUtil {
             if (!onlinePlayerChannel.equals(channel)) {
                 continue;
             }
-            MessageApi.sendMessage(onlinePlayer, textComponent);
+            MessageUtil.sendMessage(onlinePlayer, textComponent);
         }
         if (isConsoleMsg) {
             getServer().getConsoleSender().sendMessage(textComponent.toLegacyText());

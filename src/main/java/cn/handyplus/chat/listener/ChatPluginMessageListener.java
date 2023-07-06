@@ -5,11 +5,11 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ChatUtil;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
-import cn.handyplus.lib.api.MessageApi;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -40,7 +40,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         // 自定义消息处理
         String server = ConfigUtil.CONFIG.getString("server");
-        MessageApi.sendConsoleDebugMessage("子服:" + server + "收到消息");
+        MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
         BcMessageParam lbMessage = BcUtil.getParamByForward(message);
         if (lbMessage == null) {
             return;
@@ -58,16 +58,16 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         // 获取喇叭配置
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + lbMessage.getType() + ".server");
         if (CollUtil.isEmpty(serverList)) {
-            MessageApi.sendConsoleDebugMessage(lbMessage.getType() + "的server配置错误");
+            MessageUtil.sendConsoleDebugMessage(lbMessage.getType() + "的server配置错误");
             return;
         }
         // 判断是否包含该子服
         if (!serverList.contains(server)) {
-            MessageApi.sendConsoleDebugMessage(server + "子服不发消息");
+            MessageUtil.sendConsoleDebugMessage(server + "子服不发消息");
             return;
         }
         // 发送消息
-        HornUtil.sendMsg(player, lbMessage.getType(), lbMessage.getMessage());
+        HornUtil.sendMsg(player, lbMessage);
     }
 
 }

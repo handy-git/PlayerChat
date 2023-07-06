@@ -5,6 +5,7 @@ lb:
   全服大喇叭:
     name: "&#FF0000全&#FF0033服&#FF0066大&#FF0099喇&#FF00B4叭"
     enable: true
+    #  rgb 节点中 ${player} 为发消息的玩家名变量
     rgb: "&#FF0000"
     # 喇叭服务器范围
     server:
