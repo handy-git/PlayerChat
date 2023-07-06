@@ -5,6 +5,7 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,7 +36,7 @@ public class ChannelCommand implements IHandyCommandEvent {
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         String channel = args[1];
-        Map<String, Object> chatChannel = HandyPermissionUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
+        Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
         AssertUtil.isTrue(chatChannel.containsKey(channel), sender, "没有渠道");
         // 设置渠道
         ChatConstants.CHANNEL_MAP.put(player.getUniqueId(), channel);

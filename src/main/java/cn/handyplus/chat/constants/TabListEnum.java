@@ -3,7 +3,7 @@ package cn.handyplus.chat.constants;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.util.BaseUtil;
-import cn.handyplus.lib.util.HandyPermissionUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -66,7 +66,7 @@ public enum TabListEnum {
         List<String> completions = new ArrayList<>();
         // 渠道特殊处理
         if (argsLength == 2 && ("channel".equalsIgnoreCase(args[0]))) {
-            Map<String, Object> chatChannel = HandyPermissionUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
+            Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
             return new ArrayList<>(chatChannel.keySet());
         }
 
