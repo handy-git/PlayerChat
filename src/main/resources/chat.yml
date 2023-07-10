@@ -21,21 +21,21 @@ chat:
           - '个人信息一'
           - '个人信息二'
         # 点击后执行的命令
-        click: 'tpa %player_name%'
+        click: '/tpa %player_name%'
       # 聊天玩家名
       player:
         text: '&f%player_name%&7: '
         hover:
           - '&8▪ &6当前渠道: %playerChat_channel%'
         # 点击后执行的命令
-        click: 'tpa %player_name%'
+        click: '/tpa %player_name%'
       # 聊天内容
       msg:
         text: '&f'
         hover:
           - '&7时间: 发送时间'
         # 点击后执行的命令
-        click: 'tpa %player_name%'
+        click: '/tpa %player_name%'
   # 扩展渠道一
   guild:
     # 是否开启

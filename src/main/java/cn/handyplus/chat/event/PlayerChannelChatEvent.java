@@ -16,7 +16,6 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel = false;
     private final BcMessageParam bcMessageParam;
-    private final boolean isConsoleMsg;
 
     @Override
     public HandlerList getHandlers() {
@@ -30,13 +29,6 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
     public PlayerChannelChatEvent(Player player, BcMessageParam bcMessageParam) {
         super(player);
         this.bcMessageParam = bcMessageParam;
-        this.isConsoleMsg = false;
-    }
-
-    public PlayerChannelChatEvent(Player player, BcMessageParam bcMessageParam, boolean isConsoleMsg) {
-        super(player);
-        this.bcMessageParam = bcMessageParam;
-        this.isConsoleMsg = isConsoleMsg;
     }
 
     /**
@@ -46,15 +38,6 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      */
     public BcMessageParam getBcMessageParam() {
         return bcMessageParam;
-    }
-
-    /**
-     * 是否发送控制台消息
-     *
-     * @return true 是
-     */
-    public boolean isConsoleMsg() {
-        return isConsoleMsg;
     }
 
     @Override

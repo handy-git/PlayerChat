@@ -29,7 +29,7 @@ public class PlayerChannelChatEventListener implements Listener {
         }
         BcMessageParam bcMessageParam = event.getBcMessageParam();
         // 发送本服消息
-        ChatUtil.sendMsg(bcMessageParam, event.isConsoleMsg());
+        ChatUtil.sendMsg(bcMessageParam, true);
         // 发送BC消息
         BcUtil.sendParamForward(event.getPlayer(), bcMessageParam);
     }

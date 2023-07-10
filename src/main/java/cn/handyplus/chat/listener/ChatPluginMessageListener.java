@@ -25,8 +25,18 @@ import java.util.List;
  */
 public class ChatPluginMessageListener implements PluginMessageListener {
 
-    public ChatPluginMessageListener() {
-        Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.getInstance(), ChatConstants.RICE_HORN_CHANNEL, this);
+    private static final ChatPluginMessageListener INSTANCE = new ChatPluginMessageListener();
+
+    public static ChatPluginMessageListener getInstance() {
+        return INSTANCE;
+    }
+
+    public void register() {
+        Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.getInstance(), ChatConstants.RICE_HORN_CHANNEL, INSTANCE);
+    }
+
+    public void unregister() {
+        Bukkit.getMessenger().unregisterIncomingPluginChannel(PlayerChat.getInstance(), ChatConstants.RICE_HORN_CHANNEL, INSTANCE);
     }
 
     /**

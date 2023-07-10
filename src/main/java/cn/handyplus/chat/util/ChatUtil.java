@@ -9,8 +9,8 @@ import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
-import cn.handyplus.lib.util.TextUtil;
-import net.md_5.bungee.api.chat.TextComponent;
+import cn.handyplus.lib.util.RgbTextUtil;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -50,7 +50,7 @@ public class ChatUtil {
     private synchronized static void sendTextMsg(BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
-        TextComponent textComponent = buildMsg(chatParam, param.getType());
+        BaseComponent[] textComponent = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
         // 功能是否开启
         boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
@@ -66,7 +66,11 @@ public class ChatUtil {
             MessageUtil.sendMessage(onlinePlayer, textComponent);
         }
         if (isConsoleMsg) {
-            getServer().getConsoleSender().sendMessage(textComponent.toLegacyText());
+            StringBuilder str = new StringBuilder();
+            for (BaseComponent baseComponent : textComponent) {
+                str.append(baseComponent.toLegacyText());
+            }
+            getServer().getConsoleSender().sendMessage(str.toString());
         }
     }
 
@@ -119,35 +123,34 @@ public class ChatUtil {
      * @param chatParam 入参
      * @param type      类型
      */
-    public static TextComponent buildMsg(ChatParam chatParam, String type) {
+    public static BaseComponent[] buildMsg(ChatParam chatParam, String type) {
         // 加载rgb颜色
         chatParam.setPrefixText(BaseUtil.replaceChatColor(chatParam.getPrefixText()));
         chatParam.setPrefixHover(BaseUtil.replaceChatColor(chatParam.getPrefixHover()));
         chatParam.setPlayerText(BaseUtil.replaceChatColor(chatParam.getPlayerText()));
-        chatParam.setPrefixHover(BaseUtil.replaceChatColor(chatParam.getPlayerHover()));
+        chatParam.setPlayerHover(BaseUtil.replaceChatColor(chatParam.getPlayerHover()));
         chatParam.setMsgText(BaseUtil.replaceChatColor(chatParam.getMsgText()));
         chatParam.setMsgHover(BaseUtil.replaceChatColor(chatParam.getMsgHover()));
         chatParam.setMessage(chatParam.getHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
 
         // 前缀
-        TextUtil prefixTextComponent = TextUtil.getInstance().init(chatParam.getPrefixText());
+        RgbTextUtil prefixTextComponent = RgbTextUtil.getInstance().init(chatParam.getPrefixText());
         prefixTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPrefixHover(), "\n"));
-        prefixTextComponent.addClickCommand(chatParam.getPrefixClick());
+        prefixTextComponent.addClickSuggestCommand(chatParam.getPrefixClick());
         // 玩家
-        TextUtil playerTextComponent = TextUtil.getInstance().init(chatParam.getPlayerText());
+        RgbTextUtil playerTextComponent = RgbTextUtil.getInstance().init(chatParam.getPlayerText());
         playerTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPlayerHover(), "\n"));
-        prefixTextComponent.addClickCommand(chatParam.getPlayerClick());
+        playerTextComponent.addClickSuggestCommand(chatParam.getPlayerClick());
         // 消息
-        TextUtil msgTextComponent = TextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getMessage(), false);
+        RgbTextUtil msgTextComponent = RgbTextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getMessage(), false);
         // 聊天处理
         if (ChatConstants.CHAT_TYPE.equals(type)) {
             msgTextComponent.addHoverText(CollUtil.listToStr(chatParam.getMsgHover(), "\n"));
-            prefixTextComponent.addClickCommand(chatParam.getMsgClick());
+            msgTextComponent.addClickSuggestCommand(chatParam.getMsgClick());
         }
         // 物品展示处理
         if (ChatConstants.ITEM_TYPE.equals(type)) {
-            String legacyText = TextUtil.getInstance().init(chatParam.getItemText()).build().toLegacyText();
-            msgTextComponent = TextUtil.getInstance().init(chatParam.getMsgText() + legacyText);
+            msgTextComponent = RgbTextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getItemText());
             String itemHover = CollUtil.listToStr(chatParam.getItemHover(), "\n");
             msgTextComponent.addHoverText(itemHover);
         }
