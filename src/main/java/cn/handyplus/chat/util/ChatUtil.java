@@ -86,33 +86,31 @@ public class ChatUtil {
         // 前缀
         String prefixText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.prefix.text");
         List<String> prefixHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.prefix.hover");
+        String prefixClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.prefix.click");
         // 玩家信息
         String playerText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.player.text");
         List<String> playerHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.player.hover");
+        String playerClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.player.click");
         // 消息
         String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.msg.text");
         List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.msg.hover");
+        String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.msg.click");
 
         // 解析变量
         prefixText = PlaceholderApiUtil.set(player, prefixText);
         prefixHover = PlaceholderApiUtil.set(player, prefixHover);
+        prefixClick = PlaceholderApiUtil.set(player, prefixClick);
         playerText = PlaceholderApiUtil.set(player, playerText);
         playerHover = PlaceholderApiUtil.set(player, playerHover);
+        playerClick = PlaceholderApiUtil.set(player, playerClick);
         msgText = PlaceholderApiUtil.set(player, msgText);
         msgHover = PlaceholderApiUtil.set(player, msgHover);
-
-        // 加载rgb颜色
-        prefixText = BaseUtil.replaceChatColor(prefixText);
-        prefixHover = BaseUtil.replaceChatColor(prefixHover);
-        playerText = BaseUtil.replaceChatColor(playerText);
-        playerHover = BaseUtil.replaceChatColor(playerHover);
-        msgText = BaseUtil.replaceChatColor(msgText);
-        msgHover = BaseUtil.replaceChatColor(msgHover);
+        msgClick = PlaceholderApiUtil.set(player, msgClick);
 
         // 构建参数
-        return ChatParam.builder().prefixText(prefixText).prefixHover(prefixHover)
-                .playerText(playerText).playerHover(playerHover)
-                .msgText(msgText).msgHover(msgHover).build();
+        return ChatParam.builder().prefixText(prefixText).prefixHover(prefixHover).prefixClick(prefixClick)
+                .playerText(playerText).playerHover(playerHover).playerClick(playerClick)
+                .msgText(msgText).msgHover(msgHover).msgClick(msgClick).build();
     }
 
     /**
@@ -122,17 +120,29 @@ public class ChatUtil {
      * @param type      类型
      */
     public static TextComponent buildMsg(ChatParam chatParam, String type) {
+        // 加载rgb颜色
+        chatParam.setPrefixText(BaseUtil.replaceChatColor(chatParam.getPrefixText()));
+        chatParam.setPrefixHover(BaseUtil.replaceChatColor(chatParam.getPrefixHover()));
+        chatParam.setPlayerText(BaseUtil.replaceChatColor(chatParam.getPlayerText()));
+        chatParam.setPrefixHover(BaseUtil.replaceChatColor(chatParam.getPlayerHover()));
+        chatParam.setMsgText(BaseUtil.replaceChatColor(chatParam.getMsgText()));
+        chatParam.setMsgHover(BaseUtil.replaceChatColor(chatParam.getMsgHover()));
+        chatParam.setMessage(chatParam.getHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
+
         // 前缀
         TextUtil prefixTextComponent = TextUtil.getInstance().init(chatParam.getPrefixText());
         prefixTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPrefixHover(), "\n"));
+        prefixTextComponent.addClickCommand(chatParam.getPrefixClick());
         // 玩家
         TextUtil playerTextComponent = TextUtil.getInstance().init(chatParam.getPlayerText());
         playerTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPlayerHover(), "\n"));
+        prefixTextComponent.addClickCommand(chatParam.getPlayerClick());
         // 消息
         TextUtil msgTextComponent = TextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getMessage(), false);
         // 聊天处理
         if (ChatConstants.CHAT_TYPE.equals(type)) {
             msgTextComponent.addHoverText(CollUtil.listToStr(chatParam.getMsgHover(), "\n"));
+            prefixTextComponent.addClickCommand(chatParam.getMsgClick());
         }
         // 物品展示处理
         if (ChatConstants.ITEM_TYPE.equals(type)) {

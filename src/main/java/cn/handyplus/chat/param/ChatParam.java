@@ -28,6 +28,10 @@ public class ChatParam {
      */
     private List<String> prefixHover;
     /**
+     * 前缀click
+     */
+    private String prefixClick;
+    /**
      * 玩家消息
      */
     private String playerText;
@@ -36,6 +40,10 @@ public class ChatParam {
      */
     private List<String> playerHover;
     /**
+     * 玩家click
+     */
+    private String playerClick;
+    /**
      * 消息
      */
     private String msgText;
@@ -43,11 +51,20 @@ public class ChatParam {
      * 消息hover
      */
     private List<String> msgHover;
+    /**
+     * 消息click
+     */
+    private String msgClick;
 
     /**
      * 聊天消息
      */
     private String message;
+
+    /**
+     * 聊天内容颜色权限
+     */
+    private Boolean hasColor;
 
     /**
      * 物品名称
