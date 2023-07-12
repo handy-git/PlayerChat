@@ -1,7 +1,7 @@
 package cn.handyplus.chat.constants;
 
+import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.util.ConfigUtil;
-import cn.handyplus.chat.util.HornUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * tab提醒
@@ -67,7 +68,9 @@ public enum TabListEnum {
         // 渠道特殊处理
         if (argsLength == 2 && ("channel".equalsIgnoreCase(args[0]))) {
             Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
-            return new ArrayList<>(chatChannel.keySet());
+            List<String> chatChannelList = new ArrayList<>(chatChannel.keySet());
+            List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
+            return chatChannelList.stream().filter(s -> !pluginChannelList.contains(s)).collect(Collectors.toList());
         }
 
         if (argsLength == 2 && ("give".equalsIgnoreCase(args[0]) || "take".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {

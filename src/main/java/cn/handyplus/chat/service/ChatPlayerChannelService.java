@@ -1,5 +1,6 @@
 package cn.handyplus.chat.service;
 
+import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.lib.db.Db;
 
@@ -42,15 +43,19 @@ public class ChatPlayerChannelService {
     }
 
     /**
-     * 根据id 设置渠道
+     * 根据playerUuid设置渠道
      *
-     * @param id      ID
-     * @param channel 渠道
+     * @param playerUuid uid
+     * @param channel    渠道
      */
-    public void setNumber(Integer id, String channel) {
+    public boolean setChannel(UUID playerUuid, String channel) {
         Db<ChatPlayerChannelEnter> db = Db.use(ChatPlayerChannelEnter.class);
         db.update().set(ChatPlayerChannelEnter::getChannel, channel);
-        db.execution().updateById(id);
+        db.where().eq(ChatPlayerChannelEnter::getPlayerUuid, playerUuid);
+        int update = db.execution().update();
+        // 重新缓存数据
+        ChatConstants.CHANNEL_MAP.put(playerUuid, channel);
+        return update > 0;
     }
 
 }

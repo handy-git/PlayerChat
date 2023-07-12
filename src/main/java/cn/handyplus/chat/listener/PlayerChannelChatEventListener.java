@@ -1,7 +1,7 @@
 package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
-import cn.handyplus.chat.util.ChatUtil;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;

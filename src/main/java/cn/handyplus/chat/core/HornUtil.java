@@ -1,6 +1,7 @@
-package cn.handyplus.chat.util;
+package cn.handyplus.chat.core;
 
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.constants.VersionCheckEnum;
 import cn.handyplus.lib.core.StrUtil;

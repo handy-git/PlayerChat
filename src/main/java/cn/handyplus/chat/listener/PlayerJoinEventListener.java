@@ -2,11 +2,13 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.HandyHttpUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +47,12 @@ public class PlayerJoinEventListener implements Listener {
                 } else {
                     channel = enter.getChannel();
                 }
+                // 缓存渠道
                 ChatConstants.CHANNEL_MAP.put(player.getUniqueId(), channel);
+                // 判断渠道是否存在
+                if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
+                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), "default");
+                }
             }
         }.runTaskAsynchronously(PlayerChat.getInstance());
     }

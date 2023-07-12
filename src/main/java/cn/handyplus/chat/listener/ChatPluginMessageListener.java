@@ -2,9 +2,9 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.util.ChatUtil;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.util.ConfigUtil;
-import cn.handyplus.chat.util.HornUtil;
+import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.param.BcMessageParam;

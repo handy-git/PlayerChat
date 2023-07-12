@@ -1,11 +1,13 @@
-package cn.handyplus.chat.util;
+package cn.handyplus.chat.core;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
+import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -53,8 +55,7 @@ public class ChatUtil {
         BaseComponent[] textComponent = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
         // 功能是否开启
-        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
-        if (!chatEnable) {
+        if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }
         // 根据渠道发送消息
@@ -82,23 +83,23 @@ public class ChatUtil {
      * @return 参数
      */
     public static ChatParam buildChatParam(Player player, String channel) {
-        // 功能是否开启
-        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
-        if (!chatEnable) {
+        // 渠道是否开启
+        String channelEnable = ChannelUtil.isChannelEnable(channel);
+        if (StrUtil.isEmpty(channelEnable)) {
             return null;
         }
         // 前缀
-        String prefixText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.prefix.text");
-        List<String> prefixHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.prefix.hover");
-        String prefixClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.prefix.click");
+        String prefixText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.prefix.text");
+        List<String> prefixHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.prefix.hover");
+        String prefixClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.prefix.click");
         // 玩家信息
-        String playerText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.player.text");
-        List<String> playerHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.player.hover");
-        String playerClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.player.click");
+        String playerText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.player.text");
+        List<String> playerHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.player.hover");
+        String playerClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.player.click");
         // 消息
-        String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.msg.text");
-        List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format.msg.hover");
-        String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".format.msg.click");
+        String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.text");
+        List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
+        String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
 
         // 解析变量
         prefixText = PlaceholderApiUtil.set(player, prefixText);

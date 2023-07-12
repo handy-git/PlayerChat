@@ -2,12 +2,14 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.ChannelUtil;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.chat.util.ChatUtil;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
@@ -42,8 +44,8 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         Player player = event.getPlayer();
         String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
-        boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
-        if (!chatEnable) {
+        // 渠道是否开启
+        if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }
         // 取消事件

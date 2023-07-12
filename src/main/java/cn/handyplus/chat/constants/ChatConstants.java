@@ -36,4 +36,12 @@ public abstract class ChatConstants {
      */
     public static Map<UUID, String> CHANNEL_MAP = new HashMap<>();
 
+    /**
+     * 插件渠道
+     * key 渠道 value 插件名
+     *
+     * @since 1.0.6
+     */
+    public static Map<String, String> PLUGIN_CHANNEL = new HashMap<>();
+
 }
