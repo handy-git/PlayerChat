@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"cn.handyplus.chat"},{"l":"cn.handyplus.chat.api"},{"l":"所有程序包","u":"allpackages-index.html"}];updateSearchResults();

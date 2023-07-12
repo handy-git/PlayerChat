@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"cn.handyplus.chat","l":"PlayerChat"},{"p":"cn.handyplus.chat.api","l":"PlayerChatApi"}];updateSearchResults();
