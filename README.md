@@ -13,4 +13,28 @@
 
 ### 如果你没有钱购买支持作者
 
+
+### API
+
+[![](https://jitpack.io/v/handy-git/PlayerChat.svg)](https://jitpack.io/#handy-git/PlayerChat)
+
+```
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+```
+<dependency>
+    <groupId>com.github.handy-git</groupId>
+    <artifactId>PlayerChat</artifactId>
+    <version>1.0.6</version>
+</dependency>
+```
+
+[javadoc](https://handy-git.github.io/PlayerChat/cn/handyplus/chat/api/PlayerChatApi.html)
+
 请点个star支持下也可
