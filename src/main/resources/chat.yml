@@ -43,12 +43,12 @@ chat:
     # 是否开启
     enable: true
     # 渠道名称
-    name: "默认"
+    name: "公会聊天"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '%playerGuild_show_name%'
+        text: '[%playerChat_channel%]%playerGuild_show_name%'
         hover:
           - '&8▪ &6当前渠道: %playerChat_channel%'
           - '可以使用指令/plc channel [渠道名] 进行切换'

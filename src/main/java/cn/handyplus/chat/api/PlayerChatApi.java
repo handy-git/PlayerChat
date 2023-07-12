@@ -1,8 +1,11 @@
 package cn.handyplus.chat.api;
 
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.util.BaseUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -43,7 +46,24 @@ public class PlayerChatApi {
      * @param channel 渠道名
      */
     public void unRegChannel(Plugin plugin, String channel) {
-        ChatConstants.PLUGIN_CHANNEL.remove(this.getPluginChannelName(plugin, channel));
+        // 移除渠道
+        String pluginChannelName = this.getPluginChannelName(plugin, channel);
+        ChatConstants.PLUGIN_CHANNEL.remove(pluginChannelName);
+        // 查询是否有使用该渠道的
+        List<ChatPlayerChannelEnter> channelEnterList = ChatPlayerChannelService.getInstance().findByChannel(pluginChannelName);
+        if (CollUtil.isEmpty(channelEnterList)) {
+            return;
+        }
+        // 重新设置渠道
+        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, "default");
+        // 缓存渠道
+        for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
+            Player onlinePlayer = BaseUtil.getOnlinePlayer(channelEnter.getPlayerUuid());
+            if (onlinePlayer == null) {
+                continue;
+            }
+            ChatConstants.CHANNEL_MAP.put(onlinePlayer.getUniqueId(), "default");
+        }
     }
 
     /**

@@ -27,7 +27,15 @@ public class ChannelUtil {
         }
         // 第三方插件渠道
         String pluginChannel = ChatConstants.PLUGIN_CHANNEL.get(channel);
-        return StrUtil.isNotEmpty(pluginChannel) ? pluginChannel : null;
+        if (StrUtil.isEmpty(pluginChannel)) {
+            return null;
+        }
+        // 第三方插件渠道是否启用
+        boolean pluginChannelEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + pluginChannel + ".enable");
+        if (!pluginChannelEnable) {
+            return null;
+        }
+        return pluginChannel;
     }
 
     /**
