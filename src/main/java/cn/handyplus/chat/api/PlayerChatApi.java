@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * API
@@ -58,7 +59,7 @@ public class PlayerChatApi {
         ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, "default");
         // 缓存渠道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
-            Player onlinePlayer = BaseUtil.getOnlinePlayer(channelEnter.getPlayerUuid());
+            Player onlinePlayer = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
             if (onlinePlayer == null) {
                 continue;
             }
@@ -114,6 +115,16 @@ public class PlayerChatApi {
             return false;
         }
         return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channelName);
+    }
+
+    /**
+     * 设置玩家正在使用的渠道为默认
+     *
+     * @param player 玩家
+     * @return true成功
+     */
+    public boolean setPlayerChannelToDefault(Player player) {
+        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), "default");
     }
 
     /**
