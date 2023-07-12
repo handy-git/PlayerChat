@@ -3,6 +3,7 @@ package cn.handyplus.chat.core;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.util.BaseUtil;
 
 /**
  * 渠道处理
@@ -27,6 +28,18 @@ public class ChannelUtil {
         // 第三方插件渠道
         String pluginChannel = ChatConstants.PLUGIN_CHANNEL.get(channel);
         return StrUtil.isNotEmpty(pluginChannel) ? pluginChannel : null;
+    }
+
+    /**
+     * 获取渠道
+     *
+     * @param channel 渠道
+     * @return channel名称
+     */
+    public static String getChannelName(String channel) {
+        String channelEnable = isChannelEnable(channel);
+        String pluginChannel = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".name", channelEnable);
+        return BaseUtil.replaceChatColor(pluginChannel);
     }
 
 }

@@ -11,49 +11,58 @@ chat:
   default:
     # 是否开启
     enable: true
+    # 渠道名称 1.0.6+
+    name: "默认"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '[变量]'
+        text: '[%playerChat_channel%]'
         # 1.16+可用hover
         hover:
-          - '个人信息一'
-          - '个人信息二'
+          - '&8▪ &6当前渠道: %playerChat_channel%'
+          - '可以使用指令/plc channel [渠道名] 进行切换'
         # 点击后执行的命令
-        click: '/tpa %player_name%'
+        click: ''
       # 聊天玩家名
       player:
         text: '&f%player_name%&7: '
         hover:
-          - '&8▪ &6当前渠道: %playerChat_channel%'
+          - '快点击tpa我啦～'
         # 点击后执行的命令
         click: '/tpa %player_name%'
       # 聊天内容
       msg:
         text: '&f'
         hover:
-          - '&7时间: 发送时间'
+          - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令
-        click: '/tpa %player_name%'
-  # 扩展渠道一
-  guild:
+        click: ''
+  # 扩展公会聊天渠道
+  PlayerGuild:
     # 是否开启
     enable: true
+    # 渠道名称
+    name: "默认"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
         text: '%playerGuild_show_name%'
         hover:
-          - 'xxx公会信息'
+          - '&8▪ &6当前渠道: %playerChat_channel%'
+          - '可以使用指令/plc channel [渠道名] 进行切换'
       # 聊天玩家名
       player:
         text: '&f%player_name%&7: '
         hover:
-          - '&8▪ &6当前渠道: %playerChat_channel%'
+          - '快点击tpa我啦～'
+        # 点击后执行的命令
+        click: '/tpa %player_name%'
       # 聊天内容
       msg:
         text: '&f'
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
+        # 点击后执行的命令
+        click: ''
