@@ -80,4 +80,14 @@ public class PlayerChatApi {
         return true;
     }
 
+    /**
+     * 设置玩家正在使用的渠道为默认
+     *
+     * @param player 玩家
+     * @return true成功
+     */
+    public boolean setPlayerChannelToDefault(Player player) {
+        return true;
+    }
+
 }
