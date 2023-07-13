@@ -57,14 +57,14 @@ public class PlayerChatApi {
             return;
         }
         // 重新设置渠道
-        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, "default");
+        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT);
         // 缓存渠道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
             Player onlinePlayer = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
             if (onlinePlayer == null) {
                 continue;
             }
-            ChatConstants.PLAYER_CHAT_CHANNEL.put(onlinePlayer.getUniqueId(), "default");
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(onlinePlayer.getUniqueId(), ChatConstants.DEFAULT);
         }
     }
 
@@ -125,13 +125,34 @@ public class PlayerChatApi {
     }
 
     /**
+     * 删除玩家监听的插件自定义的渠道
+     * 只能删除本插件注册的渠道
+     *
+     * @param plugin  插件
+     * @param player  玩家
+     * @param channel 渠道
+     * @return true成功
+     */
+    public boolean delPlayerChannel(Plugin plugin, String channel, Player player) {
+        String channelName = getPluginChannelName(plugin, channel);
+        if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
+            return false;
+        }
+        // 取消玩家渠道
+        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
+        channelNameList.remove(channelName);
+        ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
+        return true;
+    }
+
+    /**
      * 设置玩家正在使用的渠道为默认
      *
      * @param player 玩家
      * @return true成功
      */
     public boolean setPlayerChannelToDefault(Player player) {
-        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), "default");
+        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
     }
 
     /**

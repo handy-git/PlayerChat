@@ -50,7 +50,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
             String channelName = ChatConstants.PLAYER_CHAT_CHANNEL.get(player.getUniqueId());
             if (StrUtil.isEmpty(channelName)) {
                 ChatPlayerChannelEnter enter = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
-                channelName = enter != null ? enter.getChannel() : "default";
+                channelName = enter != null ? enter.getChannel() : ChatConstants.DEFAULT;
             }
             return ChannelUtil.getChannelName(channelName);
         }

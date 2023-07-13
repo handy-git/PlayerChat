@@ -101,7 +101,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
         param.setSendTime(new Date());
-        String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), "default");
+        String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {

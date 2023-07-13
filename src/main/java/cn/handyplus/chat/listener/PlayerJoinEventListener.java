@@ -37,12 +37,12 @@ public class PlayerJoinEventListener implements Listener {
             @Override
             public void run() {
                 ChatPlayerChannelEnter enter = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
-                String channel = "default";
+                String channel = ChatConstants.DEFAULT;
                 if (enter == null) {
                     enter = new ChatPlayerChannelEnter();
                     enter.setPlayerName(player.getName());
                     enter.setPlayerUuid(player.getUniqueId().toString());
-                    enter.setChannel("default");
+                    enter.setChannel(ChatConstants.DEFAULT);
                     ChatPlayerChannelService.getInstance().add(enter);
                 } else {
                     channel = enter.getChannel();
@@ -51,7 +51,7 @@ public class PlayerJoinEventListener implements Listener {
                 ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
                 // 判断渠道是否存在
                 if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
-                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), "default");
+                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
                 }
             }
         }.runTaskAsynchronously(PlayerChat.getInstance());
