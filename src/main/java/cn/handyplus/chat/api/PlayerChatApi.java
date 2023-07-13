@@ -68,7 +68,7 @@ public class PlayerChatApi {
     }
 
     /**
-     * 设置玩家正在使用的渠道
+     * 设置玩家监听的插件自定义的渠道
      * 只能设置本插件注册的渠道
      *
      * @param plugin  插件
@@ -77,6 +77,19 @@ public class PlayerChatApi {
      * @return true成功
      */
     public boolean setPlayerChannel(Plugin plugin, String channel, Player player) {
+        return true;
+    }
+
+    /**
+     * 删除玩家监听的插件自定义的渠道
+     * 只能删除本插件注册的渠道
+     *
+     * @param plugin  插件
+     * @param player  玩家
+     * @param channel 渠道
+     * @return true成功
+     */
+    public boolean delPlayerChannel(Plugin plugin, String channel, Player player) {
         return true;
     }
 
