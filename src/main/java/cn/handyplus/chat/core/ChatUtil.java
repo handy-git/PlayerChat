@@ -141,7 +141,7 @@ public class ChatUtil {
         chatParam.setPlayerHover(BaseUtil.replaceChatColor(chatParam.getPlayerHover()));
         chatParam.setMsgText(BaseUtil.replaceChatColor(chatParam.getMsgText()));
         chatParam.setMsgHover(BaseUtil.replaceChatColor(chatParam.getMsgHover()));
-        chatParam.setMessage(chatParam.getHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
+        chatParam.setMessage(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
 
         // 前缀
         RgbTextUtil prefixTextComponent = RgbTextUtil.getInstance().init(chatParam.getPrefixText());

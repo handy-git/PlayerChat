@@ -64,7 +64,7 @@ public class ChatParam {
     /**
      * 聊天内容颜色权限
      */
-    private Boolean hasColor;
+    private boolean hasColor;
 
     /**
      * 物品名称
