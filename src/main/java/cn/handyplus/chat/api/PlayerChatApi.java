@@ -102,15 +102,14 @@ public class PlayerChatApi {
     }
 
     /**
-     * 设置玩家监听的插件自定义的渠道
-     * 只能设置本插件注册的渠道
+     * 注册玩家监听的插件自定义的渠道
      *
      * @param plugin  插件
      * @param player  玩家
      * @param channel 渠道
      * @return true成功
      */
-    public boolean setPlayerChannel(Plugin plugin, String channel, Player player) {
+    public boolean regPlayerChannel(Plugin plugin, String channel, Player player) {
         String channelName = getPluginChannelName(plugin, channel);
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
@@ -125,15 +124,14 @@ public class PlayerChatApi {
     }
 
     /**
-     * 删除玩家监听的插件自定义的渠道
-     * 只能删除本插件注册的渠道
+     * 取消注册玩家监听的插件自定义的渠道
      *
      * @param plugin  插件
      * @param player  玩家
      * @param channel 渠道
      * @return true成功
      */
-    public boolean delPlayerChannel(Plugin plugin, String channel, Player player) {
+    public boolean unRegPlayerChannel(Plugin plugin, String channel, Player player) {
         String channelName = getPluginChannelName(plugin, channel);
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
@@ -143,6 +141,23 @@ public class PlayerChatApi {
         channelNameList.remove(channelName);
         ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
         return true;
+    }
+
+    /**
+     * 设置玩家正在使用的渠道
+     * 只能设置本插件注册的渠道
+     *
+     * @param plugin  插件
+     * @param player  玩家
+     * @param channel 渠道
+     * @return true成功
+     */
+    public boolean setPlayerChannel(Plugin plugin, String channel, Player player) {
+        String channelName = getPluginChannelName(plugin, channel);
+        if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
+            return false;
+        }
+        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channelName);
     }
 
     /**
