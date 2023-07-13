@@ -43,7 +43,7 @@ public class AsyncPlayerChatEventListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
         // 渠道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
@@ -101,7 +101,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
         param.setSendTime(new Date());
-        String channel = ChatConstants.CHANNEL_MAP.getOrDefault(player.getUniqueId(), "default");
+        String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), "default");
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {

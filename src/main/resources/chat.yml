@@ -2,35 +2,37 @@
 item:
   # 是否开启
   enable: true
-  # 需求内容
+  # 展示格式
   format: "[i]"
 
-# 聊天管理 渠道可无限根据下面格式添加
+# 聊天管理 频道可无限根据下面格式添加
+# 内部变量 ${player} 玩家名 ${channel} 渠道名
 chat:
-  # 默认渠道(严禁删除本渠道)
+  # 默认频道(严禁删除本频道)
   default:
     # 是否开启
     enable: true
     # 渠道名称 1.0.6+
-    name: "默认"
+    name: "&7[&a默认频道&7]"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '[%playerChat_channel%]'
+        text: '${channel}'
         # 1.16+可用hover
         hover:
-          - '&8▪ &6当前渠道: %playerChat_channel%'
-          - '可以使用指令/plc channel [渠道名] 进行切换'
+          - '&8▪ &6这个聊天频道: ${channel}'
+          - '&8▪ &6我的聊天频道: %playerChat_channel%'
+          - '&8▪ &6点击可切换到这个聊天频道'
         # 点击后执行的命令
-        click: ''
+        click: '/plc channel default'
       # 聊天玩家名
       player:
-        text: '&f%player_name%&7: '
+        text: '&f${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
-        click: '/tpa %player_name%'
+        click: '/tpa ${player}'
       # 聊天内容
       msg:
         text: '&f'
@@ -43,22 +45,25 @@ chat:
     # 是否开启
     enable: true
     # 渠道名称
-    name: "公会聊天"
+    name: "&7[&a公会频道&7]"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '[%playerChat_channel%]%playerGuild_show_name%'
+        text: '${channel} %playerGuild_show_name%'
         hover:
-          - '&8▪ &6当前渠道: %playerChat_channel%'
-          - '可以使用指令/plc channel [渠道名] 进行切换'
+          - '&8▪ &6聊天频道名称: ${channel}'
+          - '&8▪ &6我的聊天频道: %playerChat_channel%'
+          - '&8▪ &6点击切换公会聊天频道'
+        # 点击后执行的命令
+        click: '/plg channel'
       # 聊天玩家名
       player:
-        text: '&f%player_name%&7: '
+        text: '&f${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
-        click: '/tpa %player_name%'
+        click: '/tpa ${player}'
       # 聊天内容
       msg:
         text: '&f'

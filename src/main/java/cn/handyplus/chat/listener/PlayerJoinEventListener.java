@@ -48,7 +48,7 @@ public class PlayerJoinEventListener implements Listener {
                     channel = enter.getChannel();
                 }
                 // 缓存渠道
-                ChatConstants.CHANNEL_MAP.put(player.getUniqueId(), channel);
+                ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
                 // 判断渠道是否存在
                 if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
                     ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), "default");

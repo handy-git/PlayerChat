@@ -9,6 +9,7 @@ import cn.handyplus.lib.util.BaseUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class PlayerChatApi {
             if (onlinePlayer == null) {
                 continue;
             }
-            ChatConstants.CHANNEL_MAP.put(onlinePlayer.getUniqueId(), "default");
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(onlinePlayer.getUniqueId(), "default");
         }
     }
 
@@ -101,7 +102,7 @@ public class PlayerChatApi {
     }
 
     /**
-     * 设置玩家正在使用的渠道
+     * 设置玩家监听的插件自定义的渠道
      * 只能设置本插件注册的渠道
      *
      * @param plugin  插件
@@ -114,7 +115,13 @@ public class PlayerChatApi {
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
         }
-        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channelName);
+        // 设置玩家拥有的插件渠道
+        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
+        if (!channelNameList.contains(channelName)) {
+            channelNameList.add(channelName);
+        }
+        ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
+        return true;
     }
 
     /**

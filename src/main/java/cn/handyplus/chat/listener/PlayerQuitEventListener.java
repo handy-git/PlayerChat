@@ -42,7 +42,8 @@ public class PlayerQuitEventListener implements Listener {
      * @param player 事件
      */
     private void removeCache(Player player) {
-        ChatConstants.CHANNEL_MAP.remove(player.getUniqueId());
+        ChatConstants.PLAYER_CHAT_CHANNEL.remove(player.getUniqueId());
+        ChatConstants.PLAYER_PLUGIN_CHANNEL.remove(player.getUniqueId());
     }
 
 }

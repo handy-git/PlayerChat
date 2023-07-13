@@ -13,10 +13,10 @@ import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.bukkit.Bukkit.getServer;
@@ -54,18 +54,15 @@ public class ChatUtil {
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
         BaseComponent[] textComponent = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
-        // 功能是否开启
+        // 渠道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }
         // 根据渠道发送消息
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            String onlinePlayerChannel = ChatConstants.CHANNEL_MAP.getOrDefault(onlinePlayer.getUniqueId(), "default");
-            if (!onlinePlayerChannel.equals(channel)) {
-                continue;
-            }
+        for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             MessageUtil.sendMessage(onlinePlayer, textComponent);
         }
+        // 控制台消息
         if (isConsoleMsg) {
             StringBuilder str = new StringBuilder();
             for (BaseComponent baseComponent : textComponent) {
@@ -101,7 +98,19 @@ public class ChatUtil {
         List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
         String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
 
-        // 解析变量
+        // 解析内部变量
+        String channelName = ChannelUtil.getChannelName(channel);
+        prefixText = replaceStr(player, channelName, prefixText);
+        prefixHover = replaceStr(player, channelName, prefixHover);
+        prefixClick = replaceStr(player, channelName, prefixClick);
+        playerText = replaceStr(player, channelName, playerText);
+        playerHover = replaceStr(player, channelName, playerHover);
+        playerClick = replaceStr(player, channelName, playerClick);
+        msgText = replaceStr(player, channelName, msgText);
+        msgHover = replaceStr(player, channelName, msgHover);
+        msgClick = replaceStr(player, channelName, msgClick);
+
+        // 解析PAPI变量
         prefixText = PlaceholderApiUtil.set(player, prefixText);
         prefixHover = PlaceholderApiUtil.set(player, prefixHover);
         prefixClick = PlaceholderApiUtil.set(player, prefixClick);
@@ -157,6 +166,40 @@ public class ChatUtil {
         }
         // 构建消息
         return prefixTextComponent.addExtra(playerTextComponent.build()).addExtra(msgTextComponent.build()).build();
+    }
+
+    /**
+     * 解析内部变量
+     *
+     * @param player      玩家
+     * @param channelName 渠道名称
+     * @param str         内容
+     * @return 新内容
+     */
+    private static String replaceStr(Player player, String channelName, String str) {
+        if (StrUtil.isEmpty(str)) {
+            return str;
+        }
+        return str.replace("${channel}", channelName).replace("${player}", player.getName());
+    }
+
+    /**
+     * 解析内部变量
+     *
+     * @param player      玩家
+     * @param channelName 渠道名称
+     * @param strList     内容集合
+     * @return 新内容
+     */
+    private static List<String> replaceStr(Player player, String channelName, List<String> strList) {
+        if (CollUtil.isEmpty(strList)) {
+            return strList;
+        }
+        List<String> newStrList = new ArrayList<>();
+        for (String str : strList) {
+            newStrList.add(replaceStr(player, channelName, str));
+        }
+        return newStrList;
     }
 
 }
