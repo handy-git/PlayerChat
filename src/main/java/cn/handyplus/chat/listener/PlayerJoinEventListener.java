@@ -17,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Optional;
+
 /**
  * 登录事件
  *
@@ -36,16 +38,16 @@ public class PlayerJoinEventListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                ChatPlayerChannelEnter enter = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
+                Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
                 String channel = ChatConstants.DEFAULT;
-                if (enter == null) {
-                    enter = new ChatPlayerChannelEnter();
+                if (!enterOptional.isPresent()) {
+                    ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
                     enter.setPlayerName(player.getName());
                     enter.setPlayerUuid(player.getUniqueId().toString());
                     enter.setChannel(ChatConstants.DEFAULT);
                     ChatPlayerChannelService.getInstance().add(enter);
                 } else {
-                    channel = enter.getChannel();
+                    channel = enterOptional.get().getChannel();
                 }
                 // 缓存渠道
                 ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);

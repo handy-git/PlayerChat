@@ -5,6 +5,7 @@ import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.lib.db.Db;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -37,7 +38,7 @@ public class ChatPlayerChannelService {
      * @param playerUuid uid
      * @return 数据
      */
-    public ChatPlayerChannelEnter findByUid(UUID playerUuid) {
+    public Optional<ChatPlayerChannelEnter> findByUid(UUID playerUuid) {
         Db<ChatPlayerChannelEnter> use = Db.use(ChatPlayerChannelEnter.class);
         use.where().eq(ChatPlayerChannelEnter::getPlayerUuid, playerUuid);
         return use.execution().selectOne();

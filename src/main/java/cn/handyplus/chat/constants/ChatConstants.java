@@ -18,11 +18,6 @@ public abstract class ChatConstants {
     public final static String PLUGIN_VERSION_URL = "https://api.github.com/repos/handy-git/PlayerChat/releases/latest";
 
     /**
-     * BC渠道
-     */
-    public final static String RICE_HORN_CHANNEL = "BungeeCord";
-
-    /**
      * 默认渠道
      */
     public final static String DEFAULT = "default";

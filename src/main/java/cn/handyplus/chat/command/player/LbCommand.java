@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 发送消息
@@ -57,11 +58,12 @@ public class LbCommand implements TabExecutor {
             return true;
         }
 
-        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
-        if (hornPlayerEnter == null) {
+        Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
+        if (!hornPlayerEnterOpt.isPresent()) {
             MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
             return true;
         }
+        ChatPlayerHornEnter hornPlayerEnter = hornPlayerEnterOpt.get();
         if (hornPlayerEnter.getNumber() < 1) {
             MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHaveNumber"));
             return true;

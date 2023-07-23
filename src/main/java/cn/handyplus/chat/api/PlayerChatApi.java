@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -60,11 +61,8 @@ public class PlayerChatApi {
         ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT);
         // 缓存渠道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
-            Player onlinePlayer = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
-            if (onlinePlayer == null) {
-                continue;
-            }
-            ChatConstants.PLAYER_CHAT_CHANNEL.put(onlinePlayer.getUniqueId(), ChatConstants.DEFAULT);
+            Optional<Player> playerOptional = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
+            playerOptional.ifPresent(player -> ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), ChatConstants.DEFAULT));
         }
     }
 

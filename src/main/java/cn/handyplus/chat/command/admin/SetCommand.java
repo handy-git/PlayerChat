@@ -11,6 +11,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.Optional;
+
 /**
  * @author handy
  */
@@ -34,8 +36,8 @@ public class SetCommand implements IHandyCommandEvent {
         Integer number = AssertUtil.isNumericToInt(args[3], sender, ConfigUtil.LANG_CONFIG.getString("amountFailureMsg"));
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
 
-        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
-        if (hornPlayerEnter == null) {
+        Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
+        if (!hornPlayerEnterOpt.isPresent()) {
             ChatPlayerHornEnter hornPlayer = new ChatPlayerHornEnter();
             hornPlayer.setPlayerName(offlinePlayer.getName());
             hornPlayer.setPlayerUuid(offlinePlayer.getUniqueId().toString());
@@ -43,7 +45,7 @@ public class SetCommand implements IHandyCommandEvent {
             hornPlayer.setNumber(number);
             ChatPlayerHornService.getInstance().add(hornPlayer);
         } else {
-            ChatPlayerHornService.getInstance().setNumber(hornPlayerEnter.getId(), number);
+            ChatPlayerHornService.getInstance().setNumber(hornPlayerEnterOpt.get().getId(), number);
         }
         MessageUtil.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
     }

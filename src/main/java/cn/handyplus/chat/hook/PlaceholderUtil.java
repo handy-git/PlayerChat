@@ -11,6 +11,8 @@ import cn.handyplus.lib.core.StrUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
+import java.util.Optional;
+
 /**
  * 变量扩展
  *
@@ -49,14 +51,14 @@ public class PlaceholderUtil extends PlaceholderExpansion {
         if ("channel".equals(placeholder)) {
             String channelName = ChatConstants.PLAYER_CHAT_CHANNEL.get(player.getUniqueId());
             if (StrUtil.isEmpty(channelName)) {
-                ChatPlayerChannelEnter enter = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
-                channelName = enter != null ? enter.getChannel() : ChatConstants.DEFAULT;
+                Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
+                channelName = enterOptional.isPresent() ? enterOptional.get().getChannel() : ChatConstants.DEFAULT;
             }
             return ChannelUtil.getChannelName(channelName);
         }
         // %playerChat_[类型]%
-        ChatPlayerHornEnter hornPlayerEnter = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);
-        return hornPlayerEnter != null ? hornPlayerEnter.getNumber().toString() : "0";
+        Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);
+        return hornPlayerEnterOpt.map(enter -> enter.getNumber().toString()).orElse("0");
     }
 
     /**

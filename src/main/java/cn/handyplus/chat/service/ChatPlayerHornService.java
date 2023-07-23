@@ -4,6 +4,7 @@ import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.lib.db.Db;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -37,7 +38,7 @@ public class ChatPlayerHornService {
      * @param type       类型
      * @return 数据
      */
-    public ChatPlayerHornEnter findByUidAndType(UUID playerUuid, String type) {
+    public Optional<ChatPlayerHornEnter> findByUidAndType(UUID playerUuid, String type) {
         Db<ChatPlayerHornEnter> use = Db.use(ChatPlayerHornEnter.class);
         use.where().eq(ChatPlayerHornEnter::getPlayerUuid, playerUuid)
                 .eq(ChatPlayerHornEnter::getType, type);
