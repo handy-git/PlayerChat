@@ -44,6 +44,7 @@ public class PlayerQuitEventListener implements Listener {
     private void removeCache(Player player) {
         ChatConstants.PLAYER_CHAT_CHANNEL.remove(player.getUniqueId());
         ChatConstants.PLAYER_PLUGIN_CHANNEL.remove(player.getUniqueId());
+        ChatConstants.PLAYER_CHAT_TIME.remove(player.getUniqueId());
     }
 
 }

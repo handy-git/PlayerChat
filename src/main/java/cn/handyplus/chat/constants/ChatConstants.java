@@ -52,4 +52,11 @@ public abstract class ChatConstants {
      */
     public static Map<UUID, List<String>> PLAYER_PLUGIN_CHANNEL = new HashMap<>();
 
+    /**
+     * 玩家聊天冷却
+     *
+     * @since 1.0.7
+     */
+    public static Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
+
 }

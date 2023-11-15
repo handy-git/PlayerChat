@@ -8,11 +8,14 @@ import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 当玩家聊天时触发这个事件
@@ -51,6 +55,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 取消事件
         event.setCancelled(true);
 
+        // 聊天频率处理
+        if (!this.chatTimeCheck(player)) {
+            return;
+        }
+
         // 参数构建
         BcMessageParam param = new BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
@@ -61,14 +70,50 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
+
+        // 内容黑名单处理
+        String message = this.blackListCheck(event);
         // 有权限进行颜色代码处理
-        chatParam.setMessage(event.getMessage());
+        chatParam.setMessage(message);
         chatParam.setHasColor(event.getPlayer().hasPermission("playerChat.color"));
         chatParam.setChannel(channel);
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));
         // 发送事件
         Bukkit.getScheduler().runTask(PlayerChat.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
+    }
+
+    /**
+     * 替换黑名单词语为*
+     *
+     * @param event 事件
+     * @return 健康消息
+     */
+    private String blackListCheck(AsyncPlayerChatEvent event) {
+        String message = event.getMessage();
+        List<String> blacklist = ConfigUtil.CONFIG.getStringList("blacklist");
+        if (CollUtil.isNotEmpty(blacklist)) {
+            for (String blackMsg : blacklist) {
+                if (StrUtil.isNotEmpty(blackMsg)) {
+                    message = message.replace(blackMsg, "*");
+                }
+            }
+        }
+        return message;
+    }
+
+    private boolean chatTimeCheck(Player player) {
+        int chatTime = HandyPermissionUtil.getReverseIntNumber(player, ConfigUtil.CONFIG, "chatTime");
+        if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
+            long keepAlive = (System.currentTimeMillis() - ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId())) / 1000L;
+            if (keepAlive < chatTime) {
+                String waitTimeMsg = BaseUtil.getLangMsg("chatTime").replace("${chatTime}", (chatTime - keepAlive) + "");
+                MessageUtil.sendMessage(player, waitTimeMsg);
+                return false;
+            }
+        }
+        ChatConstants.PLAYER_CHAT_TIME.put(player.getUniqueId(), System.currentTimeMillis());
+        return true;
     }
 
     /**

@@ -28,6 +28,7 @@ takeSucceedMsg: "&8[&a✔&8] &a拿走成功"
 noLook: "&8[&c✘&8] &7玩家 ${player} 没有喇叭"
 noHave: "&8[&c✘&8] &7你没有可使用的喇叭"
 noHaveNumber: "&8[&c✘&8] &7你的喇叭数量不足"
+chatTime: "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言."
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:
