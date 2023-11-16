@@ -102,6 +102,12 @@ public class AsyncPlayerChatEventListener implements Listener {
         return message;
     }
 
+    /**
+     * 聊天时间处理
+     *
+     * @param player 玩家
+     * @return true 可
+     */
     private boolean chatTimeCheck(Player player) {
         int chatTime = HandyPermissionUtil.getReverseIntNumber(player, ConfigUtil.CONFIG, "chatTime");
         if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
