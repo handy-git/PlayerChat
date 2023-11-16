@@ -38,9 +38,9 @@ public class ConfigUtil {
 
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
-        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.default", 3, Collections.singletonList("聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)"), "config.yml");
-        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip1", 2, null, "config.yml");
-        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip2", 1, null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.default", 0, Collections.singletonList("聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)"), "config.yml");
+        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip1", 0, null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip2", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip3", 0, null, "config.yml");
         CONFIG = HandyConfigUtil.load("config.yml");
     }
