@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * @author handy
  */
 public class ChannelCommand implements IHandyCommandEvent {
+
     @Override
     public String command() {
         return "channel";
@@ -29,6 +30,11 @@ public class ChannelCommand implements IHandyCommandEvent {
     @Override
     public String permission() {
         return "playerChat.channel";
+    }
+
+    @Override
+    public boolean isAsync() {
+        return true;
     }
 
     @Override

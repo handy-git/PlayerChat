@@ -37,7 +37,7 @@ public class HornUtil {
             MessageUtil.sendConsoleMessage("消息错误:入参错误,type:" + type + ",msg:" + msg);
             return;
         }
-        String rgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".rgb","");
+        String rgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".rgb", "");
         String name = ConfigUtil.LB_CONFIG.getString("lb." + type + ".name");
         boolean message = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".message.enable");
         boolean actionbar = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".actionbar.enable");
@@ -45,7 +45,7 @@ public class HornUtil {
         boolean title = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".title");
 
         // 解析变量
-        rgb = rgb.replace("${player}",bcMessageParam.getPlayerName());
+        rgb = rgb.replace("${player}", bcMessageParam.getPlayerName());
         rgb = PlaceholderApiUtil.set(player, rgb);
         // 加载rgb颜色
         String msgRgb = BaseUtil.replaceChatColor(rgb + msg);

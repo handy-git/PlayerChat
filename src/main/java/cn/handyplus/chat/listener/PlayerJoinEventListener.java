@@ -1,6 +1,5 @@
 package cn.handyplus.chat.listener;
 
-import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
@@ -9,13 +8,13 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.HandyHttpUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Optional;
 
@@ -35,28 +34,25 @@ public class PlayerJoinEventListener implements Listener {
     @EventHandler
     public void onEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
-                String channel = ChatConstants.DEFAULT;
-                if (!enterOptional.isPresent()) {
-                    ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
-                    enter.setPlayerName(player.getName());
-                    enter.setPlayerUuid(player.getUniqueId().toString());
-                    enter.setChannel(ChatConstants.DEFAULT);
-                    ChatPlayerChannelService.getInstance().add(enter);
-                } else {
-                    channel = enterOptional.get().getChannel();
-                }
-                // 缓存渠道
-                ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
-                // 判断渠道是否存在
-                if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
-                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
-                }
+        HandySchedulerUtil.runTaskAsynchronously(() -> {
+            Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
+            String channel = ChatConstants.DEFAULT;
+            if (!enterOptional.isPresent()) {
+                ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
+                enter.setPlayerName(player.getName());
+                enter.setPlayerUuid(player.getUniqueId().toString());
+                enter.setChannel(ChatConstants.DEFAULT);
+                ChatPlayerChannelService.getInstance().add(enter);
+            } else {
+                channel = enterOptional.get().getChannel();
             }
-        }.runTaskAsynchronously(PlayerChat.getInstance());
+            // 缓存渠道
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
+            // 判断渠道是否存在
+            if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
+                ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
+            }
+        });
     }
 
     /**

@@ -7,6 +7,7 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.db.SqlManagerUtil;
+import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
@@ -47,6 +48,7 @@ public class PlayerChat extends JavaPlugin {
         BcUtil.unregisterOut();
         ChatPluginMessageListener.getInstance().unregister();
         SqlManagerUtil.getInstance().close();
+        HandySchedulerUtil.cancelTask();
         MessageUtil.sendConsoleMessage("§a已成功卸载！");
         MessageUtil.sendConsoleMessage("§aAuthor:handy QQ群:1064982471");
     }

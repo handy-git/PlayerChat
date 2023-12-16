@@ -1,11 +1,12 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 1.0.7
+version: 1.0.8
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
 website: https://ricedoc.handyplus.cn/wiki/PlayerChat/log/
 description: 米饭聊天
+folia-supported: true
 commands:
   playerChat:
     description: 米饭聊天

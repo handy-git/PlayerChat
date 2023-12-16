@@ -1,6 +1,5 @@
 package cn.handyplus.chat.core;
 
-import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
@@ -8,13 +7,13 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +34,7 @@ public class ChatUtil {
      * @param isConsoleMsg 打印消息
      */
     public static void sendMsg(BcMessageParam msg, boolean isConsoleMsg) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                sendTextMsg(msg, isConsoleMsg);
-            }
-        }.runTaskAsynchronously(PlayerChat.getInstance());
+        HandySchedulerUtil.runTaskAsynchronously(() -> sendTextMsg(msg, isConsoleMsg));
     }
 
     /**

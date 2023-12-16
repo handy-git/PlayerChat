@@ -6,8 +6,8 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.util.AssertUtil;
+import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * @author handy
  */
 public class LookCommand implements IHandyCommandEvent {
+
     @Override
     public String command() {
         return "look";
@@ -31,11 +32,16 @@ public class LookCommand implements IHandyCommandEvent {
     }
 
     @Override
+    public boolean isAsync() {
+        return true;
+    }
+
+    @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
         AssertUtil.notTrue(args.length < 2, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
         String playerName = args[1];
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+        OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
         List<ChatPlayerHornEnter> hornPlayerList = ChatPlayerHornService.getInstance().findByUid(offlinePlayer.getUniqueId());
         if (CollUtil.isNotEmpty(hornPlayerList)) {
