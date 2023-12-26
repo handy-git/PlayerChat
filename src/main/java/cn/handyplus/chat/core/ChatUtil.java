@@ -13,10 +13,15 @@ import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -55,6 +60,11 @@ public class ChatUtil {
         // 根据渠道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             MessageUtil.sendMessage(onlinePlayer, textComponent);
+            // 如果开启艾特，发送消息
+            if (ConfigUtil.CHAT_CONFIG.getBoolean("at.enable") && chatParam.getMessage().contains(onlinePlayer.getName())) {
+                String sound = ConfigUtil.CHAT_CONFIG.getString("at.sound");
+                playSound(onlinePlayer, sound);
+            }
         }
         // 控制台消息
         if (isConsoleMsg) {
@@ -194,6 +204,98 @@ public class ChatUtil {
             newStrList.add(replaceStr(player, channelName, str));
         }
         return newStrList;
+    }
+
+    /**
+     * @param message 消息
+     * @return 新消息
+     * @ 处理
+     * @since 1.0.9
+     */
+    public static String at(String message) {
+        boolean enable = ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
+        if (!enable) {
+            return message;
+        }
+        message = BaseUtil.replaceChatColor(message);
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if (message.contains("@" + onlinePlayer.getName())) {
+                message = message.replace("@" + onlinePlayer.getName(), onlinePlayer.getName());
+                message = addColorToCharacter(message, onlinePlayer.getName(), ChatColor.GREEN);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 播放声音
+     *
+     * @param player   玩家
+     * @param soundStr 声音
+     * @since 1.0.9
+     */
+    private static void playSound(Player player, String soundStr) {
+        if (StrUtil.isEmpty(soundStr)) {
+            return;
+        }
+        Sound sound;
+        try {
+            sound = Sound.valueOf(soundStr);
+        } catch (Exception e) {
+            MessageUtil.sendMessage(player, "没有 " + soundStr + " 音效");
+            return;
+        }
+        player.getWorld().playSound(player.getLocation(), sound, 1, 1);
+    }
+
+    /**
+     * 为字符添加颜色
+     *
+     * @param text      消息
+     * @param character 字符
+     * @param color     颜色
+     * @return 新消息
+     * @since 1.0.9
+     */
+    private static String addColorToCharacter(String text, String character, ChatColor color) {
+        StringBuilder result = new StringBuilder();
+        String[] parts = text.split(character);
+        for (int i = 0; i < parts.length; i++) {
+            result.append(parts[i]);
+            if (i < parts.length - 1) {
+                // 添加颜色代码
+                result.append(color);
+                // 添加原本的颜色
+                ChatColor lastColor = getLastColor(parts[i]);
+                if (lastColor != null) {
+                    result.append(lastColor);
+                }
+                // 添加字符
+                result.append(character);
+            }
+        }
+        return result.toString();
+    }
+
+    /**
+     * 获取最后的颜色
+     *
+     * @param text 字符
+     * @return 颜色
+     * @since 1.0.9
+     */
+    private static ChatColor getLastColor(String text) {
+        String regex = "§[0-9a-fk-or]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+        String lastColor = null;
+        while (matcher.find()) {
+            lastColor = matcher.group();
+        }
+        if (lastColor != null && lastColor.length() > 1) {
+            return ChatColor.getByChar(lastColor.charAt(1));
+        }
+        return null;
     }
 
 }

@@ -5,6 +5,13 @@ item:
   # 展示格式
   format: "[i]"
 
+# @
+at:
+  # 是否开启
+  enable: true
+  # 音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html
+  sound: "BLOCK_ANVIL_HIT"
+
 # 聊天管理 频道可无限根据下面格式添加
 # 内部变量 ${player} 玩家名 ${channel} 渠道名
 chat:

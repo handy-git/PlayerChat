@@ -75,7 +75,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 内容黑名单处理
         String message = this.blackListCheck(event);
         // 有权限进行颜色代码处理
-        chatParam.setMessage(message);
+        chatParam.setMessage(ChatUtil.at(message));
         chatParam.setHasColor(event.getPlayer().hasPermission("playerChat.color"));
         chatParam.setChannel(channel);
         param.setType(ChatConstants.CHAT_TYPE);
