@@ -3,7 +3,6 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.lib.annotation.HandyListener;
-import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,7 +26,7 @@ public class PlayerChannelChatEventListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        BcMessageParam bcMessageParam = event.getBcMessageParam();
+        BcUtil.BcMessageParam bcMessageParam = event.getBcMessageParam();
         // 发送本服消息
         ChatUtil.sendMsg(bcMessageParam, true);
         // 发送BC消息

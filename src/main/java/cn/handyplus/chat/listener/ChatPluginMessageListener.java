@@ -8,7 +8,6 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
-import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
@@ -53,11 +52,11 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         // 自定义消息处理
         String server = ConfigUtil.CONFIG.getString("server");
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
-        Optional<BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
+        Optional<BcUtil.BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
         if (!paramOptional.isPresent()) {
             return;
         }
-        BcMessageParam bcMessageParam = paramOptional.get();
+        BcUtil.BcMessageParam bcMessageParam = paramOptional.get();
         // 判断时间太久的不发送
         long between = DateUtil.between(bcMessageParam.getSendTime(), new Date(), ChronoUnit.MINUTES);
         if (between > 1) {

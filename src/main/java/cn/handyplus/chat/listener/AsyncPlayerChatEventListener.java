@@ -12,8 +12,8 @@ import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
-import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -62,7 +62,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
 
         // 参数构建
-        BcMessageParam param = new BcMessageParam();
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
         param.setSendTime(new Date());
@@ -149,7 +149,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
 
         // 参数构建
-        BcMessageParam param = new BcMessageParam();
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
         param.setSendTime(new Date());

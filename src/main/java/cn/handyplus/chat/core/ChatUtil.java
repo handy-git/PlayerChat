@@ -8,8 +8,8 @@ import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
-import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -38,7 +38,7 @@ public class ChatUtil {
      * @param msg          消息内容
      * @param isConsoleMsg 打印消息
      */
-    public static void sendMsg(BcMessageParam msg, boolean isConsoleMsg) {
+    public static void sendMsg(BcUtil.BcMessageParam msg, boolean isConsoleMsg) {
         HandySchedulerUtil.runTaskAsynchronously(() -> sendTextMsg(msg, isConsoleMsg));
     }
 
@@ -48,7 +48,7 @@ public class ChatUtil {
      * @param param        消息内容
      * @param isConsoleMsg 打印消息
      */
-    private synchronized static void sendTextMsg(BcMessageParam param, boolean isConsoleMsg) {
+    private synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
         BaseComponent[] textComponent = buildMsg(chatParam, param.getType());

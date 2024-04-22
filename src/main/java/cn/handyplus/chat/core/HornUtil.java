@@ -5,8 +5,8 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.constants.VersionCheckEnum;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.param.BcMessageParam;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.BossBarUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -30,7 +30,7 @@ public class HornUtil {
      * @param player         玩家
      * @param bcMessageParam 消息
      */
-    public static void sendMsg(Player player, BcMessageParam bcMessageParam) {
+    public static void sendMsg(Player player, BcUtil.BcMessageParam bcMessageParam) {
         String type = bcMessageParam.getType();
         String msg = bcMessageParam.getMessage();
         if (StrUtil.isEmpty(type) || StrUtil.isEmpty(msg)) {

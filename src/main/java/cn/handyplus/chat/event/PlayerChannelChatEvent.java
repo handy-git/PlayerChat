@@ -1,6 +1,6 @@
 package cn.handyplus.chat.event;
 
-import cn.handyplus.lib.param.BcMessageParam;
+import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerEvent;
 public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel = false;
-    private final BcMessageParam bcMessageParam;
+    private final BcUtil.BcMessageParam bcMessageParam;
 
     @Override
     public HandlerList getHandlers() {
@@ -26,7 +26,7 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
         return HANDLERS;
     }
 
-    public PlayerChannelChatEvent(Player player, BcMessageParam bcMessageParam) {
+    public PlayerChannelChatEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
         super(player);
         this.bcMessageParam = bcMessageParam;
     }
@@ -36,7 +36,7 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      *
      * @return 消息内容
      */
-    public BcMessageParam getBcMessageParam() {
+    public BcUtil.BcMessageParam getBcMessageParam() {
         return bcMessageParam;
     }
 
