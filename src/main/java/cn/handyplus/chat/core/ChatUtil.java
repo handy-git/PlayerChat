@@ -167,6 +167,7 @@ public class ChatUtil {
             msgTextComponent = RgbTextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getItemText());
             String itemHover = CollUtil.listToStr(chatParam.getItemHover(), "\n");
             msgTextComponent.addHoverText(itemHover);
+            msgTextComponent.addClickCommand("/plc item " + chatParam.getItemId());
         }
         // 构建消息
         return prefixTextComponent.addExtra(playerTextComponent.build()).addExtra(msgTextComponent.build()).build();

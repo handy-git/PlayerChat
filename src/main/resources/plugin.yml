@@ -25,6 +25,7 @@ permissions:
       playerChat.look: true
       playerChat.color: true
       playerChat.channel: true
+      playerChat.item: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -46,3 +47,6 @@ permissions:
   playerChat.channel:
     description: 切换渠道
     default: op
+  playerChat.item:
+    description: 查看展示物品
+    default: true

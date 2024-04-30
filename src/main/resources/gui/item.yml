@@ -1,0 +1,30 @@
+# gui标题
+title: "&0${player}展示的物品"
+size: 54
+
+# 展示的位置
+index: 31
+
+# 关闭按钮
+back:
+  enable: true
+  index: 49
+  name: "   &8[&a关闭&8]"
+  material: barrier
+  isEnchant: false
+  lore:
+    - '&f- &7点击关闭'
+  custom-model-data: 0
+
+# 自定义按钮 你可以在这无限扩展你想要的按钮，格式跟这个例子返回一样就好
+custom:
+  # 分隔板
+  pane:
+    enable: true
+    index: 0,1,2,3,4,5,6,7,8,9,18,27,36,45,17,26,35,44,46,47,48,50,51,52,53
+    material: black_stained_glass_pane
+    isEnchant: false
+    name: "        &8[&7分割板&8]"
+    lore:
+      - "&7哎呀,不要随便戳人家啦"
+    custom-model-data: 0

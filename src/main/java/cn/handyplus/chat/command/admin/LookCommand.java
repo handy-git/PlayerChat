@@ -45,7 +45,7 @@ public class LookCommand implements IHandyCommandEvent {
 
         List<ChatPlayerHornEnter> hornPlayerList = ChatPlayerHornService.getInstance().findByUid(offlinePlayer.getUniqueId());
         if (CollUtil.isNotEmpty(hornPlayerList)) {
-            Map<String, Integer> hornPlayerMap = hornPlayerList.stream().collect(Collectors.toMap(ChatPlayerHornEnter::getType, v -> v.getNumber()));
+            Map<String, Integer> hornPlayerMap = hornPlayerList.stream().collect(Collectors.toMap(ChatPlayerHornEnter::getType, ChatPlayerHornEnter::getNumber));
             for (String type : hornPlayerMap.keySet()) {
                 MessageUtil.sendMessage(sender, playerName + "拥有 " + type + " 喇叭:" + hornPlayerMap.get(type));
             }

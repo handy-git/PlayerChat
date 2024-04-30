@@ -16,10 +16,10 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +32,7 @@ import java.util.Optional;
 public class LbCommand implements TabExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         // 参数是否正常
         if (args.length < 2) {
             MessageUtil.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
@@ -79,7 +79,7 @@ public class LbCommand implements TabExecutor {
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setType(type);
         param.setMessage(message.toString());
-        param.setSendTime(new Date());
+        param.setTimestamp(System.currentTimeMillis());
         param.setPlayerName(player.getName());
         BcUtil.sendParamForward(player, param);
         // 发送消息
@@ -88,7 +88,7 @@ public class LbCommand implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         List<String> completions = new ArrayList<>();
         List<String> commands = null;
         if (args.length == 1) {

@@ -13,7 +13,7 @@ import java.util.Collections;
  */
 public class ConfigUtil {
     public static FileConfiguration CONFIG, LANG_CONFIG;
-    public static FileConfiguration CHAT_CONFIG, LB_CONFIG;
+    public static FileConfiguration CHAT_CONFIG, LB_CONFIG, ITEM_CONFIG;
 
     /**
      * 加载全部配置
@@ -23,6 +23,7 @@ public class ConfigUtil {
         LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
         LB_CONFIG = HandyConfigUtil.load("lb.yml");
+        ITEM_CONFIG = HandyConfigUtil.load("gui/item.yml");
         upConfig();
     }
 

@@ -2,12 +2,11 @@ package cn.handyplus.chat;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderUtil;
+import cn.handyplus.chat.job.ClearItemJob;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.BaseConstants;
-import cn.handyplus.lib.db.SqlManagerUtil;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
@@ -34,23 +33,22 @@ public class PlayerChat extends JavaPlugin {
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")
                 .enableSql("cn.handyplus.chat.enter")
+                .initClickEvent("com.handy.guild.listener.gui")
                 .addMetrics(18860)
                 .enableBc()
                 .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
         ChatPluginMessageListener.getInstance().register();
+        // 定时任务启动
+        ClearItemJob.init();
         MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy QQ群:1064982471");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy 使用文档: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
     }
 
     @Override
     public void onDisable() {
-        // 关闭数据源
+        InitApi.disable();
         BcUtil.unregisterOut();
         ChatPluginMessageListener.getInstance().unregister();
-        SqlManagerUtil.getInstance().close();
-        HandySchedulerUtil.cancelTask();
-        MessageUtil.sendConsoleMessage("§a已成功卸载！");
-        MessageUtil.sendConsoleMessage("§aAuthor:handy QQ群:1064982471");
     }
 
     public static PlayerChat getInstance() {
