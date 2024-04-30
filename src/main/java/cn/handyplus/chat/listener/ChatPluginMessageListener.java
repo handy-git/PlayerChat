@@ -13,6 +13,7 @@ import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -48,7 +49,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
      * @param message 消息
      */
     @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+    public void onPluginMessageReceived(@NotNull String channel,@NotNull  Player player, byte[] message) {
         // 自定义消息处理
         String server = ConfigUtil.CONFIG.getString("server");
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
@@ -58,7 +59,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         }
         BcUtil.BcMessageParam bcMessageParam = paramOptional.get();
         // 判断时间太久的不发送
-        long between = DateUtil.between(bcMessageParam.getSendTime(), new Date(), ChronoUnit.MINUTES);
+        long between = DateUtil.between(new Date(bcMessageParam.getTimestamp()), new Date(), ChronoUnit.MINUTES);
         if (between > 1) {
             return;
         }

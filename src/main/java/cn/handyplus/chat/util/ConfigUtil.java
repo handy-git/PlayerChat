@@ -13,7 +13,7 @@ import java.util.Collections;
  */
 public class ConfigUtil {
     public static FileConfiguration CONFIG, LANG_CONFIG;
-    public static FileConfiguration CHAT_CONFIG, LB_CONFIG;
+    public static FileConfiguration CHAT_CONFIG, LB_CONFIG, ITEM_CONFIG;
 
     /**
      * 加载全部配置
@@ -23,6 +23,7 @@ public class ConfigUtil {
         LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
         LB_CONFIG = HandyConfigUtil.load("lb.yml");
+        ITEM_CONFIG = HandyConfigUtil.load("gui/item.yml");
         upConfig();
     }
 
@@ -34,6 +35,7 @@ public class ConfigUtil {
     public static void upConfig() {
         // 1.0.7 添加聊天频率提醒
         HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "chatTime", "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言.", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "itemNotFoundMsg", "&8[&c✘&8] &7展示物品超过可查看时间", null, "languages/" + CONFIG.getString("language") + ".yml");
         LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
 
         // 1.0.7 添加聊天频率配置和黑名单配置

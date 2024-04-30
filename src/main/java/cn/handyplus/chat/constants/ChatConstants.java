@@ -35,7 +35,7 @@ public abstract class ChatConstants {
     /**
      * 玩家当前渠道
      */
-    public static Map<UUID, String> PLAYER_CHAT_CHANNEL = new HashMap<>();
+    public static final Map<UUID, String> PLAYER_CHAT_CHANNEL = new HashMap<>();
 
     /**
      * 插件渠道
@@ -43,20 +43,20 @@ public abstract class ChatConstants {
      *
      * @since 1.0.6
      */
-    public static Map<String, String> PLUGIN_CHANNEL = new HashMap<>();
+    public static final Map<String, String> PLUGIN_CHANNEL = new HashMap<>();
 
     /**
      * 玩家注册的插件渠道
      *
      * @since 1.0.6
      */
-    public static Map<UUID, List<String>> PLAYER_PLUGIN_CHANNEL = new HashMap<>();
+    public static final Map<UUID, List<String>> PLAYER_PLUGIN_CHANNEL = new HashMap<>();
 
     /**
      * 玩家聊天冷却
      *
      * @since 1.0.7
      */
-    public static Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
+    public static final Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
 
 }

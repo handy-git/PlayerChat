@@ -4,10 +4,13 @@ import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.core.ChatUtil;
+import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.param.ChatParam;
+import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
@@ -65,7 +68,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
-        param.setSendTime(new Date());
+        param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {
@@ -143,16 +146,29 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // 取消事件
         event.setCancelled(true);
-        // 获取物品参数
         Player player = event.getPlayer();
+        // 聊天频率处理
+        if (!this.chatTimeCheck(player)) {
+            return;
+        }
+        // 获取物品参数
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
+
+        // 存储数据
+        ChatPlayerItemEnter itemEnter = new ChatPlayerItemEnter();
+        itemEnter.setPlayerName(player.getName());
+        itemEnter.setPlayerUuid(player.getUniqueId().toString());
+        itemEnter.setVersion(BaseConstants.VERSION_ID);
+        itemEnter.setItem(ItemStackUtil.itemStackSerialize(itemInMainHand));
+        itemEnter.setCreateTime(new Date());
+        Integer itemId = ChatPlayerItemService.getInstance().add(itemEnter);
 
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
         param.setPlayerName(player.getName());
-        param.setSendTime(new Date());
+        param.setTimestamp(System.currentTimeMillis());
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
@@ -162,6 +178,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         chatParam.setChannel(channel);
         chatParam.setItemText(BaseUtil.getDisplayName(itemInMainHand));
         chatParam.setItemHover(itemMeta.getLore());
+        chatParam.setItemId(itemId);
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

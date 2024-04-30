@@ -76,4 +76,9 @@ public class ChatParam {
      */
     private List<String> itemHover;
 
+    /**
+     * 物品ID
+     */
+    private Integer itemId;
+
 }
