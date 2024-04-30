@@ -33,7 +33,7 @@ public class PlayerChat extends JavaPlugin {
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")
                 .enableSql("cn.handyplus.chat.enter")
-                .initClickEvent("com.handy.guild.listener.gui")
+                .initClickEvent("cn.handyplus.chat.listener.gui")
                 .addMetrics(18860)
                 .enableBc()
                 .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
