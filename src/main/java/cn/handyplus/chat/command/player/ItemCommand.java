@@ -51,7 +51,7 @@ public class ItemCommand implements IHandyCommandEvent {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("itemNotFoundMsg"));
             return;
         }
-        Inventory inventory = ItemGui.getInstance().createGui(player, itemId);
+        Inventory inventory = ItemGui.getInstance().createGui(player, chatPlayerItemOptional.get());
         HandySchedulerUtil.runTask(() -> player.openInventory(inventory));
     }
 

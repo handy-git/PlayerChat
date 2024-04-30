@@ -36,17 +36,17 @@ public class ItemGui {
      * 创建gui
      *
      * @param player 玩家
-     * @param id     物品id
+     * @param enter  物品
      * @return gui
      */
-    public Inventory createGui(Player player, Integer id) {
+    public Inventory createGui(Player player, ChatPlayerItemEnter enter) {
         String title = ConfigUtil.ITEM_CONFIG.getString("title");
         int size = ConfigUtil.ITEM_CONFIG.getInt("size", BaseConstants.GUI_SIZE_54);
         title = PlaceholderApiUtil.set(player, title);
-        title = StrUtil.replace(title, "player", player.getName());
+        title = StrUtil.replace(title, "player", enter.getPlayerName());
         HandyInventory handyInventory = new HandyInventory(GuiTypeEnum.ITEM.getType(), title, size);
         handyInventory.setPlayer(player);
-        handyInventory.setId(id);
+        handyInventory.setId(enter.getId());
         this.setInventoryDate(handyInventory);
         return handyInventory.getInventory();
     }
