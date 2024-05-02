@@ -49,7 +49,7 @@ public class ChatPlayerItemService {
      */
     public int clearWeekData() {
         Db<ChatPlayerItemEnter> db = Db.use(ChatPlayerItemEnter.class);
-        db.where().le(ChatPlayerItemEnter::getCreateTime, DateUtil.offset(new Date(), Calendar.DATE, 7));
+        db.where().le(ChatPlayerItemEnter::getCreateTime, DateUtil.offset(new Date(), Calendar.DATE, -7));
         return db.execution().delete();
     }
 

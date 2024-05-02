@@ -45,6 +45,11 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip2", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(CONFIG, "chatTime.vip3", 0, null, "config.yml");
         CONFIG = HandyConfigUtil.load("config.yml");
+
+        // 1.0.9 at功能
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.enable", true, Collections.singletonList("是否开启"), "chat.yml");
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.sound", "BLOCK_ANVIL_LAND", Collections.singletonList("音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html"), "chat.yml");
+        CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
     }
 
 }

@@ -6,7 +6,7 @@
 
     <groupId>cn.handyplus.chat</groupId>
     <artifactId>PlayerChat</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>一款有点好用的聊天插件</description>
 
     <properties>
