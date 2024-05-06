@@ -175,8 +175,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
+        // 内容格式
+        String content = ConfigUtil.CHAT_CONFIG.getString("item.content");
+        String itemText = StrUtil.replace(content, "item", BaseUtil.getDisplayName(itemInMainHand));
         chatParam.setChannel(channel);
-        chatParam.setItemText(BaseUtil.getDisplayName(itemInMainHand));
+        chatParam.setItemText(itemText);
         chatParam.setItemHover(itemMeta.getLore());
         chatParam.setItemId(itemId);
         param.setMessage(JsonUtil.toJson(chatParam));

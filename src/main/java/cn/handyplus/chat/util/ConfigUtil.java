@@ -49,6 +49,8 @@ public class ConfigUtil {
         // 1.0.9 at功能
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.enable", true, Collections.singletonList("是否开启"), "chat.yml");
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.sound", "BLOCK_ANVIL_LAND", Collections.singletonList("音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html"), "chat.yml");
+        // 1.1.2 展示物品支持配置格式
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "item.content", "&5[&a展示了一个 &6${item} &a点击查看&5]", Collections.singletonList("内容格式"), "chat.yml");
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
     }
 

@@ -4,6 +4,8 @@ item:
   enable: true
   # 展示格式
   format: "[i]"
+  # 内容格式
+  content: "&5[&a展示了一个 &6${item} &a点击查看&5]"
 
 # @
 at:
