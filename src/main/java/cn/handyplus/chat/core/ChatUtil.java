@@ -217,7 +217,6 @@ public class ChatUtil {
         if (!enable) {
             return message;
         }
-        message = BaseUtil.replaceChatColor(message);
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (message.contains("@" + onlinePlayer.getName())) {
                 message = message.replace("@" + onlinePlayer.getName(), ChatColor.BLUE + onlinePlayer.getName() + ChatColor.WHITE);
