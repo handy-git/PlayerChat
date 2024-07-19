@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * 玩家渠道
+ * 玩家频道
  *
  * @author handy
  */
@@ -45,10 +45,10 @@ public class ChatPlayerChannelService {
     }
 
     /**
-     * 根据playerUuid设置渠道
+     * 根据playerUuid设置频道
      *
      * @param playerUuid uid
-     * @param channel    渠道
+     * @param channel    频道
      * @since 1.0.6
      */
     public boolean setChannel(UUID playerUuid, String channel) {
@@ -62,9 +62,9 @@ public class ChatPlayerChannelService {
     }
 
     /**
-     * 根据渠道查询
+     * 根据频道查询
      *
-     * @param channel 渠道
+     * @param channel 频道
      * @return 数据
      * @since 1.0.6
      */
@@ -75,17 +75,19 @@ public class ChatPlayerChannelService {
     }
 
     /**
-     * 根据playerUuid设置渠道
+     * 根据playerUuid设置频道
      *
-     * @param channel    渠道
-     * @param newChannel 新渠道
+     * @param channel    频道
+     * @param newChannel 新频道
+     * @param isApi      是否api
      * @since 1.0.6
      */
-    public boolean setChannel(String channel, String newChannel) {
+    public void setChannel(String channel, String newChannel, Boolean isApi) {
         Db<ChatPlayerChannelEnter> db = Db.use(ChatPlayerChannelEnter.class);
-        db.update().set(ChatPlayerChannelEnter::getChannel, newChannel);
+        db.update().set(ChatPlayerChannelEnter::getChannel, newChannel)
+                .set(isApi != null, ChatPlayerChannelEnter::getIsApi, isApi);
         db.where().eq(ChatPlayerChannelEnter::getChannel, channel);
-        return db.execution().update() > 0;
+        db.execution().update();
     }
 
 }

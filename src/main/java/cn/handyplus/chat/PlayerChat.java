@@ -1,6 +1,5 @@
 package cn.handyplus.chat;
 
-import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderUtil;
 import cn.handyplus.chat.job.ClearItemJob;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
@@ -36,12 +35,12 @@ public class PlayerChat extends JavaPlugin {
                 .initClickEvent("cn.handyplus.chat.listener.gui")
                 .addMetrics(18860)
                 .enableBc()
-                .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE), ChatConstants.PLUGIN_VERSION_URL);
+                .checkVersion(ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE));
         ChatPluginMessageListener.getInstance().register();
         // 定时任务启动
         ClearItemJob.init();
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器！");
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy 使用文档: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器!");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy WIKI: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
     }
 
     @Override

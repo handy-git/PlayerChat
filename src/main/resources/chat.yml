@@ -15,26 +15,26 @@ at:
   sound: "BLOCK_ANVIL_LAND"
 
 # 聊天管理 频道可无限根据下面格式添加
-# 内部变量 ${player} 玩家名 ${channel} 渠道名
+# 自定义频道权限 查看: playerChat.chat.频道名 使用: playerChat.use.频道名
+# 内部变量 ${player} 玩家名 ${channel} 频道名
 chat:
   # 默认频道(严禁删除本频道)
   default:
     # 是否开启
     enable: true
-    # 渠道名称 1.0.6+
+    # 频道名称 1.0.6+
     name: "&7[&a默认频道&7]"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '${channel}'
+        text: '${channel}%playerTitle_use%'
         # 1.16+可用hover
         hover:
-          - '&8▪ &6这个聊天频道: ${channel}'
-          - '&8▪ &6我的聊天频道: %playerChat_channel%'
-          - '&8▪ &6点击可切换到这个聊天频道'
+          - '&8▪ &6所在聊天频道: ${channel}'
+          - '&8▪ &6点击可执行命令/spawn'
         # 点击后执行的命令
-        click: '/plc channel default'
+        click: '/spawn'
       # 聊天玩家名
       player:
         text: '&f${player}&7: '
@@ -49,23 +49,53 @@ chat:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令
         click: ''
-  # 扩展公会聊天渠道
+  # VIP频道
+  vip:
+    # 是否开启
+    enable: true
+    # 频道名称
+    name: "&7[&aVIP频道&7]"
+    # 聊天格式 支持变量
+    format:
+      # 聊天前缀
+      prefix:
+        text: '${channel}%playerTitle_use%'
+        # 1.16+可用hover
+        hover:
+          - '&8▪ &6所在聊天频道: ${channel}'
+          - '&8▪ &6点击可执行命令/spawn'
+        # 点击后执行的命令
+        click: '/spawn'
+      # 聊天玩家名
+      player:
+        text: '&f${player}&7: '
+        hover:
+          - '快点击tpa我啦～'
+        # 点击后执行的命令
+        click: '/tpa ${player}'
+      # 聊天内容
+      msg:
+        text: '&f'
+        hover:
+          - '&7时间: %server_time_h:mm:ss a%'
+        # 点击后执行的命令
+        click: ''
+  # 扩展公会聊天频道(需PlayerGuild才生效)
   PlayerGuild:
     # 是否开启
     enable: true
-    # 渠道名称
+    # 频道名称
     name: "&7[&a公会频道&7]"
     # 聊天格式 支持变量
     format:
       # 聊天前缀
       prefix:
-        text: '${channel} %playerGuild_show_name%'
+        text: '${channel}%playerGuild_show_name%'
         hover:
-          - '&8▪ &6聊天频道名称: ${channel}'
-          - '&8▪ &6我的聊天频道: %playerChat_channel%'
-          - '&8▪ &6点击切换公会聊天频道'
+          - '&8▪ &6所在聊天频道: ${channel}'
+          - '&8▪ &6公会聊天频道,只有公会成员可见'
         # 点击后执行的命令
-        click: '/plg channel'
+        click: ''
       # 聊天玩家名
       player:
         text: '&f${player}&7: '

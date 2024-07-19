@@ -52,7 +52,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         Player player = event.getPlayer();
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
-        // 渠道是否开启
+        // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }

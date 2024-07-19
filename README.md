@@ -9,7 +9,7 @@
 
 购买后可获得售后服务，作者会指导使用，如未购买请自行查阅wiki了解如何使用
 
-开发版本下载渠道:
+开发版本下载频道:
 
 [GITHUB ACTIONS](https://github.com/handy-git/PlayerChat/actions)
 

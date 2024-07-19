@@ -52,11 +52,11 @@ public class ChatUtil {
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
         BaseComponent[] textComponent = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
-        // 渠道是否开启
+        // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }
-        // 根据渠道发送消息
+        // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             MessageUtil.sendMessage(onlinePlayer, textComponent);
             // 如果开启艾特，发送消息
@@ -79,11 +79,11 @@ public class ChatUtil {
      * 构建消息
      *
      * @param player  玩家
-     * @param channel 渠道
+     * @param channel 频道
      * @return 参数
      */
     public static ChatParam buildChatParam(Player player, String channel) {
-        // 渠道是否开启
+        // 频道是否开启
         String channelEnable = ChannelUtil.isChannelEnable(channel);
         if (StrUtil.isEmpty(channelEnable)) {
             return null;
@@ -176,7 +176,7 @@ public class ChatUtil {
      * 解析内部变量
      *
      * @param player      玩家
-     * @param channelName 渠道名称
+     * @param channelName 频道名称
      * @param str         内容
      * @return 新内容
      */
@@ -191,7 +191,7 @@ public class ChatUtil {
      * 解析内部变量
      *
      * @param player      玩家
-     * @param channelName 渠道名称
+     * @param channelName 频道名称
      * @param strList     内容集合
      * @return 新内容
      */

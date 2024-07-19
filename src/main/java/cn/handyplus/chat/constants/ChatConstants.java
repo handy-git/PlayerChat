@@ -13,12 +13,7 @@ import java.util.UUID;
 public abstract class ChatConstants {
 
     /**
-     * 检查更新网址
-     */
-    public final static String PLUGIN_VERSION_URL = "https://api.github.com/repos/handy-git/PlayerChat/releases/latest";
-
-    /**
-     * 默认渠道
+     * 默认频道
      */
     public final static String DEFAULT = "default";
 
@@ -33,20 +28,20 @@ public abstract class ChatConstants {
     public final static String ITEM_TYPE = "RICE_ITEM";
 
     /**
-     * 玩家当前渠道
+     * 玩家当前频道
      */
     public static final Map<UUID, String> PLAYER_CHAT_CHANNEL = new HashMap<>();
 
     /**
-     * 插件渠道
-     * key 渠道 value 插件名
+     * 插件频道
+     * key 频道 value 插件名
      *
      * @since 1.0.6
      */
     public static final Map<String, String> PLUGIN_CHANNEL = new HashMap<>();
 
     /**
-     * 玩家注册的插件渠道
+     * 玩家注册的插件频道
      *
      * @since 1.0.6
      */
@@ -58,5 +53,19 @@ public abstract class ChatConstants {
      * @since 1.0.7
      */
     public static final Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
+
+    /**
+     * 频道使用权限
+     *
+     * @since 1.1.4
+     */
+    public static final String PLAYER_CHAT_USE = "playerChat.use.";
+
+    /**
+     * 频道查看权限
+     *
+     * @since 1.1.4
+     */
+    public static final String PLAYER_CHAT_CHAT = "playerChat.chat.";
 
 }

@@ -36,6 +36,10 @@ public class ConfigUtil {
         // 1.0.7 添加聊天频率提醒
         HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "chatTime", "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言.", null, "languages/" + CONFIG.getString("language") + ".yml");
         HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "itemNotFoundMsg", "&8[&c✘&8] &7展示物品超过可查看时间", null, "languages/" + CONFIG.getString("language") + ".yml");
+        // 1.1.4 频道不存在
+        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "channelDoesNotExist", "&8[&c✘&8] &7频道不存在", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "pluginChannel", "&8[&c✘&8] &7无法切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "noChannelPermission", "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
         LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
 
         // 1.0.7 添加聊天频率配置和黑名单配置

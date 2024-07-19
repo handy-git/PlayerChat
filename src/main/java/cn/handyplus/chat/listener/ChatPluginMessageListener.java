@@ -44,7 +44,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
     /**
      * 处理消息
      *
-     * @param channel 渠道
+     * @param channel 频道
      * @param player  玩家
      * @param message 消息
      */

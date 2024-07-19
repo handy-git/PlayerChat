@@ -65,7 +65,7 @@ public enum TabListEnum {
      */
     public static List<String> returnList(String[] args, int argsLength) {
         List<String> completions = new ArrayList<>();
-        // 渠道特殊处理
+        // 频道特殊处理
         if (argsLength == 2 && ("channel".equalsIgnoreCase(args[0]))) {
             Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
             List<String> chatChannelList = new ArrayList<>(chatChannel.keySet());

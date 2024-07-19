@@ -1,22 +1,22 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 1.1.3
+version: 1.1.4
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
 website: https://ricedoc.handyplus.cn/wiki/PlayerChat/log/
-description: 米饭聊天
+description: 一款有点好用的聊天插件
 folia-supported: true
 commands:
   playerChat:
-    description: 米饭聊天
+    description: 一款有点好用的聊天插件
     aliases: [ plc ]
   lb:
-    description: 米饭聊天
+    description: 一款有点好用的聊天插件
     aliases: [ lb ]
 permissions:
   playerChat.*:
-    description: 大喇叭
+    description: 一款有点好用的聊天插件
     children:
       playerChat.reload: true
       playerChat.give: true
@@ -45,8 +45,14 @@ permissions:
     description: 颜色权限
     default: op
   playerChat.channel:
-    description: 切换渠道
+    description: 切换频道
     default: op
   playerChat.item:
     description: 查看展示物品
+    default: true
+  playerChat.chat.default:
+    description: 默认频道查看权限
+    default: true
+  playerChat.use.default:
+    description: 默认频道使用权限
     default: true

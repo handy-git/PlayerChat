@@ -33,33 +33,33 @@ public class PlayerChatApi {
     }
 
     /**
-     * 注册渠道
+     * 注册频道
      *
      * @param plugin  插件
-     * @param channel 渠道名
+     * @param channel 频道名
      */
     public void regChannel(Plugin plugin, String channel) {
         ChatConstants.PLUGIN_CHANNEL.put(this.getPluginChannelName(plugin, channel), plugin.getName());
     }
 
     /**
-     * 取消注册渠道
+     * 取消注册频道
      *
      * @param plugin  插件
-     * @param channel 渠道名
+     * @param channel 频道名
      */
     public void unRegChannel(Plugin plugin, String channel) {
-        // 移除渠道
+        // 移除频道
         String pluginChannelName = this.getPluginChannelName(plugin, channel);
         ChatConstants.PLUGIN_CHANNEL.remove(pluginChannelName);
-        // 查询是否有使用该渠道的
+        // 查询是否有使用该频道的
         List<ChatPlayerChannelEnter> channelEnterList = ChatPlayerChannelService.getInstance().findByChannel(pluginChannelName);
         if (CollUtil.isEmpty(channelEnterList)) {
             return;
         }
-        // 重新设置渠道
-        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT);
-        // 缓存渠道
+        // 重新设置频道
+        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT, true);
+        // 缓存频道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
             Optional<Player> playerOptional = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
             playerOptional.ifPresent(player -> ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), ChatConstants.DEFAULT));
@@ -67,10 +67,10 @@ public class PlayerChatApi {
     }
 
     /**
-     * 注册渠道
+     * 注册频道
      *
      * @param plugin      插件
-     * @param channelList 渠道名集合
+     * @param channelList 频道名集合
      */
     public void regChannel(Plugin plugin, List<String> channelList) {
         for (String channel : channelList) {
@@ -79,10 +79,10 @@ public class PlayerChatApi {
     }
 
     /**
-     * 取消注册渠道
+     * 取消注册频道
      *
      * @param plugin      插件
-     * @param channelList 渠道名集合
+     * @param channelList 频道名集合
      */
     public void unRegChannel(Plugin plugin, List<String> channelList) {
         for (String channel : channelList) {
@@ -91,7 +91,7 @@ public class PlayerChatApi {
     }
 
     /**
-     * 取消注册渠道
+     * 取消注册频道
      *
      * @param plugin 插件
      */
@@ -100,11 +100,11 @@ public class PlayerChatApi {
     }
 
     /**
-     * 注册玩家监听的插件自定义的渠道
+     * 注册玩家监听的插件自定义的频道
      *
      * @param plugin  插件
      * @param player  玩家
-     * @param channel 渠道
+     * @param channel 频道
      * @return true成功
      */
     public boolean regPlayerChannel(Plugin plugin, String channel, Player player) {
@@ -112,7 +112,7 @@ public class PlayerChatApi {
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
         }
-        // 设置玩家拥有的插件渠道
+        // 设置玩家拥有的插件频道
         List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
         if (!channelNameList.contains(channelName)) {
             channelNameList.add(channelName);
@@ -122,11 +122,11 @@ public class PlayerChatApi {
     }
 
     /**
-     * 取消注册玩家监听的插件自定义的渠道
+     * 取消注册玩家监听的插件自定义的频道
      *
      * @param plugin  插件
      * @param player  玩家
-     * @param channel 渠道
+     * @param channel 频道
      * @return true成功
      */
     public boolean unRegPlayerChannel(Plugin plugin, String channel, Player player) {
@@ -134,7 +134,7 @@ public class PlayerChatApi {
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
         }
-        // 取消玩家渠道
+        // 取消玩家频道
         List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
         channelNameList.remove(channelName);
         ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
@@ -142,12 +142,12 @@ public class PlayerChatApi {
     }
 
     /**
-     * 设置玩家正在使用的渠道
-     * 只能设置本插件注册的渠道
+     * 设置玩家正在使用的频道
+     * 只能设置本插件注册的频道
      *
      * @param plugin  插件
      * @param player  玩家
-     * @param channel 渠道
+     * @param channel 频道
      * @return true成功
      */
     public boolean setPlayerChannel(Plugin plugin, String channel, Player player) {
@@ -159,7 +159,7 @@ public class PlayerChatApi {
     }
 
     /**
-     * 设置玩家正在使用的渠道为默认
+     * 设置玩家正在使用的频道为默认
      *
      * @param player 玩家
      * @return true成功
@@ -169,11 +169,11 @@ public class PlayerChatApi {
     }
 
     /**
-     * 处理渠道名称
+     * 处理频道名称
      *
      * @param plugin  插件
-     * @param channel 渠道名
-     * @return 渠道名称
+     * @param channel 频道名
+     * @return 频道名称
      */
     private String getPluginChannelName(Plugin plugin, String channel) {
         return plugin.getName() + "_" + channel;

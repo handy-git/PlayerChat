@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 渠道处理
+ * 频道处理
  *
  * @author handy
  * @since 1.0.6
@@ -19,23 +19,23 @@ import java.util.List;
 public class ChannelUtil {
 
     /**
-     * 获取渠道
+     * 获取开启的频道
      *
-     * @param channel 渠道
-     * @return true开启
+     * @param channel 频道
+     * @return 开启的频道
      */
     public static String isChannelEnable(String channel) {
-        // chat自带渠道
+        // chat自带频道
         boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
         if (chatEnable) {
             return channel;
         }
-        // 第三方插件渠道
+        // 第三方插件频道
         String pluginChannel = ChatConstants.PLUGIN_CHANNEL.get(channel);
         if (StrUtil.isEmpty(pluginChannel)) {
             return null;
         }
-        // 第三方插件渠道是否启用
+        // 第三方插件频道是否启用
         boolean pluginChannelEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + pluginChannel + ".enable");
         if (!pluginChannelEnable) {
             return null;
@@ -44,9 +44,9 @@ public class ChannelUtil {
     }
 
     /**
-     * 获取渠道名
+     * 获取频道名
      *
-     * @param channel 渠道
+     * @param channel 频道
      * @return channel名称
      */
     public static String getChannelName(String channel) {
@@ -56,26 +56,27 @@ public class ChannelUtil {
     }
 
     /**
-     * 获取该渠道玩家
+     * 获取该频道玩家
      *
-     * @param channel 渠道
-     * @return 在渠道的玩家
+     * @param channel 频道
+     * @return 在频道的玩家
      */
     public static List<Player> getChannelPlayer(String channel) {
-        // 默认渠道返回全部
+        // 默认频道返回全部
         if (ChatConstants.DEFAULT.equals(channel)) {
             return new ArrayList<>(Bukkit.getOnlinePlayers());
         }
         List<Player> playerList = new ArrayList<>();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            // 判断插件自定义渠道
+            // 判断插件自定义频道
             List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(onlinePlayer.getUniqueId(), new ArrayList<>());
             if (channelNameList.contains(channel)) {
                 playerList.add(onlinePlayer);
                 continue;
             }
-            // 判断是否存在对应渠道权限
-            if (onlinePlayer.hasPermission("playerChat.chat." + isChannelEnable(channel))) {
+            // 判断是否存在对应频道权限
+            String channelEnable = isChannelEnable(channel);
+            if (StrUtil.isNotEmpty(channelEnable) && onlinePlayer.hasPermission(ChatConstants.PLAYER_CHAT_CHAT + channelEnable)) {
                 playerList.add(onlinePlayer);
             }
         }

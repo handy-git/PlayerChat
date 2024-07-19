@@ -15,7 +15,7 @@ import java.util.List;
 public class ChatParam {
 
     /**
-     * 渠道
+     * 频道
      */
     private String channel;
 

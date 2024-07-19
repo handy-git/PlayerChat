@@ -14,7 +14,7 @@ helps:
   - "   &8&l- &f take [喇叭类型] [玩家名] [数量]   &7拿走玩家喇叭数量"
   - "   &8&l- &f set [喇叭类型] [玩家名] [数量]   &7设置玩家喇叭数量"
   - "   &8&l- &f look [玩家名] &7查看玩家喇叭数量"
-  - "   &8&l- &f channel [渠道名] &7切换聊天渠道"
+  - "   &8&l- &f channel [频道名] &7切换聊天频道"
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
 
 noPermission: "&c你没有权限执行此命令..."
@@ -30,6 +30,9 @@ noHave: "&8[&c✘&8] &7你没有可使用的喇叭"
 noHaveNumber: "&8[&c✘&8] &7你的喇叭数量不足"
 chatTime: "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言."
 itemNotFoundMsg: "&8[&c✘&8] &7展示物品超过可查看时间"
+channelDoesNotExist: "&8[&c✘&8] &7频道不存在"
+pluginChannel: "&8[&c✘&8] &7无法切换到该频道"
+noChannelPermission: "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

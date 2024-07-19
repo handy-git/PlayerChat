@@ -27,7 +27,7 @@ import java.util.Optional;
 public class PlayerJoinEventListener implements Listener {
 
     /**
-     * 设置渠道
+     * 设置频道
      *
      * @param event 事件
      */
@@ -42,13 +42,19 @@ public class PlayerJoinEventListener implements Listener {
                 enter.setPlayerName(player.getName());
                 enter.setPlayerUuid(player.getUniqueId().toString());
                 enter.setChannel(ChatConstants.DEFAULT);
+                enter.setIsApi(false);
                 ChatPlayerChannelService.getInstance().add(enter);
             } else {
                 channel = enterOptional.get().getChannel();
+                // 判断是否有权限
+                if (!enterOptional.get().getIsApi() && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
+                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
+                    return;
+                }
             }
-            // 缓存渠道
+            // 缓存频道
             ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
-            // 判断渠道是否存在
+            // 判断频道是否存在
             if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
                 ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
             }
@@ -66,7 +72,7 @@ public class PlayerJoinEventListener implements Listener {
         if (!ConfigUtil.CONFIG.getBoolean(BaseConstants.IS_CHECK_UPDATE_TO_OP_MSG)) {
             return;
         }
-        HandyHttpUtil.checkVersion(event.getPlayer(), ChatConstants.PLUGIN_VERSION_URL);
+        HandyHttpUtil.checkVersion(event.getPlayer());
     }
 
 }
