@@ -91,9 +91,8 @@ public class ItemGui {
      * @param handyInventory GUI
      */
     private void setFunctionMenu(HandyInventory handyInventory) {
-        Inventory inventory = handyInventory.getInventory();
         // 关闭按钮
-        HandyInventoryUtil.setButton(ConfigUtil.ITEM_CONFIG, inventory, "back");
+        HandyInventoryUtil.setButton(ConfigUtil.ITEM_CONFIG, handyInventory, "back");
         // 自定义按钮
         HandyInventoryUtil.setCustomButton(ConfigUtil.ITEM_CONFIG, handyInventory, "custom");
     }
