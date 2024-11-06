@@ -2,13 +2,16 @@ package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.listener.AsyncPlayerChatEventListener;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
+import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * 私信
@@ -35,7 +38,7 @@ public class TellCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 接收人
@@ -47,6 +50,8 @@ public class TellCommand implements IHandyCommandEvent {
         }
         // 发送消息
         AsyncPlayerChatEventListener.sendMsg(player, message.toString(), ChatConstants.TELL, playerName);
+        HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message.toString());
+        MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("sendTell", map));
     }
 
 }

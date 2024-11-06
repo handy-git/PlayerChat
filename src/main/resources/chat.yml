@@ -75,7 +75,7 @@ chat:
         click: '/tpa ${player}'
       # 聊天内容
       msg:
-        text: '&f'
+        text: '&8&o${player}悄悄地对你说: '
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令

@@ -33,7 +33,9 @@ itemNotFoundMsg: "&8[&c✘&8] &7展示物品超过可查看时间"
 channelDoesNotExist: "&8[&c✘&8] &7频道不存在"
 pluginChannel: "&8[&c✘&8] &7无法切换到该频道"
 noChannelPermission: "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道"
+sendTell: "&8&o你悄悄的对 ${player} 说: ${message}"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:
   number: "&7请输入数量"
+  message: "&7请输入私信内容"

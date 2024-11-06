@@ -2,7 +2,6 @@ package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.service.ChatPlayerHornService;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
@@ -36,10 +35,10 @@ public class SetCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 4, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 4, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
         String type = args[1];
         String playerName = args[2];
-        Integer number = AssertUtil.isNumericToInt(args[3], sender, ConfigUtil.LANG_CONFIG.getString("amountFailureMsg"));
+        Integer number = AssertUtil.isNumericToInt(args[3], sender, BaseUtil.getMsgNotColor("amountFailureMsg"));
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
@@ -53,7 +52,7 @@ public class SetCommand implements IHandyCommandEvent {
         } else {
             ChatPlayerHornService.getInstance().setNumber(hornPlayerEnterOpt.get().getId(), number);
         }
-        MessageUtil.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("setSucceedMsg"));
+        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("setSucceedMsg"));
     }
 
 }

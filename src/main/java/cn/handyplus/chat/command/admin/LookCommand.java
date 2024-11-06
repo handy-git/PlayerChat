@@ -2,7 +2,6 @@ package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.service.ChatPlayerHornService;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -39,7 +38,7 @@ public class LookCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
         String playerName = args[1];
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
@@ -50,7 +49,7 @@ public class LookCommand implements IHandyCommandEvent {
                 MessageUtil.sendMessage(sender, playerName + "拥有 " + type + " 喇叭:" + hornPlayerMap.get(type));
             }
         } else {
-            MessageUtil.sendMessage(sender, ConfigUtil.LANG_CONFIG.getString("noLook", "").replace("${player}", playerName));
+            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("noLook", "").replace("${player}", playerName));
         }
     }
 

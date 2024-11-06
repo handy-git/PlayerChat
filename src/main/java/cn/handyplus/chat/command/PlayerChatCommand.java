@@ -1,9 +1,9 @@
 package cn.handyplus.chat.command;
 
 import cn.handyplus.chat.constants.TabListEnum;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.command.HandyCommandWrapper;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.util.BaseUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -64,7 +64,7 @@ public class PlayerChatCommand implements TabExecutor {
         if (!sender.hasPermission(PERMISSION)) {
             return true;
         }
-        List<String> helps = ConfigUtil.LANG_CONFIG.getStringList("helps");
+        List<String> helps = BaseConstants.LANG_CONFIG.getStringList("helps");
         for (String help : helps) {
             sender.sendMessage(BaseUtil.replaceChatColor(help));
         }

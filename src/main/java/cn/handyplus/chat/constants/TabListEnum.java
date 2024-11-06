@@ -39,7 +39,7 @@ public enum TabListEnum {
     SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "set", 4),
 
     TELL_TWO(null, 1, "tell", 2),
-    TELL_THREE(Collections.singletonList("请输入私信内容"), 1, "tell", 3),
+    TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
     ;
 
     /**

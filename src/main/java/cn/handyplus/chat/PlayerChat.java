@@ -6,6 +6,7 @@ import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
@@ -61,11 +62,11 @@ public class PlayerChat extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin(BaseConstants.PLACEHOLDER_API) != null) {
             USE_PAPI = true;
             new PlaceholderUtil(this).register();
-            MessageUtil.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPISucceedMsg"));
+            MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("placeholderAPISucceedMsg"));
             return;
         }
         USE_PAPI = false;
-        MessageUtil.sendConsoleMessage(ConfigUtil.LANG_CONFIG.getString("placeholderAPIFailureMsg"));
+        MessageUtil.sendConsoleMessage(BaseUtil.getMsgNotColor("placeholderAPIFailureMsg"));
     }
 
 }

@@ -1,5 +1,6 @@
 package cn.handyplus.chat.util;
 
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -12,7 +13,7 @@ import java.util.Collections;
  * @author handy
  */
 public class ConfigUtil {
-    public static FileConfiguration CONFIG, LANG_CONFIG;
+    public static FileConfiguration CONFIG;
     public static FileConfiguration CHAT_CONFIG, LB_CONFIG, ITEM_CONFIG;
 
     /**
@@ -20,7 +21,7 @@ public class ConfigUtil {
      */
     public static void init() {
         CONFIG = HandyConfigUtil.loadConfig();
-        LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
+        HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
         LB_CONFIG = HandyConfigUtil.load("lb.yml");
         ITEM_CONFIG = HandyConfigUtil.load("gui/item.yml");
@@ -34,13 +35,16 @@ public class ConfigUtil {
      */
     public static void upConfig() {
         // 1.0.7 添加聊天频率提醒
-        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "chatTime", "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言.", null, "languages/" + CONFIG.getString("language") + ".yml");
-        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "itemNotFoundMsg", "&8[&c✘&8] &7展示物品超过可查看时间", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "chatTime", "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言.", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "itemNotFoundMsg", "&8[&c✘&8] &7展示物品超过可查看时间", null, "languages/" + CONFIG.getString("language") + ".yml");
         // 1.1.4 频道不存在
-        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "channelDoesNotExist", "&8[&c✘&8] &7频道不存在", null, "languages/" + CONFIG.getString("language") + ".yml");
-        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "pluginChannel", "&8[&c✘&8] &7无法切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
-        HandyConfigUtil.setPathIsNotContains(LANG_CONFIG, "noChannelPermission", "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
-        LANG_CONFIG = HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "channelDoesNotExist", "&8[&c✘&8] &7频道不存在", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "pluginChannel", "&8[&c✘&8] &7无法切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "noChannelPermission", "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道", null, "languages/" + CONFIG.getString("language") + ".yml");
+        // 1.1.5 私信提醒
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.message", "&7请输入私信内容", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄的对 ${player} 说: ${message}", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
 
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");

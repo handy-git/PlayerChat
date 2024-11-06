@@ -59,12 +59,12 @@ public class LbCommand implements TabExecutor {
 
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (!hornPlayerEnterOpt.isPresent()) {
-            MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHave"));
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHave"));
             return true;
         }
         ChatPlayerHornEnter hornPlayerEnter = hornPlayerEnterOpt.get();
         if (hornPlayerEnter.getNumber() < 1) {
-            MessageUtil.sendMessage(player, ConfigUtil.LANG_CONFIG.getString("noHaveNumber"));
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHaveNumber"));
             return true;
         }
         // 进行扣除

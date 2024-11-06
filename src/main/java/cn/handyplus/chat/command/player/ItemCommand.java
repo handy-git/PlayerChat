@@ -3,7 +3,6 @@ package cn.handyplus.chat.command.player;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.inventory.ItemGui;
 import cn.handyplus.chat.service.ChatPlayerItemService;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -41,7 +40,7 @@ public class ItemCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, ConfigUtil.LANG_CONFIG.getString("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 展示物品ID
