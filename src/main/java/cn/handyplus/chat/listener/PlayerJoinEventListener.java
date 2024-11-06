@@ -9,6 +9,7 @@ import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
+import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyHttpUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -73,6 +74,20 @@ public class PlayerJoinEventListener implements Listener {
             return;
         }
         HandyHttpUtil.checkVersion(event.getPlayer());
+    }
+
+    /**
+     * 获取玩家列表
+     *
+     * @param event 事件
+     */
+    @EventHandler
+    public void getPlayerList(PlayerJoinEvent event) {
+        BcUtil.sendPlayerList();
+        String name = event.getPlayer().getName();
+        if (!ChatConstants.PLAYER_LIST.contains(name)) {
+            ChatConstants.PLAYER_LIST.add(name);
+        }
     }
 
 }

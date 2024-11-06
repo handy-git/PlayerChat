@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -240,14 +241,12 @@ public class ChatUtil {
         if (StrUtil.isEmpty(soundStr)) {
             return;
         }
-        Sound sound;
-        try {
-            sound = Sound.valueOf(soundStr);
-        } catch (Exception e) {
+        Optional<Sound> soundOptional = BaseUtil.getSound(soundStr);
+        if (!soundOptional.isPresent()) {
             MessageUtil.sendMessage(player, "没有 " + soundStr + " 音效");
             return;
         }
-        PlayerSchedulerUtil.playSound(player, sound, 1, 1);
+        PlayerSchedulerUtil.playSound(player, soundOptional.get(), 1, 1);
     }
 
 }

@@ -86,6 +86,9 @@ public enum TabListEnum {
             if ((tabListEnum.getBef() == null || tabListEnum.getBef().equalsIgnoreCase(args[tabListEnum.getBefPos() - 1])) && tabListEnum.getNum() == argsLength) {
                 completions = tabListEnum.getList();
             }
+            if (TELL_TWO.equals(tabListEnum)) {
+                return ChatConstants.PLAYER_LIST;
+            }
         }
         return completions;
     }

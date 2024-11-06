@@ -1,5 +1,6 @@
 package cn.handyplus.chat.constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,5 +73,12 @@ public abstract class ChatConstants {
      * @since 1.1.4
      */
     public static final String PLAYER_CHAT_CHAT = "playerChat.chat.";
+
+    /**
+     * 玩家列表
+     *
+     * @since 1.1.5
+     */
+    public static List<String> PLAYER_LIST = new ArrayList<>();
 
 }
