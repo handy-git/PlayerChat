@@ -1,4 +1,4 @@
-package cn.handyplus.chat.command.player;
+package cn.handyplus.chat.command;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.core.HornUtil;

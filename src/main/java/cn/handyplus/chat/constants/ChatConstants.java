@@ -18,6 +18,11 @@ public abstract class ChatConstants {
     public final static String DEFAULT = "default";
 
     /**
+     * 私信频道
+     */
+    public static final String TELL = "tell";
+
+    /**
      * 消息类型
      */
     public final static String CHAT_TYPE = "RICE_CHAT";

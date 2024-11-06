@@ -49,7 +49,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
      * @param message 消息
      */
     @Override
-    public void onPluginMessageReceived(@NotNull String channel,@NotNull  Player player, byte[] message) {
+    public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] message) {
         // 自定义消息处理
         String server = ConfigUtil.CONFIG.getString("server");
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");

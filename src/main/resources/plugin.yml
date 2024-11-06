@@ -1,6 +1,6 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 1.1.4
+version: 1.1.5
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
@@ -26,6 +26,7 @@ permissions:
       playerChat.color: true
       playerChat.channel: true
       playerChat.item: true
+      playerChat.tell: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -55,4 +56,13 @@ permissions:
     default: true
   playerChat.use.default:
     description: 默认频道使用权限
+    default: true
+  playerChat.tell:
+    description: 私聊权限
+    default: op
+  playerChat.chat.tell:
+    description: 私信频道查看权限
+    default: true
+  playerChat.use.tell:
+    description: 私信频道使用权限
     default: true

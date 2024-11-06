@@ -58,12 +58,28 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // 取消事件
         event.setCancelled(true);
+        // 发送消息
+        sendMsg(player, event.getMessage(), channel);
+    }
 
+    public static void sendMsg(Player player, String message, String channel) {
+        sendMsg(player, message, channel, null);
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param player         玩家
+     * @param message        消息
+     * @param channel        渠道
+     * @param tellPlayerName 接收人
+     * @since 1.1.5
+     */
+    public static void sendMsg(Player player, String message, String channel, String tellPlayerName) {
         // 聊天频率处理
-        if (!this.chatTimeCheck(player)) {
+        if (chatTimeCheck(player)) {
             return;
         }
-
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.getInstance().getName());
@@ -74,11 +90,14 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
-
+        // 添加接收人 1.1.5
+        chatParam.setTellPlayerName(tellPlayerName);
         // 内容黑名单处理
-        String message = this.blackListCheck(event);
+        message = blackListCheck(message);
+        // @处理
+        message = ChatUtil.at(message);
         // 消息内容
-        chatParam.setMessage(ChatUtil.at(message));
+        chatParam.setMessage(message);
         // 有权限进行颜色代码处理
         chatParam.setHasColor(player.hasPermission("playerChat.color"));
         chatParam.setChannel(channel);
@@ -91,11 +110,10 @@ public class AsyncPlayerChatEventListener implements Listener {
     /**
      * 替换黑名单词语为*
      *
-     * @param event 事件
+     * @param message 消息
      * @return 健康消息
      */
-    private String blackListCheck(AsyncPlayerChatEvent event) {
-        String message = event.getMessage();
+    private static String blackListCheck(String message) {
         List<String> blacklist = ConfigUtil.CONFIG.getStringList("blacklist");
         if (CollUtil.isNotEmpty(blacklist)) {
             for (String blackMsg : blacklist) {
@@ -113,18 +131,18 @@ public class AsyncPlayerChatEventListener implements Listener {
      * @param player 玩家
      * @return true 可
      */
-    private boolean chatTimeCheck(Player player) {
+    private static boolean chatTimeCheck(Player player) {
         int chatTime = HandyPermissionUtil.getReverseIntNumber(player, ConfigUtil.CONFIG, "chatTime");
         if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
             long keepAlive = (System.currentTimeMillis() - ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId())) / 1000L;
             if (keepAlive < chatTime) {
                 String waitTimeMsg = BaseUtil.getLangMsg("chatTime").replace("${chatTime}", (chatTime - keepAlive) + "");
                 MessageUtil.sendMessage(player, waitTimeMsg);
-                return false;
+                return true;
             }
         }
         ChatConstants.PLAYER_CHAT_TIME.put(player.getUniqueId(), System.currentTimeMillis());
-        return true;
+        return false;
     }
 
     /**
@@ -149,7 +167,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
         // 聊天频率处理
-        if (!this.chatTimeCheck(player)) {
+        if (chatTimeCheck(player)) {
             return;
         }
         // 获取物品参数

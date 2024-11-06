@@ -58,6 +58,10 @@ public class ChatUtil {
         }
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
+            // 判断是否开启私信
+            if (StrUtil.isNotEmpty(chatParam.getTellPlayerName()) && !onlinePlayer.getName().equals(chatParam.getTellPlayerName())) {
+                continue;
+            }
             MessageUtil.sendMessage(onlinePlayer, textComponent);
             // 如果开启艾特，发送消息
             if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable") && chatParam.getMessage().contains(onlinePlayer.getName())) {

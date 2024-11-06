@@ -81,4 +81,11 @@ public class ChatParam {
      */
     private Integer itemId;
 
+    /**
+     * 接收人
+     *
+     * @since 1.1.5
+     */
+    private String tellPlayerName;
+
 }
