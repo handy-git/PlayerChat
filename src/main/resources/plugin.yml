@@ -65,4 +65,4 @@ permissions:
     default: true
   playerChat.use.tell:
     description: 私信频道使用权限
-    default: true
+    default: op

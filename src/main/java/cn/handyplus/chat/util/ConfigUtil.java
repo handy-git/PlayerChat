@@ -44,6 +44,7 @@ public class ConfigUtil {
         // 1.1.5 私信提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.message", "&7请输入私信内容", null, "languages/" + CONFIG.getString("language") + ".yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄的对 ${player} 说: ${message}", null, "languages/" + CONFIG.getString("language") + ".yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTellErrorMsg", "&8[&c✘&8] &7不能发送私信给自己", null, "languages/" + CONFIG.getString("language") + ".yml");
         HandyConfigUtil.loadLangConfig(CONFIG.getString("language"), true);
 
         // 1.0.7 添加聊天频率配置和黑名单配置

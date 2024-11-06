@@ -43,6 +43,7 @@ public class TellCommand implements IHandyCommandEvent {
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 接收人
         String playerName = args[1];
+        AssertUtil.notTrue(player.getName().equals(playerName), sender, BaseUtil.getMsgNotColor("sendTellErrorMsg"));
         // 获取消息
         StringBuilder message = new StringBuilder();
         for (int i = 2; i < args.length; i++) {
