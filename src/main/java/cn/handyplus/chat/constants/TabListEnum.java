@@ -29,12 +29,17 @@ public enum TabListEnum {
 
     LOOK_TWO(null, 1, "look", 2),
 
+    CHANNEL_TWO(null, 1, "channel", 2),
+
+    GIVE_TWO(null, 1, "give", 2),
     GIVE_THREE(null, 1, "give", 3),
     GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "give", 4),
 
+    TAKE_TWO(null, 1, "take", 2),
     TAKE_THREE(null, 1, "take", 3),
     TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "take", 4),
 
+    SET_TWO(null, 1, "set", 2),
     SET_THREE(null, 1, "set", 3),
     SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "set", 4),
 
@@ -67,30 +72,37 @@ public enum TabListEnum {
      * @return 提醒
      */
     public static List<String> returnList(String[] args, int argsLength) {
-        List<String> completions = new ArrayList<>();
-        // 频道特殊处理
-        if (argsLength == 2 && ("channel".equalsIgnoreCase(args[0]))) {
-            Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
-            List<String> chatChannelList = new ArrayList<>(chatChannel.keySet());
-            List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
-            return chatChannelList.stream().filter(s -> !pluginChannelList.contains(s)).collect(Collectors.toList());
-        }
-
-        if (argsLength == 2 && ("give".equalsIgnoreCase(args[0]) || "take".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
-            return HornUtil.getTabTitle();
-        }
         for (TabListEnum tabListEnum : TabListEnum.values()) {
+            // 过滤掉参数长度不满足要求的情况
             if (tabListEnum.getBefPos() - 1 >= args.length) {
                 continue;
             }
-            if ((tabListEnum.getBef() == null || tabListEnum.getBef().equalsIgnoreCase(args[tabListEnum.getBefPos() - 1])) && tabListEnum.getNum() == argsLength) {
-                completions = tabListEnum.getList();
+            // 过滤掉前置参数不匹配的情况
+            if (tabListEnum.getBef() != null && !tabListEnum.getBef().equalsIgnoreCase(args[tabListEnum.getBefPos() - 1])) {
+                continue;
             }
-            if (TELL_TWO.equals(tabListEnum)) {
-                return ChatConstants.PLAYER_LIST;
+            // 过滤掉参数长度不匹配的情况
+            if (tabListEnum.getNum() != argsLength) {
+                continue;
             }
+            // 频道特殊处理
+            if (CHANNEL_TWO.equals(tabListEnum)) {
+                return getChannel();
+            }
+            // 喇叭特殊处理
+            if (GIVE_TWO.equals(tabListEnum) || TAKE_TWO.equals(tabListEnum) || SET_TWO.equals(tabListEnum)) {
+                return HornUtil.getTabTitle();
+            }
+            return tabListEnum.getList();
         }
-        return completions;
+        return new ArrayList<>();
+    }
+
+    private static List<String> getChannel() {
+        Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
+        List<String> chatChannelList = new ArrayList<>(chatChannel.keySet());
+        List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
+        return chatChannelList.stream().filter(s -> !pluginChannelList.contains(s)).collect(Collectors.toList());
     }
 
 }
