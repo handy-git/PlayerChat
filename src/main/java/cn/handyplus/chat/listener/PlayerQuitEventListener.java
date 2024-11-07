@@ -2,6 +2,7 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,6 +46,8 @@ public class PlayerQuitEventListener implements Listener {
         ChatConstants.PLAYER_CHAT_CHANNEL.remove(player.getUniqueId());
         ChatConstants.PLAYER_PLUGIN_CHANNEL.remove(player.getUniqueId());
         ChatConstants.PLAYER_CHAT_TIME.remove(player.getUniqueId());
+        ChatConstants.PLAYER_LIST.remove(player.getName());
+        BcUtil.sendPlayerList();
     }
 
 }
