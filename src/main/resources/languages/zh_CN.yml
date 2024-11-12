@@ -35,6 +35,7 @@ pluginChannel: "&8[&c✘&8] &7无法切换到该频道"
 noChannelPermission: "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道"
 sendTell: "&8&o你悄悄的对 ${player} 说: ${message}"
 sendTellErrorMsg: "&8[&c✘&8] &7不能发送私信给自己"
+blacklistMsg: "&8[&c✘&8] &7请文明用语"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

@@ -55,7 +55,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
         // 设置玩家列表
         ChatConstants.PLAYER_LIST = BcUtil.getPlayerList(message);
-        MessageUtil.sendConsoleMessage("收到BC消息当前在线玩家:" + ChatConstants.PLAYER_LIST);
+        MessageUtil.sendConsoleDebugMessage("收到BC消息当前在线玩家:" + ChatConstants.PLAYER_LIST);
         Optional<BcUtil.BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
         if (!paramOptional.isPresent()) {
             return;

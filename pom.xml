@@ -11,9 +11,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot-api.vesion>1.21-R0.1-SNAPSHOT</spigot-api.vesion>
+        <spigot-api.vesion>1.21.3-R0.1-SNAPSHOT</spigot-api.vesion>
         <lombok.version>1.18.34</lombok.version>
-        <HandyLib.version>3.13.1</HandyLib.version>
+        <HandyLib.version>3.13.3</HandyLib.version>
         <placeholderapi.version>2.10.5</placeholderapi.version>
         <annotations.version>24.1.0</annotations.version>
     </properties>
@@ -49,6 +49,13 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

@@ -93,7 +93,10 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 添加接收人 1.1.5
         chatParam.setTellPlayerName(tellPlayerName);
         // 内容黑名单处理
-        message = blackListCheck(message);
+        if (blackListCheck(message)) {
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("blacklistMsg"));
+            return;
+        }
         // @处理
         message = ChatUtil.at(message);
         // 消息内容
@@ -111,18 +114,22 @@ public class AsyncPlayerChatEventListener implements Listener {
      * 替换黑名单词语为*
      *
      * @param message 消息
-     * @return 健康消息
+     * @return true 存在黑名单语言
      */
-    private static String blackListCheck(String message) {
+    private static boolean blackListCheck(String message) {
         List<String> blacklist = ConfigUtil.CONFIG.getStringList("blacklist");
+        String stripColorMessage = BaseUtil.stripColor(message);
         if (CollUtil.isNotEmpty(blacklist)) {
             for (String blackMsg : blacklist) {
-                if (StrUtil.isNotEmpty(blackMsg)) {
-                    message = message.replace(blackMsg, "*");
+                if (StrUtil.isEmpty(blackMsg)) {
+                    continue;
+                }
+                if (stripColorMessage.contains(blackMsg)) {
+                    return true;
                 }
             }
         }
-        return message;
+        return false;
     }
 
     /**
