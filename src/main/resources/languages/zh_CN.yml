@@ -16,6 +16,7 @@ helps:
   - "   &8&l- &f look [玩家名] &7查看玩家喇叭数量"
   - "   &8&l- &f channel [频道名] &7切换聊天频道"
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
+  - "   &8&l- &f tell [玩家] [消息]  &7私信玩家消息"
 
 noPermission: "&c你没有权限执行此命令..."
 noPlayerFailureMsg: "&c该命令只能玩家执行."
