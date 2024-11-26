@@ -25,6 +25,10 @@ public class ChannelUtil {
      * @return 开启的频道
      */
     public static String isChannelEnable(String channel) {
+        // 默认频道直接返回
+        if (ChatConstants.DEFAULT.equals(channel)) {
+            return channel;
+        }
         // chat自带频道
         boolean chatEnable = ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channel + ".enable");
         if (chatEnable) {

@@ -52,6 +52,12 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         Player player = event.getPlayer();
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
+        // 是否有对应频道权限 如果没有权限回到默认频道
+        if (!ChatConstants.DEFAULT.equals(channel) && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
+            channel = ChatConstants.DEFAULT;
+            // 缓存为频道
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
+        }
         // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
@@ -59,11 +65,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 取消事件
         event.setCancelled(true);
         // 发送消息
-        sendMsg(player, event.getMessage(), channel);
-    }
-
-    public static void sendMsg(Player player, String message, String channel) {
-        sendMsg(player, message, channel, null);
+        sendMsg(player, event.getMessage(), channel, null);
     }
 
     /**

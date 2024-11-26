@@ -1,6 +1,6 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 1.1.5
+version: 1.1.6
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
