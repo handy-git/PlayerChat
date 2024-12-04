@@ -14,7 +14,6 @@
         <spigot-api.vesion>1.21.3-R0.1-SNAPSHOT</spigot-api.vesion>
         <lombok.version>1.18.36</lombok.version>
         <HandyLib.version>3.13.8</HandyLib.version>
-        <placeholderapi.version>2.10.5</placeholderapi.version>
         <annotations.version>24.1.0</annotations.version>
     </properties>
 
@@ -34,12 +33,6 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>${spigot-api.vesion}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>${placeholderapi.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -64,34 +57,6 @@
                         <arg>-Xlint:-options</arg>
                     </compilerArgs>
                 </configuration>
-            </plugin>
-            <!--将依赖的jar包打包到当前jar包-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <artifactSet>
-                        <includes>
-                            <include>cn.handyplus.lib:*:*:*</include>
-                        </includes>
-                    </artifactSet>
-                    <relocations>
-                        <relocation>
-                            <pattern>cn.handyplus.lib</pattern>
-                            <shadedPattern>cn.handyplus.chat.lib</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

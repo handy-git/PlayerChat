@@ -1,7 +1,5 @@
 package cn.handyplus.chat.event;
 
-import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.util.BcUtil;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -56,8 +54,7 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      * @since 1.1.7
      */
     public String getOriginalMessage() {
-        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
-        return chatParam.getMessage();
+        return "";
     }
 
 }
