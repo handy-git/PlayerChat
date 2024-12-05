@@ -6,14 +6,14 @@
 
     <groupId>cn.handyplus.chat</groupId>
     <artifactId>PlayerChat</artifactId>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <description>一款有点好用的聊天插件</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot-api.vesion>1.21.3-R0.1-SNAPSHOT</spigot-api.vesion>
+        <spigot-api.vesion>1.21.4-R0.1-SNAPSHOT</spigot-api.vesion>
         <lombok.version>1.18.36</lombok.version>
-        <HandyLib.version>3.13.8</HandyLib.version>
+        <HandyLib.version>3.13.9</HandyLib.version>
         <placeholderapi.version>2.10.5</placeholderapi.version>
         <annotations.version>24.1.0</annotations.version>
     </properties>
