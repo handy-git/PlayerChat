@@ -1,6 +1,5 @@
 package cn.handyplus.chat.event;
 
-import cn.handyplus.lib.util.BcUtil;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -21,7 +20,7 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      * 获取消息内容
      */
     @Getter
-    private final BcUtil.BcMessageParam bcMessageParam;
+    private final Object bcMessageParam;
 
     @Override
     public @NotNull HandlerList getHandlers() {
@@ -32,7 +31,7 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
         return HANDLERS;
     }
 
-    public PlayerChannelChatEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
+    public PlayerChannelChatEvent(Player player, Object bcMessageParam) {
         super(player);
         this.bcMessageParam = bcMessageParam;
     }
