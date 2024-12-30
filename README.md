@@ -26,6 +26,10 @@ purchased it, please refer to the wiki for usage instructions.
 **Free License for Contributions**  
 Contribute code, documentation, or other resources to this open-source project, and you can get a free license upon approval.
 
+## Contributors
+
+[![Contrib](https://contrib.rocks/image?repo=handy-git/PlayerChat)](https://github.com/handy-git/PlayerChat/graphs/contributors)
+
 Download Development Versions:
 
 [GITHUB ACTIONS](https://github.com/handy-git/PlayerChat/actions)
