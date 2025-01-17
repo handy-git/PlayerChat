@@ -5,7 +5,6 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.util.ConfigUtil;
-import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.util.BcUtil;
@@ -34,11 +33,11 @@ public class ChatPluginMessageListener implements PluginMessageListener {
     }
 
     public void register() {
-        Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.getInstance(), BaseConstants.BUNGEE_CORD_CHANNEL, INSTANCE);
+        Bukkit.getMessenger().registerIncomingPluginChannel(PlayerChat.INSTANCE, BcUtil.BUNGEE_CORD_CHANNEL, INSTANCE);
     }
 
     public void unregister() {
-        Bukkit.getMessenger().unregisterIncomingPluginChannel(PlayerChat.getInstance(), BaseConstants.BUNGEE_CORD_CHANNEL, INSTANCE);
+        Bukkit.getMessenger().unregisterIncomingPluginChannel(PlayerChat.INSTANCE, BcUtil.BUNGEE_CORD_CHANNEL, INSTANCE);
     }
 
     /**

@@ -76,7 +76,7 @@ public class LbCommand implements TabExecutor {
         }
 
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.getInstance().getName());
+        param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setType(type);
         param.setMessage(message.toString());
         param.setTimestamp(System.currentTimeMillis());

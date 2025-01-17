@@ -84,7 +84,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.getInstance().getName());
+        param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
@@ -194,7 +194,7 @@ public class AsyncPlayerChatEventListener implements Listener {
 
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.getInstance().getName());
+        param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
