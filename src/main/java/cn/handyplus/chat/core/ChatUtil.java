@@ -85,9 +85,10 @@ public class ChatUtil {
      *
      * @param player  玩家
      * @param channel 频道
+     * @param message 消息
      * @return 参数
      */
-    public static ChatParam buildChatParam(Player player, String channel) {
+    public static ChatParam buildChatParam(Player player, String channel, String message) {
         // 频道是否开启
         String channelEnable = ChannelUtil.isChannelEnable(channel);
         if (StrUtil.isEmpty(channelEnable)) {
@@ -105,6 +106,7 @@ public class ChatUtil {
         String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.text");
         List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
         String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
+        String msgContent = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.content");
 
         // 解析内部变量
         String channelName = ChannelUtil.getChannelName(channel);
@@ -117,6 +119,7 @@ public class ChatUtil {
         msgText = replaceStr(player, channelName, msgText);
         msgHover = replaceStr(player, channelName, msgHover);
         msgClick = replaceStr(player, channelName, msgClick);
+        msgContent = replaceStr(player, channelName, msgContent, message);
 
         // 解析PAPI变量
         prefixText = PlaceholderApiUtil.set(player, prefixText);
@@ -128,11 +131,12 @@ public class ChatUtil {
         msgText = PlaceholderApiUtil.set(player, msgText);
         msgHover = PlaceholderApiUtil.set(player, msgHover);
         msgClick = PlaceholderApiUtil.set(player, msgClick);
+        msgContent = PlaceholderApiUtil.set(player, msgContent);
 
         // 构建参数
         return ChatParam.builder().prefixText(prefixText).prefixHover(prefixHover).prefixClick(prefixClick)
                 .playerText(playerText).playerHover(playerHover).playerClick(playerClick)
-                .msgText(msgText).msgHover(msgHover).msgClick(msgClick).build();
+                .msgText(msgText).msgHover(msgHover).msgClick(msgClick).msgContent(msgContent).build();
     }
 
     /**
@@ -150,6 +154,8 @@ public class ChatUtil {
         chatParam.setMsgText(BaseUtil.replaceChatColor(chatParam.getMsgText()));
         chatParam.setMsgHover(BaseUtil.replaceChatColor(chatParam.getMsgHover()));
         chatParam.setMessage(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
+        chatParam.setMsgContent(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMsgContent()) : chatParam.getMsgContent());
+        chatParam.setMessage(StrUtil.isNotEmpty(chatParam.getMsgContent()) ? chatParam.getMsgContent() : chatParam.getMessage());
 
         // 前缀
         RgbTextUtil prefixTextComponent = RgbTextUtil.getInstance().init(chatParam.getPrefixText());
@@ -189,7 +195,29 @@ public class ChatUtil {
         if (StrUtil.isEmpty(str)) {
             return str;
         }
-        return str.replace("${channel}", channelName).replace("${player}", player.getName());
+        str = StrUtil.replace(str, "channel", channelName);
+        str = StrUtil.replace(str, "player", player.getName());
+        return str;
+    }
+
+    /**
+     * 解析内部变量
+     *
+     * @param player      玩家
+     * @param channelName 频道名称
+     * @param str         内容
+     * @param message     原消息
+     * @return 新内容
+     * @since 1.1.9
+     */
+    private static String replaceStr(Player player, String channelName, String str, String message) {
+        if (StrUtil.isEmpty(str)) {
+            return str;
+        }
+        str = StrUtil.replace(str, "channel", channelName);
+        str = StrUtil.replace(str, "player", player.getName());
+        str = StrUtil.replace(str, "message", message);
+        return str;
     }
 
     /**

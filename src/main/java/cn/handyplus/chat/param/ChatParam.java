@@ -44,9 +44,15 @@ public class ChatParam {
      */
     private String playerClick;
     /**
-     * 消息
+     * 消息前缀
      */
     private String msgText;
+
+    /**
+     * 消息内容
+     */
+    private String msgContent;
+
     /**
      * 消息hover
      */

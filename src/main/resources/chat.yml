@@ -44,7 +44,10 @@ chat:
         click: '/tpa ${player}'
       # 聊天内容
       msg:
+        # 自定义消息前缀
         text: '&f'
+        # 自定义消息内容
+        content: '${message}'
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令
@@ -75,7 +78,10 @@ chat:
         click: '/tpa ${player}'
       # 聊天内容
       msg:
+        # 自定义消息前缀
         text: '&8&o${player}悄悄地对你说: '
+        # 自定义消息内容
+        content: '${message}'
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令
@@ -106,7 +112,10 @@ chat:
         click: '/tpa ${player}'
       # 聊天内容
       msg:
+        # 自定义消息前缀
         text: '&f'
+        # 自定义消息内容
+        content: '${message}'
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令
@@ -136,7 +145,10 @@ chat:
         click: '/tpa ${player}'
       # 聊天内容
       msg:
+        # 自定义消息前缀
         text: '&f'
+        # 自定义消息内容
+        content: '${message}'
         hover:
           - '&7时间: %server_time_h:mm:ss a%'
         # 点击后执行的命令

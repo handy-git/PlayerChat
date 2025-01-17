@@ -82,18 +82,6 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatTimeCheck(player)) {
             return;
         }
-        // 参数构建
-        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.INSTANCE.getName());
-        param.setPlayerName(player.getName());
-        param.setTimestamp(System.currentTimeMillis());
-        // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        if (chatParam == null) {
-            return;
-        }
-        // 添加接收人 1.1.5
-        chatParam.setTellPlayerName(tellPlayerName);
         // 内容黑名单处理
         if (blackListCheck(message)) {
             MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("blacklistMsg"));
@@ -101,7 +89,19 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // @处理
         message = ChatUtil.at(message);
-        // 消息内容
+        // 参数构建
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
+        param.setPluginName(PlayerChat.INSTANCE.getName());
+        param.setPlayerName(player.getName());
+        param.setTimestamp(System.currentTimeMillis());
+        // 构建消息参数
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel, message);
+        if (chatParam == null) {
+            return;
+        }
+        // 添加接收人 1.1.5
+        chatParam.setTellPlayerName(tellPlayerName);
+        // 原消息内容
         chatParam.setMessage(message);
         // 有权限进行颜色代码处理
         chatParam.setHasColor(player.hasPermission("playerChat.color"));
@@ -199,7 +199,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setTimestamp(System.currentTimeMillis());
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
         // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel, "");
         if (chatParam == null) {
             return;
         }
