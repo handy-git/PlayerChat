@@ -2,6 +2,7 @@ package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
+import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,23 @@ public class PlayerChannelChatEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(PlayerChannelChatEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+        BcUtil.BcMessageParam bcMessageParam = event.getBcMessageParam();
+        // 发送本服消息
+        ChatUtil.sendMsg(bcMessageParam, true);
+        // 发送BC消息
+        BcUtil.sendParamForward(event.getPlayer(), bcMessageParam);
+    }
+
+    /**
+     * 频道私信信息处理.
+     *
+     * @param event 事件
+     */
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onChat(PlayerChannelTellEvent event) {
         if (event.isCancelled()) {
             return;
         }

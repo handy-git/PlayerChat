@@ -6,6 +6,7 @@ import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
+import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
@@ -109,7 +110,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));
         // 发送事件
-        HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
+        if (StrUtil.isEmpty(tellPlayerName)) {
+            HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
+        } else {
+            HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelTellEvent(player, param)));
+        }
     }
 
     /**
