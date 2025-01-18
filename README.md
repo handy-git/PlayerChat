@@ -23,7 +23,11 @@ Purchase Link: [Click to View](https://afdian.net/item/83c6b64614cd11ee8dee52540
 Purchasing this plugin grants access to after-sales support. The author will guide you through usage. If you have not
 purchased it, please refer to the wiki for usage instructions.
 
-**Free License for Contributions**  
+## Page Views Count
+
+![Page Views Count](https://badges.toozhao.com/badges/01JHVDZ8QQD8XXTSHSSRDQEZRW/green.svg)
+
+## Free License for Contributions
 Contribute code, documentation, or other resources to this open-source project, and you can get a free license upon approval.
 
 ## Contributors
