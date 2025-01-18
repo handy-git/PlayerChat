@@ -67,7 +67,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         }
         // 群组聊天消息
         if (ChatConstants.CHAT_TYPE.equals(bcMessageParam.getType()) || ChatConstants.ITEM_TYPE.equals(bcMessageParam.getType())) {
-            ChatUtil.sendMsg(bcMessageParam, false);
+            ChatUtil.asyncSendMsg(bcMessageParam, false);
             return;
         }
         // 获取喇叭配置

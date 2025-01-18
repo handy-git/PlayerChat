@@ -33,22 +33,22 @@ import static org.bukkit.Bukkit.getServer;
 public class ChatUtil {
 
     /**
-     * 解析并发送消息
+     * 异步发送消息
      *
      * @param msg          消息内容
      * @param isConsoleMsg 打印消息
      */
-    public static void sendMsg(BcUtil.BcMessageParam msg, boolean isConsoleMsg) {
+    public static void asyncSendMsg(BcUtil.BcMessageParam msg, boolean isConsoleMsg) {
         HandySchedulerUtil.runTaskAsynchronously(() -> sendTextMsg(msg, isConsoleMsg));
     }
 
     /**
-     * 解析并发送消息
+     * 发送消息
      *
      * @param param        消息内容
      * @param isConsoleMsg 打印消息
      */
-    private synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
+    public synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
         BaseComponent[] textComponent = buildMsg(chatParam, param.getType());

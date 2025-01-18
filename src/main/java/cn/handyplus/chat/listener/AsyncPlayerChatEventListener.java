@@ -14,7 +14,6 @@ import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
@@ -104,9 +103,9 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setMessage(JsonUtil.toJson(chatParam));
         // 发送事件
         if (StrUtil.isEmpty(tellPlayerName)) {
-            HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
         } else {
-            HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelTellEvent(player, param)));
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelTellEvent(player, param));
         }
     }
 
@@ -189,7 +188,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件
-        HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param)));
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
     }
 
 }
