@@ -12,7 +12,6 @@ import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
-import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
@@ -31,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 当玩家聊天时触发这个事件
@@ -83,11 +81,6 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatTimeCheck(player)) {
             return;
         }
-        // 内容黑名单处理
-        if (blackListCheck(message)) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("blacklistMsg"));
-            return;
-        }
         // @处理
         message = ChatUtil.at(message);
         // 参数构建
@@ -115,28 +108,6 @@ public class AsyncPlayerChatEventListener implements Listener {
         } else {
             HandySchedulerUtil.runTask(() -> Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelTellEvent(player, param)));
         }
-    }
-
-    /**
-     * 替换黑名单词语为*
-     *
-     * @param message 消息
-     * @return true 存在黑名单语言
-     */
-    private static boolean blackListCheck(String message) {
-        List<String> blacklist = ConfigUtil.CONFIG.getStringList("blacklist");
-        String stripColorMessage = BaseUtil.stripColor(message);
-        if (CollUtil.isNotEmpty(blacklist)) {
-            for (String blackMsg : blacklist) {
-                if (StrUtil.isEmpty(blackMsg)) {
-                    continue;
-                }
-                if (stripColorMessage.contains(blackMsg)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
