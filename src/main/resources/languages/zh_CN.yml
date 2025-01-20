@@ -19,6 +19,7 @@ helps:
   - "   &8&l- &f tell [玩家] [消息]  &7私信玩家消息"
   - "   &8&l- &f clearBossBar   &7移除全部BossBar消息"
 
+succeedMsg: "&8[&a✔&8] &a命令执行成功"
 noPermission: "&c你没有权限执行此命令..."
 noPlayerFailureMsg: "&c该命令只能玩家执行."
 reloadMsg: "&a插件重载完毕..."

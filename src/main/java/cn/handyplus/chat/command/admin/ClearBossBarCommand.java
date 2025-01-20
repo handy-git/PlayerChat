@@ -1,7 +1,9 @@
 package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.lib.command.IHandyCommandEvent;
+import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BossBarUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -31,6 +33,7 @@ public class ClearBossBarCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         BossBarUtil.removeAllBossBar();
+        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("succeedMsg", "&8[&a✔&8] &a命令执行成功"));
     }
 
 }
