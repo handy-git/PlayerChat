@@ -1,6 +1,6 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 1.2.0
+version: 1.2.1
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI ]
@@ -27,6 +27,7 @@ permissions:
       playerChat.channel: true
       playerChat.item: true
       playerChat.tell: true
+      playerChat.clearBossBar: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -65,4 +66,7 @@ permissions:
     default: true
   playerChat.use.tell:
     description: 私信频道使用权限
+    default: op
+  playerChat.clearBossBar:
+    description: 移除全部BossBar消息
     default: op

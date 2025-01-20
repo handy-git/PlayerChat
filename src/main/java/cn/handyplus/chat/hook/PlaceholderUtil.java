@@ -10,6 +10,7 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.lib.core.StrUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
      * @return 结果
      */
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "playerChat";
     }
 
@@ -43,7 +44,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
      * @return 变量
      */
     @Override
-    public String onRequest(OfflinePlayer player, String placeholder) {
+    public String onRequest(OfflinePlayer player, @NotNull String placeholder) {
         if (player == null) {
             return null;
         }
@@ -89,7 +90,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
      * @return 结果
      */
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return plugin.getDescription().getAuthors().toString();
     }
 
@@ -99,7 +100,7 @@ public class PlaceholderUtil extends PlaceholderExpansion {
      * @return 结果
      */
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 }
