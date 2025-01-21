@@ -4,6 +4,7 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.util.BcUtil;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -42,7 +43,7 @@ public class PlayerChannelTellEvent extends Event implements Cancellable {
     }
 
     public PlayerChannelTellEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
-        super(true);
+        super(!Bukkit.isPrimaryThread());
         this.player = player;
         this.bcMessageParam = bcMessageParam;
     }
