@@ -1,8 +1,5 @@
 package cn.handyplus.chat.event;
 
-import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.lib.core.JsonUtil;
-import cn.handyplus.lib.util.BcUtil;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -24,7 +21,7 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
      * 获取消息内容
      */
     @Getter
-    private final BcUtil.BcMessageParam bcMessageParam;
+    private final Object bcMessageParam;
 
     @Override
     public @NotNull HandlerList getHandlers() {
@@ -35,7 +32,7 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
         return HANDLERS;
     }
 
-    public PlayerChannelTellEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
+    public PlayerChannelTellEvent(Player player, Object bcMessageParam) {
         super(player);
         this.bcMessageParam = bcMessageParam;
     }
@@ -56,8 +53,7 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
      * @return 原始消息
      */
     public String getOriginalMessage() {
-        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
-        return chatParam.getMessage();
+        return null;
     }
 
     /**
@@ -66,8 +62,7 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
      * @return 私信接收人
      */
     public String getTellPlayerName() {
-        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
-        return chatParam.getTellPlayerName();
+        return null;
     }
 
 }
