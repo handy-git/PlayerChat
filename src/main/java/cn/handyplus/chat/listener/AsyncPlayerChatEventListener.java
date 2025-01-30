@@ -28,7 +28,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 当玩家聊天时触发这个事件
@@ -81,7 +83,8 @@ public class AsyncPlayerChatEventListener implements Listener {
             return;
         }
         // @处理
-        message = ChatUtil.at(message);
+        List<String> mentionedPlayers = new ArrayList<>();
+        message = ChatUtil.at(mentionedPlayers, message);
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
@@ -96,6 +99,8 @@ public class AsyncPlayerChatEventListener implements Listener {
         chatParam.setTellPlayerName(tellPlayerName);
         // 原消息内容
         chatParam.setMessage(message);
+        // @玩家处理
+        chatParam.setMentionedPlayers(mentionedPlayers);
         // 有权限进行颜色代码处理
         chatParam.setHasColor(player.hasPermission("playerChat.color"));
         chatParam.setChannel(channel);

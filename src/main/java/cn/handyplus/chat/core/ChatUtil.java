@@ -6,6 +6,7 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.PatternUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
@@ -14,7 +15,6 @@ import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -65,9 +65,12 @@ public class ChatUtil {
             }
             MessageUtil.sendMessage(onlinePlayer, textComponent);
             // 如果开启艾特，发送消息
-            if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable") && chatParam.getMessage().contains(onlinePlayer.getName())) {
-                String sound = ConfigUtil.CHAT_CONFIG.getString("at.sound");
-                playSound(onlinePlayer, sound);
+            if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable")) {
+                // 获取艾特玩家
+                if (CollUtil.isNotEmpty(chatParam.getMentionedPlayers()) && chatParam.getMentionedPlayers().contains(onlinePlayer.getName())) {
+                    String sound = ConfigUtil.CHAT_CONFIG.getString("at.sound");
+                    playSound(onlinePlayer, sound);
+                }
             }
         }
         // 控制台消息
@@ -240,20 +243,26 @@ public class ChatUtil {
     }
 
     /**
-     * @param message 消息
+     * 处理@人
+     *
+     * @param mentionedPlayers 被@的人
+     * @param message          消息
      * @return 新消息
-     * @ 处理
      * @since 1.0.9
      */
-    public static String at(String message) {
+    public static String at(List<String> mentionedPlayers, String message) {
         boolean enable = ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
         if (!enable) {
             return message;
         }
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if (message.contains("@" + onlinePlayer.getName())) {
-                message = message.replace("@" + onlinePlayer.getName(), ChatColor.BLUE + onlinePlayer.getName() + ChatColor.WHITE);
-            }
+        // 提取@的玩家名
+        mentionedPlayers.addAll(PatternUtil.extractAtTags(message));
+        if (CollUtil.isEmpty(mentionedPlayers)) {
+            return message;
+        }
+        // 将 @玩家名 替换为高亮显示
+        for (String playerName : mentionedPlayers) {
+            message = message.replaceAll("@" + playerName, ChatColor.BLUE + playerName + ChatColor.RESET);
         }
         return message;
     }
