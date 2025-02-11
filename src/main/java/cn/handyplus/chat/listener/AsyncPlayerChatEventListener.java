@@ -184,7 +184,7 @@ public class AsyncPlayerChatEventListener implements Listener {
             return;
         }
         // 内容格式
-        String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &6${item} &a点击查看&5]");
+        String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &f${item} &a点击查看&5]");
         String displayName = BaseUtil.getDisplayName(itemInMainHand);
         int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length");
         if (BaseUtil.stripColor(displayName).length() > itemLength) {
