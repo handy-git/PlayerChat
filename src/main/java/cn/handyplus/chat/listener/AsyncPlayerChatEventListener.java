@@ -121,7 +121,7 @@ public class AsyncPlayerChatEventListener implements Listener {
      * @return true 可
      */
     private static boolean chatTimeCheck(Player player) {
-        int chatTime = HandyPermissionUtil.getReverseIntNumber(player, ConfigUtil.CONFIG, "chatTime");
+        int chatTime = HandyPermissionUtil.getReverseIntNumber(player, BaseConstants.CONFIG, "chatTime");
         if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
             long keepAlive = (System.currentTimeMillis() - ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId())) / 1000L;
             if (keepAlive < chatTime) {
@@ -184,8 +184,12 @@ public class AsyncPlayerChatEventListener implements Listener {
             return;
         }
         // 内容格式
-        String content = ConfigUtil.CHAT_CONFIG.getString("item.content");
+        String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &6${item} &a点击查看&5]");
         String itemText = StrUtil.replace(content, "item", BaseUtil.getDisplayName(itemInMainHand));
+        int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length");
+        if (itemText.length() > itemLength) {
+            itemText = itemText.substring(0, 6) + "...";
+        }
         chatParam.setChannel(channel);
         chatParam.setItemText(itemText);
         chatParam.setItemHover(itemMeta.getLore());

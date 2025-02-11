@@ -5,6 +5,7 @@ import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
@@ -76,7 +77,7 @@ public class PlayerChannelChatEventListener implements Listener {
      * @return true 存在黑名单语言
      */
     private static boolean blackListCheck(String message) {
-        List<String> blacklist = ConfigUtil.CONFIG.getStringList("blacklist");
+        List<String> blacklist = BaseConstants.CONFIG.getStringList("blacklist");
         String stripColorMessage = BaseUtil.stripColor(message);
         if (CollUtil.isNotEmpty(blacklist)) {
             for (String blackMsg : blacklist) {

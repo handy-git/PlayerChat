@@ -5,6 +5,7 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.util.BcUtil;
@@ -50,7 +51,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] message) {
         // 自定义消息处理
-        String server = ConfigUtil.CONFIG.getString("server");
+        String server = BaseConstants.CONFIG.getString("server");
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
         // 设置玩家列表
         ChatConstants.PLAYER_LIST = BcUtil.getPlayerList(message);
