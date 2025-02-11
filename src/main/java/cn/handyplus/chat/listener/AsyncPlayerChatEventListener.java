@@ -185,11 +185,13 @@ public class AsyncPlayerChatEventListener implements Listener {
         }
         // 内容格式
         String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &6${item} &a点击查看&5]");
-        String itemText = StrUtil.replace(content, "item", BaseUtil.getDisplayName(itemInMainHand));
+        String displayName = BaseUtil.getDisplayName(itemInMainHand);
         int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length");
-        if (itemText.length() > itemLength) {
-            itemText = itemText.substring(0, 6) + "...";
+        if (BaseUtil.stripColor(displayName).length() > itemLength) {
+            displayName = BaseUtil.stripColor(displayName).substring(0, 6) + "...";
         }
+        String itemText = StrUtil.replace(content, "item", displayName);
+
         chatParam.setChannel(channel);
         chatParam.setItemText(itemText);
         chatParam.setItemHover(itemMeta.getLore());
