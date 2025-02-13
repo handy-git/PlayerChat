@@ -1,5 +1,6 @@
 package cn.handyplus.chat.event;
 
+import cn.handyplus.lib.util.BcUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

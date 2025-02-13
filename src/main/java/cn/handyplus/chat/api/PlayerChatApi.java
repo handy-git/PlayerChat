@@ -122,7 +122,7 @@ public class PlayerChatApi {
      * @return 频道名称
      */
     private String getPluginChannelName(Plugin plugin, String channel) {
-        return true;
+        return "";
     }
 
     /**
@@ -136,6 +136,7 @@ public class PlayerChatApi {
      * @since 1.2.3
      */
     public boolean sendMessage(Player player, String channel, String message, String source) {
+        return true;
     }
 
 }
