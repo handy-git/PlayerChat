@@ -101,4 +101,9 @@ public class ChatParam {
      */
     private List<String> mentionedPlayers;
 
+    /**
+     * 来源
+     */
+    private String source = "PlayerChat";
+
 }

@@ -68,4 +68,26 @@ public class PlayerChannelChatEvent extends Event implements Cancellable {
         return chatParam.getMessage();
     }
 
+    /**
+     * 获取当前渠道
+     *
+     * @return 当前渠道
+     * @since 1.2.3
+     */
+    public String getChannel() {
+        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
+        return chatParam.getChannel();
+    }
+
+    /**
+     * 获取消息来源
+     *
+     * @return 消息来源
+     * @since 1.2.3
+     */
+    public String getSource() {
+        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
+        return chatParam.getSource();
+    }
+
 }

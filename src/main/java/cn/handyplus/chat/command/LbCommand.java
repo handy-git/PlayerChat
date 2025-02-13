@@ -7,6 +7,7 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -34,16 +35,9 @@ public class LbCommand implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         // 参数是否正常
-        if (args.length < 2) {
-            MessageUtil.sendMessage(sender, "参数错误 /lb [喇叭类型] [消息内容]");
-            return true;
-        }
+        AssertUtil.notTrue(args.length < 2, sender, "参数错误 /lb [喇叭类型] [消息内容]");
         // 是否为玩家
-        if (BaseUtil.isNotPlayer(sender)) {
-            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
-            return true;
-        }
-        Player player = (Player) sender;
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 获取类型
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");

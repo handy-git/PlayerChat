@@ -1,11 +1,18 @@
 package cn.handyplus.chat.api;
 
+import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
+import cn.handyplus.chat.event.PlayerChannelChatEvent;
+import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.BcUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -177,6 +184,41 @@ public class PlayerChatApi {
      */
     private String getPluginChannelName(Plugin plugin, String channel) {
         return plugin.getName() + "_" + channel;
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param player  发送人
+     * @param channel 渠道
+     * @param message 消息内容
+     * @param source  来源
+     * @return true成功
+     * @since 1.2.3
+     */
+    public boolean sendMessage(Player player, String channel, String message, String source) {
+        // @处理
+        List<String> mentionedPlayers = new ArrayList<>();
+        message = ChatUtil.at(mentionedPlayers, message);
+        // 参数构建
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
+        param.setPluginName(PlayerChat.INSTANCE.getName());
+        param.setPlayerName(player.getName());
+        param.setTimestamp(System.currentTimeMillis());
+        // 构建消息参数
+        ChatParam chatParam = ChatParam.builder().msgContent(message).build();
+        // 原消息内容
+        chatParam.setMessage(message);
+        // @玩家处理
+        chatParam.setMentionedPlayers(mentionedPlayers);
+        chatParam.setHasColor(true);
+        chatParam.setChannel(channel);
+        chatParam.setSource(source);
+        param.setType(ChatConstants.CHAT_TYPE);
+        param.setMessage(JsonUtil.toJson(chatParam));
+        // 发送事件
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
+        return true;
     }
 
 }
