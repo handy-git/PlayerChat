@@ -69,7 +69,7 @@ public class PlayerChannelChatEvent extends Event implements Cancellable {
      * 获取当前渠道
      *
      * @return 当前渠道
-     * @since 1.2.3
+     * @since 1.2.4
      */
     public String getChannel() {
         return "";
@@ -79,7 +79,7 @@ public class PlayerChannelChatEvent extends Event implements Cancellable {
      * 获取消息来源
      *
      * @return 消息来源
-     * @since 1.2.3
+     * @since 1.2.4
      */
     public String getSource() {
         return "";
