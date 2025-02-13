@@ -194,7 +194,7 @@ public class PlayerChatApi {
      * @param message 消息内容
      * @param source  来源
      * @return true成功
-     * @since 1.2.3
+     * @since 1.2.4
      */
     public boolean sendMessage(Player player, String channel, String message, String source) {
         // @处理
