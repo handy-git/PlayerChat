@@ -1,10 +1,11 @@
 package cn.handyplus.chat.event;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @author handy
  * @since 1.0.0
  */
-public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
+public class PlayerChannelChatEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel = false;
     /**
@@ -21,6 +22,12 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      */
     @Getter
     private final Object bcMessageParam;
+
+    /**
+     * 发送人
+     */
+    @Getter
+    private final Player player;
 
     @Override
     public @NotNull HandlerList getHandlers() {
@@ -31,8 +38,9 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
         return HANDLERS;
     }
 
-    public PlayerChannelChatEvent(Player player, Object bcMessageParam) {
-        super(player);
+    public PlayerChannelChatEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
+        super(!Bukkit.isPrimaryThread());
+        this.player = player;
         this.bcMessageParam = bcMessageParam;
     }
 
@@ -54,6 +62,28 @@ public class PlayerChannelChatEvent extends PlayerEvent implements Cancellable {
      */
     public String getOriginalMessage() {
         return "";
+    }
+
+    /**
+     * 获取当前渠道
+     *
+     * @return 当前渠道
+     * @since 1.2.3
+     */
+    public String getChannel() {
+        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
+        return chatParam.getChannel();
+    }
+
+    /**
+     * 获取消息来源
+     *
+     * @return 消息来源
+     * @since 1.2.3
+     */
+    public String getSource() {
+        ChatParam chatParam = JsonUtil.toBean(bcMessageParam.getMessage(), ChatParam.class);
+        return chatParam.getSource();
     }
 
 }

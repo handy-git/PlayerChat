@@ -122,7 +122,20 @@ public class PlayerChatApi {
      * @return 频道名称
      */
     private String getPluginChannelName(Plugin plugin, String channel) {
-        return plugin.getName() + "_" + channel;
+        return true;
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param player  发送人
+     * @param channel 渠道
+     * @param message 消息内容
+     * @param source  来源
+     * @return true成功
+     * @since 1.2.3
+     */
+    public boolean sendMessage(Player player, String channel, String message, String source) {
     }
 
 }

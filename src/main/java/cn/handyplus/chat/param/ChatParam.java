@@ -94,4 +94,16 @@ public class ChatParam {
      */
     private String tellPlayerName;
 
+    /**
+     * 被@的人
+     *
+     * @since 1.2.2
+     */
+    private List<String> mentionedPlayers;
+
+    /**
+     * 来源
+     */
+    private String source = "PlayerChat";
+
 }

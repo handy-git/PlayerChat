@@ -1,10 +1,11 @@
 package cn.handyplus.chat.event;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @author handy
  * @since 1.2.0
  */
-public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
+public class PlayerChannelTellEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean cancel = false;
 
@@ -22,6 +23,12 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
      */
     @Getter
     private final Object bcMessageParam;
+
+    /**
+     * 发送人
+     */
+    @Getter
+    private final Player player;
 
     @Override
     public @NotNull HandlerList getHandlers() {
@@ -32,8 +39,9 @@ public class PlayerChannelTellEvent extends PlayerEvent implements Cancellable {
         return HANDLERS;
     }
 
-    public PlayerChannelTellEvent(Player player, Object bcMessageParam) {
-        super(player);
+    public PlayerChannelTellEvent(Player player, BcUtil.BcMessageParam bcMessageParam) {
+        super(!Bukkit.isPrimaryThread());
+        this.player = player;
         this.bcMessageParam = bcMessageParam;
     }
 
