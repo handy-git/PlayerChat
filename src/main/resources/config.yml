@@ -1,6 +1,10 @@
 # 子服标识，群组服需先配置这个
 server: "lobby"
 
+# 子服自定义名称
+# 可以用 papi变量 %playerChat_server_name% 读取 或者内部变量 ${serverName} 读取
+serverName: ""
+
 # 第一次修改语言文件,需重启生效
 language: zh_CN
 

@@ -4,6 +4,7 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.PatternUtil;
@@ -200,6 +201,7 @@ public class ChatUtil {
         }
         str = StrUtil.replace(str, "channel", channelName);
         str = StrUtil.replace(str, "player", player.getName());
+        str = StrUtil.replace(str, "serverName", BaseConstants.CONFIG.getString("serverName"));
         return str;
     }
 
