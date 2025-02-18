@@ -201,7 +201,7 @@ public class ChatUtil {
         }
         str = StrUtil.replace(str, "channel", channelName);
         str = StrUtil.replace(str, "player", player.getName());
-        str = StrUtil.replace(str, "serverName", BaseConstants.CONFIG.getString("serverName"));
+        str = StrUtil.replace(str, "serverName", BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName")));
         return str;
     }
 
