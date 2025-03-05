@@ -47,15 +47,15 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTellErrorMsg", "&8[&c✘&8] &7不能发送私信给自己", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "blacklistMsg", "&8[&c✘&8] &7请文明用语", null, language);
         HandyConfigUtil.loadLangConfig(true);
-
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.default", 0, Collections.singletonList("聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip1", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip2", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip3", 0, null, "config.yml");
+        // 1.2.6 增加登录后默认频道设置
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
         BaseConstants.CONFIG = HandyConfigUtil.load("config.yml");
-
         // 1.0.9 at功能
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.enable", true, Collections.singletonList("是否开启"), "chat.yml");
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.sound", "BLOCK_ANVIL_LAND", Collections.singletonList("音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html"), "chat.yml");

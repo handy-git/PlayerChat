@@ -5,6 +5,7 @@ import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BcUtil;
@@ -35,7 +36,8 @@ public class PlayerJoinEventListener implements Listener {
         Player player = event.getPlayer();
         HandySchedulerUtil.runTaskAsynchronously(() -> {
             Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
-            String channel = ChatConstants.DEFAULT;
+            String defaultChannel = BaseConstants.CONFIG.getString("firstLoginChatDefault", ChatConstants.DEFAULT);
+            String channel = defaultChannel;
             if (!enterOptional.isPresent()) {
                 ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
                 enter.setPlayerName(player.getName());
@@ -47,7 +49,7 @@ public class PlayerJoinEventListener implements Listener {
                 channel = enterOptional.get().getChannel();
                 // 判断是否有权限
                 if (!enterOptional.get().getIsApi() && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
-                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
+                    ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), defaultChannel);
                     return;
                 }
             }
