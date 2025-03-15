@@ -21,7 +21,6 @@ lb:
     # 物品栏上方消息 1.9+ 才可使用
     actionbar:
       enable: true
-      rgb: "&a"
       format: "${message}"
     # boss血条消息 1.13+ 才可使用
     boss:

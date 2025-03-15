@@ -5,7 +5,6 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.constants.VersionCheckEnum;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.BossBarUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
@@ -46,7 +45,7 @@ public class HornUtil {
         // 解析内部变量
         rgb = rgb.replace("${player}", bcMessageParam.getPlayerName());
         // 加载rgb颜色
-        String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
+        String msgRgb = rgb + msg;
         if (message) {
             List<String> messageFormatList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".message.format");
             for (String messageFormat : messageFormatList) {
@@ -56,10 +55,8 @@ public class HornUtil {
         }
         // 1.9+ 才可使用
         if (actionbar && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
-            String actionbarRgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.rgb");
-            String actionbarRgbMsg = BaseUtil.replaceChatColor(actionbarRgb + msg);
             String actionbarFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.format", "${message}");
-            actionbarFormat = actionbarFormat.replace("${message}", actionbarRgbMsg);
+            actionbarFormat = actionbarFormat.replace("${message}", msgRgb);
             MessageUtil.sendAllActionbar(PlaceholderApiUtil.set(player, actionbarFormat));
         }
         // 1.9+ 才可使用
@@ -72,8 +69,7 @@ public class HornUtil {
         if (boss && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_12.getVersionId()) {
             String bossFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".boss.format", "${message}");
             String bossFormatStr = bossFormat.replace("${message}", msgRgb);
-            bossFormatStr = PlaceholderApiUtil.set(player, bossFormatStr);
-            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.LB_CONFIG, "lb." + type + ".boss", bossFormatStr);
+            KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.LB_CONFIG, "lb." + type + ".boss", PlaceholderApiUtil.set(player, bossFormatStr));
             BossBarUtil.addAllPlayer(bossBar);
             int time = ConfigUtil.LB_CONFIG.getInt("lb." + type + ".boss.time", 3);
             BossBarUtil.setProgress(bossBar.getKey(), time);
