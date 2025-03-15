@@ -43,36 +43,36 @@ public class HornUtil {
         boolean actionbar = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".actionbar.enable");
         boolean boss = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".boss.enable");
         boolean title = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".title.enable", true);
-
-        // 解析变量
+        // 解析内部变量
         rgb = rgb.replace("${player}", bcMessageParam.getPlayerName());
-        rgb = PlaceholderApiUtil.set(player, rgb);
         // 加载rgb颜色
         String msgRgb = BaseUtil.replaceChatColor(rgb + msg);
         if (message) {
             List<String> messageFormatList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".message.format");
             for (String messageFormat : messageFormatList) {
-                MessageUtil.sendAllMessage(messageFormat.replace("${message}", msgRgb));
+                messageFormat = messageFormat.replace("${message}", msgRgb);
+                MessageUtil.sendAllMessage(PlaceholderApiUtil.set(player, messageFormat));
             }
         }
         // 1.9+ 才可使用
         if (actionbar && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
             String actionbarRgb = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.rgb");
             String actionbarRgbMsg = BaseUtil.replaceChatColor(actionbarRgb + msg);
-            actionbarRgbMsg = PlaceholderApiUtil.set(player, actionbarRgbMsg);
             String actionbarFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.format", "${message}");
-            MessageUtil.sendAllActionbar(actionbarFormat.replace("${message}", actionbarRgbMsg));
+            actionbarFormat = actionbarFormat.replace("${message}", actionbarRgbMsg);
+            MessageUtil.sendAllActionbar(PlaceholderApiUtil.set(player, actionbarFormat));
         }
         // 1.9+ 才可使用
         if (title && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
-            name = PlaceholderApiUtil.set(player, name);
             String titleFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".title.format", "${message}");
-            MessageUtil.sendAllTitle(name, titleFormat.replace("${message}", msgRgb));
+            titleFormat = titleFormat.replace("${message}", msgRgb);
+            MessageUtil.sendAllTitle(PlaceholderApiUtil.set(player, name), PlaceholderApiUtil.set(player, titleFormat));
         }
         // 1.13+ 才可使用
         if (boss && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_12.getVersionId()) {
             String bossFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".boss.format", "${message}");
             String bossFormatStr = bossFormat.replace("${message}", msgRgb);
+            bossFormatStr = PlaceholderApiUtil.set(player, bossFormatStr);
             KeyedBossBar bossBar = BossBarUtil.createBossBar(ConfigUtil.LB_CONFIG, "lb." + type + ".boss", bossFormatStr);
             BossBarUtil.addAllPlayer(bossBar);
             int time = ConfigUtil.LB_CONFIG.getInt("lb." + type + ".boss.time", 3);
