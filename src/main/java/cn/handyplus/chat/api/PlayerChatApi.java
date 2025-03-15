@@ -137,27 +137,6 @@ public class PlayerChatApi {
      * @since 1.2.4
      */
     public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @NotNull String source) {
-        // @处理
-        List<String> mentionedPlayers = new ArrayList<>();
-        message = ChatUtil.at(mentionedPlayers, message);
-        // 参数构建
-        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.INSTANCE.getName());
-        param.setPlayerName(player.getName());
-        param.setTimestamp(System.currentTimeMillis());
-        // 构建消息参数
-        ChatParam chatParam = ChatParam.builder().msgContent(message).build();
-        // 原消息内容
-        chatParam.setMessage(message);
-        // @玩家处理
-        chatParam.setMentionedPlayers(mentionedPlayers);
-        chatParam.setHasColor(true);
-        chatParam.setChannel(channel);
-        chatParam.setSource(source);
-        param.setType(ChatConstants.CHAT_TYPE);
-        param.setMessage(JsonUtil.toJson(chatParam));
-        // 发送事件
-        Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
         return true;
     }
 
@@ -169,15 +148,6 @@ public class PlayerChatApi {
      * @since 1.2.7
      */
     public void sendLb(@NotNull Player player, @NotNull String type, @NotNull String message) {
-        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.INSTANCE.getName());
-        param.setType(type);
-        param.setMessage(message);
-        param.setTimestamp(System.currentTimeMillis());
-        param.setPlayerName(player.getName());
-        BcUtil.sendParamForward(player, param);
-        // 发送消息
-        HornUtil.sendMsg(player, param);
     }
 
 }
