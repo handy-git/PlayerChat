@@ -22,6 +22,7 @@ lb:
     actionbar:
       enable: true
       rgb: "&a"
+      format: "${message}"
     # boss血条消息 1.13+ 才可使用
     boss:
       enable: true
@@ -30,5 +31,8 @@ lb:
       # 血条样式 https://bukkit.windit.net/javadoc/org/bukkit/boss/BarStyle.html
       style: "SOLID"
       time: 3
+      format: "${message}"
     # 公告消息 1.9+ 才可使用
-    title: true
+    title:
+      enable: true
+      format: "${message}"
