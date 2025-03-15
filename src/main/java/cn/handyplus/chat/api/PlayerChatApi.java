@@ -3,6 +3,7 @@ package cn.handyplus.chat.api;
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChatUtil;
+import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.param.ChatParam;
@@ -15,6 +16,7 @@ import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,7 +198,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 1.2.4
      */
-    public boolean sendMessage(Player player, String channel, String message, String source) {
+    public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @NotNull String source) {
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();
         message = ChatUtil.at(mentionedPlayers, message);
@@ -219,6 +221,25 @@ public class PlayerChatApi {
         // 发送事件
         Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelChatEvent(player, param));
         return true;
+    }
+
+    /**
+     * 发送喇叭消息
+     * @param player 玩家
+     * @param type 类型
+     * @param message 消息
+     * @since 1.2.7
+     */
+    public void sendLb(@NotNull Player player, @NotNull String type, @NotNull String message) {
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
+        param.setPluginName(PlayerChat.INSTANCE.getName());
+        param.setType(type);
+        param.setMessage(message);
+        param.setTimestamp(System.currentTimeMillis());
+        param.setPlayerName(player.getName());
+        BcUtil.sendParamForward(player, param);
+        // 发送消息
+        HornUtil.sendMsg(player, param);
     }
 
 }
