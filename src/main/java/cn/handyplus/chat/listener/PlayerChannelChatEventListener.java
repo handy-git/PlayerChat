@@ -3,7 +3,6 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
-import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;

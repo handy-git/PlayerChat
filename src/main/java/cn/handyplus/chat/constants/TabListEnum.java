@@ -6,12 +6,13 @@ import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -87,7 +88,7 @@ public enum TabListEnum {
             }
             // 频道特殊处理
             if (CHANNEL_TWO.equals(tabListEnum)) {
-                return getChannel();
+                return getChannel(null);
             }
             // 喇叭特殊处理
             if (GIVE_TWO.equals(tabListEnum) || TAKE_TWO.equals(tabListEnum) || SET_TWO.equals(tabListEnum)) {
@@ -98,9 +99,16 @@ public enum TabListEnum {
         return new ArrayList<>();
     }
 
-    private static List<String> getChannel() {
-        Map<String, Object> chatChannel = HandyConfigUtil.getChildMap(ConfigUtil.CHAT_CONFIG, "chat");
-        List<String> chatChannelList = new ArrayList<>(chatChannel.keySet());
+    public static List<String> getChannel(CommandSender sender) {
+        Set<String> chatChannelKeySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat");
+        List<String> chatChannelList = new ArrayList<>(chatChannelKeySet);
+        // 过滤私信频道
+        chatChannelList = chatChannelList.stream().filter(s -> !"tell".equals(s)).collect(Collectors.toList());
+        // 只显示有权限的频道
+        if (sender != null) {
+            chatChannelList = chatChannelList.stream().filter(s -> sender.hasPermission(ChatConstants.PLAYER_CHAT_USE + s)).collect(Collectors.toList());
+        }
+        // 过滤插件频道
         List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
         return chatChannelList.stream().filter(s -> !pluginChannelList.contains(s)).collect(Collectors.toList());
     }

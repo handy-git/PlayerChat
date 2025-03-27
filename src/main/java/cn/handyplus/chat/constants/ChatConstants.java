@@ -11,7 +11,7 @@ import java.util.UUID;
  *
  * @author handy
  */
-public abstract class ChatConstants {
+public class ChatConstants {
 
     /**
      * 默认频道

@@ -4,7 +4,6 @@ import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.db.Db;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -42,14 +41,14 @@ public class ChatPlayerItemService {
     }
 
     /**
-     * 清理周贡献
+     * 清理之前数据
      *
      * @return 清理数量
-     * @since 1.10.9
+     * @since 1.1.0
      */
-    public int clearWeekData() {
+    public int clearItemData() {
         Db<ChatPlayerItemEnter> db = Db.use(ChatPlayerItemEnter.class);
-        db.where().le(ChatPlayerItemEnter::getCreateTime, DateUtil.offset(new Date(), Calendar.DATE, -7));
+        db.where().le(ChatPlayerItemEnter::getCreateTime, DateUtil.addDate(new Date(), -1));
         return db.execution().delete();
     }
 

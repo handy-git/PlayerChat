@@ -46,6 +46,8 @@ public class ChannelCommand implements IHandyCommandEvent {
         // 频道存在判断
         String chatChannel = ChannelUtil.isChannelEnable(channel);
         AssertUtil.notNull(chatChannel, sender, BaseUtil.getMsgNotColor("channelDoesNotExist"));
+        // 禁止切换到私信频道
+        AssertUtil.notTrue(ChatConstants.TELL.equals(chatChannel), sender, BaseUtil.getMsgNotColor("channelDoesNotExist"));
         // 插件注册频道处理
         List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
         AssertUtil.notTrue(pluginChannelList.contains(channel), sender, BaseUtil.getMsgNotColor("pluginChannel"));

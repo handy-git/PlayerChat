@@ -1,10 +1,12 @@
 package cn.handyplus.chat.command;
 
+import cn.handyplus.chat.constants.PlayerTabListEnum;
 import cn.handyplus.chat.constants.TabListEnum;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.command.HandyCommandWrapper;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -28,11 +30,13 @@ public class PlayerChatCommand implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         // 判断指令是否正确
         if (args.length < 1) {
-            return sendHelp(sender);
+            sendHelp(sender);
+            return true;
         }
         boolean rst = HandyCommandWrapper.onCommand(sender, cmd, label, args, BaseUtil.getLangMsg("noPermission"));
         if (!rst) {
-            return sendHelp(sender);
+            sendHelp(sender);
+            return true;
         }
         return true;
     }
@@ -42,7 +46,7 @@ public class PlayerChatCommand implements TabExecutor {
         List<String> completions = new ArrayList<>();
         List<String> commands;
         if (!sender.hasPermission(PERMISSION)) {
-            commands = new ArrayList<>();
+            commands = PlayerTabListEnum.returnList(sender, args, args.length);
         } else {
             commands = TabListEnum.returnList(args, args.length);
         }
@@ -58,17 +62,15 @@ public class PlayerChatCommand implements TabExecutor {
      * 发送帮助
      *
      * @param sender 发送人
-     * @return 消息
      */
-    private Boolean sendHelp(CommandSender sender) {
+    private void sendHelp(CommandSender sender) {
         if (!sender.hasPermission(PERMISSION)) {
-            return true;
+            return;
         }
         List<String> helps = BaseConstants.LANG_CONFIG.getStringList("helps");
         for (String help : helps) {
-            sender.sendMessage(BaseUtil.replaceChatColor(help));
+            MessageUtil.sendMessage(sender, help);
         }
-        return true;
     }
 
 }

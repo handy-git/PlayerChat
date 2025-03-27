@@ -1,8 +1,8 @@
 package cn.handyplus.chat;
 
 import cn.handyplus.chat.hook.PlaceholderUtil;
-import cn.handyplus.chat.job.ClearItemJob;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
+import cn.handyplus.chat.util.ClearItemJob;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.HookPluginEnum;
