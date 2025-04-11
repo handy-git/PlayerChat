@@ -46,6 +46,10 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄的对 ${player} 说: ${message}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTellErrorMsg", "&8[&c✘&8] &7不能发送私信给自己", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "blacklistMsg", "&8[&c✘&8] &7请文明用语", null, language);
+        // 1.2.9 喇叭参数提醒
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/lb [喇叭类型] [消息内容]", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbConfigFailureMsg", "&8[&c✘&8] &7喇叭配置错误", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbEnableMsg", "&8[&c✘&8] &7该喇叭已经被管理员禁用", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
