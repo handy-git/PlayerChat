@@ -75,7 +75,7 @@ public class PlayerChannelChatEventListener implements Listener {
      * @param message 消息
      * @return true 存在黑名单语言
      */
-    private static boolean blackListCheck(String message) {
+    public static boolean blackListCheck(String message) {
         List<String> blacklist = BaseConstants.CONFIG.getStringList("blacklist");
         String stripColorMessage = BaseUtil.stripColor(message);
         if (CollUtil.isNotEmpty(blacklist)) {

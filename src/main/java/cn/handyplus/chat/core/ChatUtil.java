@@ -16,6 +16,7 @@ import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -256,6 +258,11 @@ public class ChatUtil {
         boolean enable = ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
         if (!enable) {
             return message;
+        }
+        // 如何存在玩家自动添加@
+        boolean contains = Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()).contains(message);
+        if (contains) {
+            message = "@" + message;
         }
         // 提取@的玩家名
         mentionedPlayers.addAll(PatternUtil.extractAtTags(message));

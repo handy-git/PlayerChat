@@ -3,6 +3,7 @@ package cn.handyplus.chat.command;
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
+import cn.handyplus.chat.listener.PlayerChannelChatEventListener;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
@@ -64,18 +65,25 @@ public class LbCommand implements TabExecutor {
             MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHaveNumber"));
             return true;
         }
-        // 进行扣除
-        ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
+
         // 获取消息
         StringBuilder message = new StringBuilder();
         for (int i = 1; i < args.length; i++) {
             message.append(args[i]).append(" ");
         }
+        String originalMessage = message.toString();
+        // 内容黑名单处理
+        if (PlayerChannelChatEventListener.blackListCheck(originalMessage)) {
+            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("blacklistMsg"));
+            return true;
+        }
+        // 进行扣除
+        ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
 
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setType(type);
-        param.setMessage(message.toString());
+        param.setMessage(originalMessage);
         param.setTimestamp(System.currentTimeMillis());
         param.setPlayerName(player.getName());
         BcUtil.sendParamForward(player, param);
