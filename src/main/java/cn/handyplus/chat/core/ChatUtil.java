@@ -259,10 +259,11 @@ public class ChatUtil {
         if (!enable) {
             return message;
         }
-        // 如何存在玩家自动添加@
-        boolean contains = Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()).contains(message);
-        if (contains) {
-            message = "@" + message;
+        List<String> messageList = StrUtil.strToStrList(message, " ");
+        for (String name : messageList) {
+            if (CollUtil.contains(ChatConstants.PLAYER_LIST, name)) {
+                message = message.replaceFirst(name, "@" + name);
+            }
         }
         // 提取@的玩家名
         mentionedPlayers.addAll(PatternUtil.extractAtTags(message));
