@@ -149,8 +149,9 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (!itemEnable) {
             return;
         }
-        String format = ConfigUtil.CHAT_CONFIG.getString("item.format");
-        if (!event.getMessage().equals(format)) {
+        String format = ConfigUtil.CHAT_CONFIG.getString("item.format", "[i]");
+        String message = event.getMessage();
+        if (!message.contains(format)) {
             return;
         }
         // 取消事件
@@ -192,6 +193,7 @@ public class AsyncPlayerChatEventListener implements Listener {
             displayName = BaseUtil.stripColor(displayName).substring(0, 6) + "...";
         }
         String itemText = StrUtil.replace(content, "item", displayName);
+        itemText = message.replace(format, itemText);
 
         chatParam.setChannel(channel);
         chatParam.setItemText(itemText);

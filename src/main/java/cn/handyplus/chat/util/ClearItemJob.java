@@ -25,8 +25,10 @@ public class ClearItemJob {
         HandySchedulerUtil.runTaskTimerAsynchronously(() -> {
             Date date = new Date();
             int num = ChatPlayerItemService.getInstance().clearItemData();
-            MessageUtil.sendConsoleMessage("清理过期数据成功,清理时间:" + DateUtil.format(date, DateUtil.YYYY_HH) + ",本次清理:" + num + "数据");
-        }, 0, 20 * 60 * 60 * 12);
+            if (num > 0) {
+                MessageUtil.sendConsoleMessage("清理过期数据成功,清理时间:" + DateUtil.format(date, DateUtil.YYYY_HH) + ",本次清理:" + num + "数据");
+            }
+        }, 20 * 60 * 60, 20 * 60 * 60 * 12);
     }
 
 }
