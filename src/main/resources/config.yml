@@ -30,8 +30,9 @@ chatTime:
   # vip3的上限 需要权限 playerWarp.delayTime.vip3
   vip3: 0
 
-# 黑名单,关键字替换成*
+# 聊天黑名单
 blacklist:
   - '操'
   - '草'
   - 'cao'
+  - '%'
