@@ -7,6 +7,7 @@ import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
+import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
@@ -192,11 +193,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (BaseUtil.stripColor(displayName).length() > itemLength) {
             displayName = BaseUtil.stripColor(displayName).substring(0, 6) + "...";
         }
-        String itemText = StrUtil.replace(content, "item", displayName);
+        String itemText = StrUtil.replace(content, "item", displayName.replace("%", ""));
         itemText = message.replace(format, itemText);
 
         chatParam.setChannel(channel);
-        chatParam.setItemText(itemText);
+        chatParam.setItemText(PlaceholderApiUtil.set(player, itemText));
         chatParam.setItemHover(itemMeta.getLore());
         chatParam.setItemId(itemId);
         param.setMessage(JsonUtil.toJson(chatParam));
