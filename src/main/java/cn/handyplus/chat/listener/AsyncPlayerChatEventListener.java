@@ -7,6 +7,7 @@ import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
+import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
@@ -196,7 +197,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         itemText = message.replace(format, itemText);
 
         chatParam.setChannel(channel);
-        chatParam.setItemText(itemText);
+        chatParam.setItemText(PlaceholderApiUtil.set(player, itemText));
         chatParam.setItemHover(itemMeta.getLore());
         chatParam.setItemId(itemId);
         param.setMessage(JsonUtil.toJson(chatParam));

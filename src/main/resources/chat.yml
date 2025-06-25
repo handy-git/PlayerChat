@@ -5,7 +5,7 @@ item:
   # 展示格式
   format: "[i]"
   # 内容格式
-  content: "&5[&a展示了一个 &f${item} &a点击查看&5]"
+  content: "&5[&a展示了一个 &f${item} &a点击查看&5]&r"
   # 物品名称长度限制 多余的会显示为...
   length: 6
 
