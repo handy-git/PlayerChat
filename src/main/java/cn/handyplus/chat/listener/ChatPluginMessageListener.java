@@ -19,6 +19,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * BC消息处理
@@ -54,8 +55,13 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         String server = BaseConstants.CONFIG.getString("server");
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
         // 设置玩家列表
-        ChatConstants.PLAYER_LIST = BcUtil.getPlayerList(message);
-        MessageUtil.sendConsoleDebugMessage("收到BC消息当前在线玩家:" + ChatConstants.PLAYER_LIST);
+        List<String> playerList = BcUtil.getPlayerList(message);
+        MessageUtil.sendConsoleDebugMessage("当前BC在线玩家列表:" + playerList);
+        if (CollUtil.isNotEmpty(playerList)) {
+            ChatConstants.PLAYER_LIST.addAll(playerList);
+            ChatConstants.PLAYER_LIST = ChatConstants.PLAYER_LIST.stream().distinct().collect(Collectors.toList());
+            MessageUtil.sendConsoleDebugMessage("聚合在线玩家数据列表:" + ChatConstants.PLAYER_LIST);
+        }
         Optional<BcUtil.BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
         if (!paramOptional.isPresent()) {
             return;
