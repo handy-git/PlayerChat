@@ -162,6 +162,11 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatTimeCheck(player)) {
             return;
         }
+        // 内容黑名单处理
+        if (PlayerChannelChatEventListener.blackListCheck(message)) {
+            MessageUtil.sendMessage(event.getPlayer(), BaseUtil.getMsgNotColor("blacklistMsg"));
+            return;
+        }
         // 获取物品参数
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
