@@ -273,7 +273,7 @@ public class ChatUtil {
         boolean keepAt = ConfigUtil.CHAT_CONFIG.getBoolean("at.keepAt", false);
         String atColor = ConfigUtil.CHAT_CONFIG.getString("at.atColor", "&9");
         for (String playerName : mentionedPlayers) {
-            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + ChatColor.RESET);
+            message = message.replaceAll("@" + playerName, BaseUtil.replaceChatColor(atColor + (keepAt ? "@" : "") + playerName) + ChatColor.RESET);
         }
         return message;
     }

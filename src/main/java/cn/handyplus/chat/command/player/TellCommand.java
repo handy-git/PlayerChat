@@ -11,7 +11,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * 私信
@@ -45,13 +47,10 @@ public class TellCommand implements IHandyCommandEvent {
         String playerName = args[1];
         AssertUtil.notTrue(player.getName().equals(playerName), sender, BaseUtil.getMsgNotColor("sendTellErrorMsg"));
         // 获取消息
-        StringBuilder message = new StringBuilder();
-        for (int i = 2; i < args.length; i++) {
-            message.append(args[i]).append(" ");
-        }
+        String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
-        AsyncPlayerChatEventListener.sendMsg(player, message.toString(), ChatConstants.TELL, playerName);
-        HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message.toString());
+        AsyncPlayerChatEventListener.sendMsg(player, message, ChatConstants.TELL, playerName);
+        HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
         MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("sendTell", map));
     }
 
