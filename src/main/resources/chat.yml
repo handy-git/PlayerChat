@@ -15,6 +15,10 @@ at:
   enable: true
   # 音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html
   sound: "BLOCK_ANVIL_LAND"
+  # 是否保留@符号
+  keepAt: false
+  # @默认的颜色
+  atColor: "&9"
 
 # 聊天管理 频道可无限根据下面格式添加
 # 自定义频道权限 查看: playerChat.chat.频道名 使用: playerChat.use.频道名

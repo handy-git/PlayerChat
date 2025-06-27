@@ -16,7 +16,6 @@ import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -24,7 +23,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -113,6 +111,7 @@ public class ChatUtil {
         List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
         String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
         String msgContent = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.content");
+        msgContent = BaseUtil.replaceChatColor(msgContent);
 
         // 解析内部变量
         String channelName = ChannelUtil.getChannelName(channel);
@@ -271,8 +270,10 @@ public class ChatUtil {
             return message;
         }
         // 将 @玩家名 替换为高亮显示
+        boolean keepAt = ConfigUtil.CHAT_CONFIG.getBoolean("at.keepAt", false);
+        String atColor = ConfigUtil.CHAT_CONFIG.getString("at.atColor", "&9");
         for (String playerName : mentionedPlayers) {
-            message = message.replaceAll("@" + playerName, ChatColor.BLUE + playerName + ChatColor.RESET);
+            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + ChatColor.RESET);
         }
         return message;
     }

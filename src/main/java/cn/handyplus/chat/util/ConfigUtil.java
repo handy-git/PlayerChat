@@ -43,7 +43,7 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "noChannelPermission", "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道", null, language);
         // 1.1.5 私信提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.message", "&7请输入私信内容", null, language);
-        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄的对 ${player} 说: ${message}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄地对 ${player} 说: ${message}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTellErrorMsg", "&8[&c✘&8] &7不能发送私信给自己", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "blacklistMsg", "&8[&c✘&8] &7请文明用语", null, language);
         // 1.2.9 喇叭参数提醒
@@ -66,6 +66,9 @@ public class ConfigUtil {
         // 1.1.2 展示物品支持配置格式
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "item.content", "&5[&a展示了一个 &6${item} &a点击查看&5]", Collections.singletonList("内容格式"), "chat.yml");
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "item.length", 6, Collections.singletonList("物品名称长度限制 多余的会显示为..."), "chat.yml");
+        // 1.3.5 at功能配置
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.keepAt", false, Collections.singletonList("是否保留@符号"), "chat.yml");
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.atColor", "&9", Collections.singletonList("@默认的颜色"), "chat.yml");
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
     }
 
