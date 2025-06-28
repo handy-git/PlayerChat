@@ -43,14 +43,6 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>handyplus-minecraft-maven</id>
-            <name>maven</name>
-            <url>https://handyplus-maven.pkg.coding.net/repository/minecraft/maven/</url>
-        </repository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <!--指定1.8jdk-->
