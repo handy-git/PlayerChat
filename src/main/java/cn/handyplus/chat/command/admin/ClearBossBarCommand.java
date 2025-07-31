@@ -1,8 +1,8 @@
 package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.lib.command.IHandyCommandEvent;
+import cn.handyplus.lib.expand.BossBarUtil;
 import cn.handyplus.lib.util.BaseUtil;
-import cn.handyplus.lib.util.BossBarUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

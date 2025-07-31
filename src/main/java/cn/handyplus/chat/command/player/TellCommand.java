@@ -40,12 +40,12 @@ public class TellCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 接收人
         String playerName = args[1];
-        AssertUtil.notTrue(player.getName().equals(playerName), sender, BaseUtil.getMsgNotColor("sendTellErrorMsg"));
+        AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getMsgNotColor("sendTellErrorMsg"));
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息

@@ -35,10 +35,10 @@ public class TakeCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 4, sender, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 4, BaseUtil.getMsgNotColor("paramFailureMsg"));
         String type = args[1];
         String playerName = args[2];
-        Integer number = AssertUtil.isNumericToInt(args[3], sender, BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer number = AssertUtil.isNumericToInt(args[3], BaseUtil.getMsgNotColor("amountFailureMsg"));
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
