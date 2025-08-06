@@ -59,7 +59,9 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip3", 0, null, "config.yml");
         // 1.2.6 增加登录后默认频道设置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
-        BaseConstants.CONFIG = HandyConfigUtil.load("config.yml");
+        // 1.3.6 私信简化
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "tellAlias", Arrays.asList("/tell", "/msg"), Collections.singletonList("/plc tell 指令的简写"), "config.yml");
+        HandyConfigUtil.loadConfig();
         // 1.0.9 at功能
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.enable", true, Collections.singletonList("是否开启"), "chat.yml");
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.sound", "BLOCK_ANVIL_LAND", Collections.singletonList("音效列表 https://bukkit.windit.net/javadoc/org/bukkit/Sound.html"), "chat.yml");
