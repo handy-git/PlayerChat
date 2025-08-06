@@ -31,7 +31,7 @@ public class PlayerCommandPreprocessEventListener implements Listener {
         }
         for (String alias : tellAlias) {
             if (event.getMessage().startsWith(alias)) {
-                String replace = event.getMessage().replace(alias, "/plc tell");
+                String replace = event.getMessage().replace(alias, "plc tell");
                 PlayerSchedulerUtil.performCommand(event.getPlayer(), replace);
                 event.setCancelled(true);
                 return;
