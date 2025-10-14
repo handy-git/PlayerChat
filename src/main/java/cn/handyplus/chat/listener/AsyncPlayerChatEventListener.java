@@ -233,6 +233,10 @@ public class AsyncPlayerChatEventListener implements Listener {
      */
     private static String getChannel(Player player) {
         String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
+        // 插件频道直接返回
+        if (ChatConstants.PLUGIN_CHANNEL.containsKey(channel)) {
+            return channel;
+        }
         // 是否有对应频道权限 如果没有权限回到默认频道
         if (!ChatConstants.DEFAULT.equals(channel) && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
             channel = ChatConstants.DEFAULT;
