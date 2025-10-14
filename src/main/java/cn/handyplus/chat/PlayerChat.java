@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PlayerChat extends JavaPlugin {
     public static PlayerChat INSTANCE;
     public static boolean USE_PAPI;
+    public static boolean USE_DISCORD_SRV;
 
     @Override
     public void onEnable() {
@@ -31,6 +32,8 @@ public class PlayerChat extends JavaPlugin {
         if (USE_PAPI) {
             new PlaceholderUtil(this).register();
         }
+        // 加载DiscordSRV
+        USE_DISCORD_SRV = BaseUtil.hook(HookPluginEnum.DISCORD_SRV);
         // 加载主数据
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")

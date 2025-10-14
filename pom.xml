@@ -6,16 +6,17 @@
 
     <groupId>cn.handyplus.chat</groupId>
     <artifactId>PlayerChat</artifactId>
-    <version>1.3.7</version>
+    <version>1.4.0</version>
     <description>一款有点好用的聊天插件</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot-api.vesion>1.21.8-R0.1-SNAPSHOT</spigot-api.vesion>
-        <HandyLib.version>3.24.6</HandyLib.version>
+        <spigot-api.vesion>1.21.10-R0.1-SNAPSHOT</spigot-api.vesion>
+        <HandyLib.version>3.28.2</HandyLib.version>
         <lombok.version>1.18.38</lombok.version>
         <annotations.version>26.0.2</annotations.version>
         <placeholderapi.version>2.11.6</placeholderapi.version>
+        <discordsrv.version>1.30.1</discordsrv.version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,12 @@
             <artifactId>annotations</artifactId>
             <version>${annotations.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.discordsrv</groupId>
+            <artifactId>discordsrv</artifactId>
+            <version>${discordsrv.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
