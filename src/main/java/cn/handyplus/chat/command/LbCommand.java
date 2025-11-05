@@ -8,7 +8,6 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -19,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +40,6 @@ public class LbCommand implements TabExecutor {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("lbParamFailureMsg"));
             return true;
         }
-        // 是否为玩家
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 获取类型
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");
@@ -51,21 +49,9 @@ public class LbCommand implements TabExecutor {
         }
         boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".enable");
         if (!enable) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("lbEnableMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("lbEnableMsg"));
             return true;
         }
-
-        Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
-        if (!hornPlayerEnterOpt.isPresent()) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHave"));
-            return true;
-        }
-        ChatPlayerHornEnter hornPlayerEnter = hornPlayerEnterOpt.get();
-        if (hornPlayerEnter.getNumber() < 1) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHaveNumber"));
-            return true;
-        }
-
         // 获取消息
         StringBuilder message = new StringBuilder();
         for (int i = 1; i < args.length; i++) {
@@ -77,16 +63,15 @@ public class LbCommand implements TabExecutor {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("blacklistMsg"));
             return true;
         }
-        // 进行扣除
-        ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
-
+        // 校验玩家
+        Player player = this.checkPlayer(sender, type);
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setType(type);
         param.setMessage(originalMessage);
         param.setTimestamp(System.currentTimeMillis());
-        param.setPlayerName(player.getName());
-        BcUtil.sendParamForward(player, param);
+        param.setPlayerName(player != null ? player.getName() : "CONSOLE");
+        BcUtil.sendParamForward(sender, param);
         // 发送消息
         HornUtil.sendMsg(player, param);
         return true;
@@ -105,6 +90,35 @@ public class LbCommand implements TabExecutor {
         StringUtil.copyPartialMatches(args[args.length - 1].toLowerCase(), commands, completions);
         Collections.sort(completions);
         return completions;
+    }
+
+    /**
+     * 校验玩家喇叭
+     *
+     * @param sender 控制台
+     * @param type   类型
+     * @return 玩家或者 null
+     */
+    private @Nullable Player checkPlayer(@NotNull CommandSender sender, String type) {
+        if (!BaseUtil.isPlayer(sender)) {
+            return null;
+        }
+        Player player = (Player) sender;
+        // 查询喇叭
+        Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
+        if (!hornPlayerEnterOpt.isPresent()) {
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHave"));
+            return null;
+        }
+        // 校验喇叭数量
+        ChatPlayerHornEnter hornPlayerEnter = hornPlayerEnterOpt.get();
+        if (hornPlayerEnter.getNumber() < 1) {
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHaveNumber"));
+            return null;
+        }
+        // 进行扣除
+        ChatPlayerHornService.getInstance().subtractNumber(hornPlayerEnter.getId(), 1);
+        return player;
     }
 
 }
