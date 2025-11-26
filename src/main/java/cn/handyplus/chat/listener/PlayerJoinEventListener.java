@@ -4,6 +4,7 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
@@ -41,7 +42,7 @@ public class PlayerJoinEventListener implements Listener {
             if (!enterOptional.isPresent()) {
                 ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
                 enter.setPlayerName(player.getName());
-                enter.setPlayerUuid(player.getUniqueId().toString());
+                enter.setPlayerUuid(player.getUniqueId());
                 enter.setChannel(ChatConstants.DEFAULT);
                 enter.setIsApi(false);
                 ChatPlayerChannelService.getInstance().add(enter);
@@ -59,6 +60,8 @@ public class PlayerJoinEventListener implements Listener {
             if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
                 ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
             }
+            // 缓存屏蔽列表
+            ChatConstants.PLAYER_IGNORE_MAP.put(player.getUniqueId(), ChatPlayerIgnoreService.getInstance().findIgnoreByUid(player.getUniqueId()));
         });
     }
 

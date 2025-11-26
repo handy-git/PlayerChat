@@ -70,7 +70,7 @@ public class PlayerChatApi {
         ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT, true);
         // 缓存频道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
-            Optional<Player> playerOptional = BaseUtil.getOnlinePlayer(UUID.fromString(channelEnter.getPlayerUuid()));
+            Optional<Player> playerOptional = BaseUtil.getOnlinePlayer(channelEnter.getPlayerUuid());
             playerOptional.ifPresent(player -> ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), ChatConstants.DEFAULT));
         }
     }

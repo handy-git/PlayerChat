@@ -81,4 +81,11 @@ public class ChatConstants {
      */
     public static List<String> PLAYER_LIST = new ArrayList<>();
 
+    /**
+     * 玩家忽略列表
+     *
+     * @since 1.4.3
+     */
+    public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new HashMap<>();
+
 }

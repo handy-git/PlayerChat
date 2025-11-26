@@ -6,6 +6,8 @@ import cn.handyplus.lib.db.IndexEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 /**
  * 玩家频道
  *
@@ -23,7 +25,7 @@ public class ChatPlayerChannelEnter {
     private String playerName;
 
     @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.INDEX)
-    private String playerUuid;
+    private UUID playerUuid;
 
     @TableField(value = "channel", comment = "频道")
     private String channel;

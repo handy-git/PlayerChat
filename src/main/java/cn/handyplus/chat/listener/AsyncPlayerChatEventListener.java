@@ -139,7 +139,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 存储数据
         ChatPlayerItemEnter itemEnter = new ChatPlayerItemEnter();
         itemEnter.setPlayerName(player.getName());
-        itemEnter.setPlayerUuid(player.getUniqueId().toString());
+        itemEnter.setPlayerUuid(player.getUniqueId());
         itemEnter.setVersion(BaseConstants.VERSION_ID);
         itemEnter.setItem(ItemStackUtil.itemStackSerialize(itemInMainHand));
         itemEnter.setCreateTime(new Date());

@@ -64,6 +64,11 @@ public class ChatUtil {
             if (StrUtil.isNotEmpty(chatParam.getTellPlayerName()) && !onlinePlayer.getName().equals(chatParam.getTellPlayerName())) {
                 continue;
             }
+            // 判断是否开启屏蔽
+            List<String> ignoreList = ChatConstants.PLAYER_IGNORE_MAP.get(onlinePlayer.getUniqueId());
+            if (CollUtil.isNotEmpty(ignoreList) && ignoreList.contains(param.getPlayerName())) {
+                continue;
+            }
             MessageUtil.sendMessage(onlinePlayer, textComponent);
             // 如果开启艾特，发送消息
             if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable")) {
@@ -110,7 +115,7 @@ public class ChatUtil {
         String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.text");
         List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
         String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
-        String msgContent = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.content");
+        String msgContent = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.content", "");
         msgContent = BaseUtil.replaceChatColor(msgContent);
 
         // 解析内部变量

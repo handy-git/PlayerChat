@@ -45,7 +45,7 @@ public class SetCommand implements IHandyCommandEvent {
         if (!hornPlayerEnterOpt.isPresent()) {
             ChatPlayerHornEnter hornPlayer = new ChatPlayerHornEnter();
             hornPlayer.setPlayerName(offlinePlayer.getName());
-            hornPlayer.setPlayerUuid(offlinePlayer.getUniqueId().toString());
+            hornPlayer.setPlayerUuid(offlinePlayer.getUniqueId());
             hornPlayer.setType(type);
             hornPlayer.setNumber(number);
             ChatPlayerHornService.getInstance().add(hornPlayer);

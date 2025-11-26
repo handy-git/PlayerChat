@@ -26,7 +26,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
@@ -46,6 +46,8 @@ public enum TabListEnum {
 
     TELL_TWO(null, 1, "tell", 2),
     TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
+
+    IGNORE_TWO(null, 1, "ignore", 2),
     ;
 
     /**
