@@ -72,6 +72,11 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
         // 1.3.6 私信简化
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "tellAlias", Arrays.asList("/tell", "/msg"), Collections.singletonList("/plc tell 指令的简写"), "config.yml");
+        // 2.0.0 AI审核
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.enable", false, null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.chatMaxCount", 3, null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.voteMaxNumber", 5, null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.command", Collections.singletonList("lb 全服大喇叭 &a${player}&c因违规发言,已被投票禁言5分钟"), null, "config.yml");
         HandyConfigUtil.loadConfig();
         // 1.0.9 at功能
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.enable", true, Collections.singletonList("是否开启"), "chat.yml");

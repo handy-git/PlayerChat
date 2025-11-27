@@ -19,9 +19,13 @@ firstLoginChatDefault: "default"
 
 # 是否开启 AI 审核
 ai:
+  # 是否开启
   enable: false
+  # AI一天警告最大次数
   chatMaxCount: 3
+  # AI投票成功人数
   voteMaxNumber: 5
+  # AI投票成功后执行的指令
   command:
     - "lb 全服大喇叭 &a${player}&c因违规发言,已被投票禁言5分钟"
 
