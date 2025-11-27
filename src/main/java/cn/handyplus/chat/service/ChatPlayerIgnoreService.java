@@ -71,12 +71,12 @@ public class ChatPlayerIgnoreService {
         if (CollUtil.isEmpty(ignorePlayerList)) {
             // 没有屏蔽人了直接删除
             Db.use(ChatPlayerIgnoreEnter.class).execution().deleteById(chatPlayerIgnoreEnter.getId());
-            return;
+        } else {
+            // 还有屏蔽人就只更新
+            Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
+            use.update().set(ChatPlayerIgnoreEnter::getIgnorePlayer, CollUtil.listToStr(ignorePlayerList));
+            use.execution().updateById(chatPlayerIgnoreEnter.getId());
         }
-        // 还有屏蔽人就只更新
-        Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
-        use.update().set(ChatPlayerIgnoreEnter::getIgnorePlayer, CollUtil.listToStr(ignorePlayerList));
-        use.execution().updateById(chatPlayerIgnoreEnter.getId());
         // 重新缓存屏蔽列表
         ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, ChatPlayerIgnoreService.getInstance().findIgnoreByUid(playerUuid));
     }
