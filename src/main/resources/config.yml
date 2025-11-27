@@ -17,6 +17,15 @@ tellAlias:
 # 注意 如果修改为其他频道,请把对应的权限提前给予 查看: playerChat.chat.频道名 使用: playerChat.use.频道名
 firstLoginChatDefault: "default"
 
+# 是否开启 AI 审核
+ai:
+  enable: false
+  chatMaxCount: 3
+  voteMaxNumber: 5
+  command:
+    - "/lb xxx xxx"
+    - "/ban xxx xxx"
+
 # 聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)
 # 0为关闭状态
 chatTime:

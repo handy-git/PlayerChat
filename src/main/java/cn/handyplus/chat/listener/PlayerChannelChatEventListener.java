@@ -1,13 +1,20 @@
 package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChatUtil;
+import cn.handyplus.chat.event.PlayerAiChatEvent;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
+import cn.handyplus.deep.seek.api.DeepSeekApi;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +41,8 @@ public class PlayerChannelChatEventListener implements Listener {
         sendMsg(event.getBcMessageParam(), event.getPlayer());
         // 发送Discord消息
         this.sendDiscord(event);
+        // AI审核
+        this.aiReview(event.getPlayer(), event.getOriginalMessage());
     }
 
     /**
@@ -71,11 +80,34 @@ public class PlayerChannelChatEventListener implements Listener {
         if (!PlayerChat.USE_DISCORD_SRV) {
             return;
         }
+        // 不转发非本插件消息
+        if (!PlayerChat.INSTANCE.getName().equals(event.getSource())) {
+            return;
+        }
         // 根据游戏频道名获取对应的Discord频道
         TextChannel channel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName(event.getChannel());
         if (channel != null) {
             DiscordSRV.getPlugin().processChatMessage(event.getPlayer(), event.getOriginalMessage(), event.getChannel(), false, event);
         }
+    }
+
+    /**
+     * AI审核
+     */
+    private void aiReview(Player player, String message) {
+        // 是否开启
+        if (!PlayerChat.USE_AI || !BaseConstants.CONFIG.getBoolean(ChatConstants.AI_ENABLE)) {
+            return;
+        }
+        // 异步 AI 审核并提醒玩家
+        HandySchedulerUtil.runTaskAsynchronously(() -> {
+            String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), message);
+            if (!chat.contains(ChatConstants.ILLEGAL)) {
+                return;
+            }
+            MessageUtil.sendMessage(player, chat);
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(player, message, chat));
+        });
     }
 
 }

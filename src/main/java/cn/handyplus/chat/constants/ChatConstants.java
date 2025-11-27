@@ -24,6 +24,11 @@ public class ChatConstants {
     public static final String TELL = "tell";
 
     /**
+     * AI频道
+     */
+    public final static String AI = "ai";
+
+    /**
      * 消息类型
      */
     public final static String CHAT_TYPE = "RICE_CHAT";
@@ -87,5 +92,18 @@ public class ChatConstants {
      * @since 1.4.3
      */
     public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new HashMap<>();
+    /**
+     * 违规
+     *
+     * @since 1.5.0
+     */
+    public static final String ILLEGAL = "违规";
+
+    /**
+     * AI审核
+     *
+     * @since 1.5.0
+     */
+    public static final String AI_ENABLE= "ai.enable";
 
 }
