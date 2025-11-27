@@ -45,7 +45,7 @@ lbEnableMsg: "&8[&c✘&8] &7该喇叭已经被管理员禁用"
 ignorePlayer: "&8[&a✔&8] &7您已屏蔽玩家&a${player}&7的全部消息"
 ignoreParamFailureMsg: "&8[&c✘&8] &7请指定需要屏蔽的玩家名称"
 ignoreListEmptyMsg: "&8[&c✘&8] &7未屏蔽玩家"
-ignoreListMsg: "&8[&a✔&8] &7已屏蔽玩家列表:&a ${name}"
+ignoreListMsg: "&8[&a✔&8] &7屏蔽数量:&a  ${number}"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

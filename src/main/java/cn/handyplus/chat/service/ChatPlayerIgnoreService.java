@@ -77,6 +77,8 @@ public class ChatPlayerIgnoreService {
         Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
         use.update().set(ChatPlayerIgnoreEnter::getIgnorePlayer, CollUtil.listToStr(ignorePlayerList));
         use.execution().updateById(chatPlayerIgnoreEnter.getId());
+        // 重新缓存屏蔽列表
+        ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, ChatPlayerIgnoreService.getInstance().findIgnoreByUid(playerUuid));
     }
 
     /**

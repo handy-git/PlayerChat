@@ -30,6 +30,7 @@ permissions:
       playerChat.clearBossBar: true
       playerChat.ignore: true
       playerChat.ignoreList: true
+      playerChat.removeIgnore: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -77,4 +78,7 @@ permissions:
     default: true
   playerChat.ignoreList:
     description: 已屏蔽玩家列表
+    default: true
+  playerChat.removeIgnore:
+    description: 移除屏蔽
     default: true

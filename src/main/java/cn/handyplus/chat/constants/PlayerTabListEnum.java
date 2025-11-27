@@ -21,7 +21,7 @@ public enum PlayerTabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("channel", "tell", "ignore", "ignoreList"), 0, null, 1),
+    FIRST(Arrays.asList("channel", "tell", "ignore", "ignoreList", "removeIgnore"), 0, null, 1),
 
     CHANNEL_TWO(null, 1, "channel", 2),
 
@@ -29,6 +29,7 @@ public enum PlayerTabListEnum {
     TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
 
     IGNORE_TWO(null, 1, "ignore", 2),
+    REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),
     ;
 
     /**
