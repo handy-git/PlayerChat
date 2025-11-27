@@ -5,7 +5,6 @@ import cn.handyplus.chat.enter.ChatPlayerAiEnter;
 import cn.handyplus.chat.service.ChatPlayerAiService;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
-import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -13,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -51,13 +51,16 @@ public class VoteCommand implements IHandyCommandEvent {
             return;
         }
         String aiVoteMaxNumber = BaseConstants.CONFIG.getString("ai.voteMaxNumber");
-        Map<String, String> replaceMap = MapUtil.of("${number}", String.valueOf(chatPlayerAiOpt.get().getVoteNumber() + 1), "${max}", aiVoteMaxNumber);
+        Map<String, String> replaceMap = new HashMap<>();
+        replaceMap.put("${max}", aiVoteMaxNumber);
         // 是否已投票
         Integer existId = ChatConstants.PLAYER_VOTE_MAP.getOrDefault(player.getUniqueId(), 0);
         if (existId.equals(id)) {
+            replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + "");
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("hasVotedMsg", replaceMap));
             return;
         }
+        replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + 1 + "");
         // 增加投票
         ChatPlayerAiService.getInstance().addVoteNumber(id);
         ChatConstants.PLAYER_VOTE_MAP.put(player.getUniqueId(), id);
