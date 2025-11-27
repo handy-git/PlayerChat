@@ -118,12 +118,12 @@ public class PlayerAiChatEventListener implements Listener {
         String aiText = BaseUtil.getMsgNotColor("aiText", MapUtil.of("${player}", player.getName()));
         // 给予展示属性
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
-        chatChildParam.setText(aiText);
+        chatChildParam.setText("${message}");
         chatChildParam.setClick("/plc vote " + id);
         chatChildParam.setHover(new ArrayList<>());
         chatChildParam.setClickSuggest(null);
         chatParam.setChildList(Collections.singletonList(chatChildParam));
-        chatParam.setMessage("");
+        chatParam.setMessage(aiText);
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

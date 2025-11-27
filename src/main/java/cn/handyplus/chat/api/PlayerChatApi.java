@@ -18,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -199,7 +200,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 1.2.4
      */
-    public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @NotNull String source) {
+    public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @Nullable String source) {
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();
         message = ChatUtil.at(mentionedPlayers, message);
@@ -214,7 +215,7 @@ public class PlayerChatApi {
             return false;
         }
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
-        chatChildParam.setText(message);
+        chatChildParam.setText("${message}");
         chatChildParam.setHover(new ArrayList<>());
         chatChildParam.setClick(null);
         chatChildParam.setClickSuggest(null);

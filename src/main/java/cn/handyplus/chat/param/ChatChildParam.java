@@ -30,8 +30,4 @@ public class ChatChildParam {
      * click
      */
     private String click;
-    /**
-     * 内容
-     */
-    private String content;
 }
