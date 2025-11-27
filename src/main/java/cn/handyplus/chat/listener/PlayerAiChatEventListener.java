@@ -121,6 +121,7 @@ public class PlayerAiChatEventListener implements Listener {
         chatChildParam.setText(aiText);
         chatChildParam.setClick("/plc vote " + id);
         chatChildParam.setHover(new ArrayList<>());
+        chatChildParam.setClickSuggest(null);
         chatParam.setChildList(Collections.singletonList(chatChildParam));
         chatParam.setMessage("");
         param.setMessage(JsonUtil.toJson(chatParam));

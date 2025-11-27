@@ -6,6 +6,7 @@ import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
+import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.lib.core.CollUtil;
@@ -19,6 +20,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -211,6 +213,12 @@ public class PlayerChatApi {
         if (chatParam == null) {
             return false;
         }
+        ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
+        chatChildParam.setText(message);
+        chatChildParam.setHover(new ArrayList<>());
+        chatChildParam.setClick(null);
+        chatChildParam.setClickSuggest(null);
+        chatParam.setChildList(Collections.singletonList(chatChildParam));
         // 原消息内容
         chatParam.setMessage(message);
         // @玩家处理
