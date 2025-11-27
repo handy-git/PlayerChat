@@ -50,6 +50,12 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/lb [喇叭类型] [消息内容]", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbConfigFailureMsg", "&8[&c✘&8] &7喇叭配置错误", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbEnableMsg", "&8[&c✘&8] &7该喇叭已经被管理员禁用", null, language);
+        // 1.4.3 屏蔽相关
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignorePlayer", "&8[&a✔&8] &7您已屏蔽玩家&a${player}&7的全部消息", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreParamFailureMsg", "&8[&c✘&8] &7请指定需要屏蔽的玩家名称", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListEmptyMsg", "&8[&c✘&8] &7未屏蔽玩家", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListMsg", "&8[&a✔&8] &7屏蔽数量:&a  ${number}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreSelfFailureMsg", "&8[&c✘&8] &7无法屏蔽自己", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
