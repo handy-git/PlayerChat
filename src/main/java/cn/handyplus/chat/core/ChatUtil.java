@@ -2,6 +2,7 @@ package cn.handyplus.chat.core;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
+import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
@@ -13,16 +14,20 @@ import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -52,7 +57,7 @@ public class ChatUtil {
     public synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
-        BaseComponent[] textComponent = buildMsg(chatParam, param.getType());
+        BaseComponent[] textComponent = buildMsg(chatParam);
         String channel = chatParam.getChannel();
         // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
@@ -94,103 +99,65 @@ public class ChatUtil {
      *
      * @param player  玩家
      * @param channel 频道
-     * @param message 消息
      * @return 参数
      */
-    public static ChatParam buildChatParam(Player player, String channel, String message) {
+    public static @Nullable ChatParam buildChatParam(@NotNull Player player, @NotNull String channel) {
         // 频道是否开启
         String channelEnable = ChannelUtil.isChannelEnable(channel);
         if (StrUtil.isEmpty(channelEnable)) {
             return null;
         }
-        // 前缀
-        String prefixText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.prefix.text");
-        List<String> prefixHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.prefix.hover");
-        String prefixClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.prefix.click");
-        // 玩家信息
-        String playerText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.player.text");
-        List<String> playerHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.player.hover");
-        String playerClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.player.click");
-        // 消息
-        String msgText = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.text");
-        List<String> msgHover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format.msg.hover");
-        String msgClick = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.click");
-        String msgContent = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format.msg.content", "");
-        msgContent = BaseUtil.replaceChatColor(msgContent);
-
-        // 解析内部变量
         String channelName = ChannelUtil.getChannelName(channel);
-        prefixText = replaceStr(player, channelName, prefixText);
-        prefixHover = replaceStr(player, channelName, prefixHover);
-        prefixClick = replaceStr(player, channelName, prefixClick);
-        playerText = replaceStr(player, channelName, playerText);
-        playerHover = replaceStr(player, channelName, playerHover);
-        playerClick = replaceStr(player, channelName, playerClick);
-        msgText = replaceStr(player, channelName, msgText);
-        msgHover = replaceStr(player, channelName, msgHover);
-        msgClick = replaceStr(player, channelName, msgClick);
-        msgContent = replaceStr(player, channelName, msgContent, message);
-
-        // 解析PAPI变量
-        prefixText = PlaceholderApiUtil.set(player, prefixText);
-        prefixHover = PlaceholderApiUtil.set(player, prefixHover);
-        prefixClick = PlaceholderApiUtil.set(player, prefixClick);
-        playerText = PlaceholderApiUtil.set(player, playerText);
-        playerHover = PlaceholderApiUtil.set(player, playerHover);
-        playerClick = PlaceholderApiUtil.set(player, playerClick);
-        msgText = PlaceholderApiUtil.set(player, msgText);
-        msgHover = PlaceholderApiUtil.set(player, msgHover);
-        msgClick = PlaceholderApiUtil.set(player, msgClick);
-        msgContent = PlaceholderApiUtil.set(player, msgContent);
-
+        Set<String> keySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat." + channelEnable + ".format");
+        List<ChatChildParam> childList = new ArrayList<>();
+        for (String key : keySet) {
+            String text = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".text");
+            List<String> hover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format." + key + ".hover");
+            String click = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".click");
+            String clickSuggest = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".clickSuggest");
+            String content = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".content", "");
+            // 替换变量
+            text = replaceStr(player, channelName, text);
+            hover = replaceStr(player, channelName, hover);
+            click = replaceStr(player, channelName, click);
+            clickSuggest = replaceStr(player, channelName, clickSuggest);
+            content = replaceStr(player, channelName, content);
+            ChatChildParam chatChildParam = ChatChildParam.builder().text(text).hover(hover).click(click).clickSuggest(clickSuggest).content(content).build();
+            childList.add(chatChildParam);
+        }
         // 构建参数
-        return ChatParam.builder().prefixText(prefixText).prefixHover(prefixHover).prefixClick(prefixClick)
-                .playerText(playerText).playerHover(playerHover).playerClick(playerClick)
-                .msgText(msgText).msgHover(msgHover).msgClick(msgClick).msgContent(msgContent).build();
+        return ChatParam.builder().channel(channel).childList(childList).build();
     }
 
     /**
      * 构建消息
      *
      * @param chatParam 入参
-     * @param type      类型
      */
-    public static BaseComponent[] buildMsg(ChatParam chatParam, String type) {
-        // 加载rgb颜色
-        chatParam.setPrefixText(BaseUtil.replaceChatColor(chatParam.getPrefixText()));
-        chatParam.setPrefixHover(BaseUtil.replaceChatColor(chatParam.getPrefixHover()));
-        chatParam.setPlayerText(BaseUtil.replaceChatColor(chatParam.getPlayerText()));
-        chatParam.setPlayerHover(BaseUtil.replaceChatColor(chatParam.getPlayerHover()));
-        chatParam.setMsgText(BaseUtil.replaceChatColor(chatParam.getMsgText()));
-        chatParam.setMsgHover(BaseUtil.replaceChatColor(chatParam.getMsgHover()));
+    public static @NotNull BaseComponent[] buildMsg(@NotNull ChatParam chatParam) {
+        // 加载颜色
         chatParam.setMessage(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
-        chatParam.setMsgContent(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMsgContent()) : chatParam.getMsgContent());
-        chatParam.setMessage(StrUtil.isNotEmpty(chatParam.getMsgContent()) ? chatParam.getMsgContent() : chatParam.getMessage());
-
-        // 前缀
-        RgbTextUtil prefixTextComponent = RgbTextUtil.getInstance().init(chatParam.getPrefixText());
-        prefixTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPrefixHover(), "\n"));
-        prefixTextComponent.addClickSuggestCommand(chatParam.getPrefixClick());
-        // 玩家
-        RgbTextUtil playerTextComponent = RgbTextUtil.getInstance().init(chatParam.getPlayerText());
-        playerTextComponent.addHoverText(CollUtil.listToStr(chatParam.getPlayerHover(), "\n"));
-        playerTextComponent.addClickSuggestCommand(chatParam.getPlayerClick());
-        // 消息
-        RgbTextUtil msgTextComponent = RgbTextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getMessage(), false);
-        // 聊天处理
-        if (ChatConstants.CHAT_TYPE.equals(type)) {
-            msgTextComponent.addHoverText(CollUtil.listToStr(chatParam.getMsgHover(), "\n"));
-            msgTextComponent.addClickSuggestCommand(chatParam.getMsgClick());
-        }
-        // 物品展示处理
-        if (ChatConstants.ITEM_TYPE.equals(type)) {
-            msgTextComponent = RgbTextUtil.getInstance().init(chatParam.getMsgText() + chatParam.getItemText());
-            String itemHover = CollUtil.listToStr(chatParam.getItemHover(), "\n");
-            msgTextComponent.addHoverText(itemHover);
-            msgTextComponent.addClickCommand("/plc item " + chatParam.getItemId());
+        for (ChatChildParam chatChildParam : chatParam.getChildList()) {
+            chatChildParam.setText(BaseUtil.replaceChatColor(chatChildParam.getText()));
+            chatChildParam.setHover(BaseUtil.replaceChatColor(chatChildParam.getHover()));
+            chatChildParam.setContent(BaseUtil.replaceChatColor(chatChildParam.getContent()));
+            chatChildParam.setContent(StrUtil.replace(chatChildParam.getContent(), "message", chatParam.getMessage()));
         }
         // 构建消息
-        return prefixTextComponent.addExtra(playerTextComponent.build()).addExtra(msgTextComponent.build()).build();
+        List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();
+        for (ChatChildParam chatChildParam : chatParam.getChildList()) {
+            RgbTextUtil textComponent = RgbTextUtil.getInstance().init(chatChildParam.getText());
+            textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
+            textComponent.addClickSuggestCommand(chatChildParam.getClickSuggest());
+            textComponent.addClickCommand(chatChildParam.getClick());
+            rgbTextUtilList.add(textComponent);
+        }
+        // 构建消息
+        RgbTextUtil first = rgbTextUtilList.get(0);
+        for (int i = 1; i < rgbTextUtilList.size(); i++) {
+            first.addExtra(rgbTextUtilList.get(i).build());
+        }
+        return first.build();
     }
 
     /**
@@ -208,26 +175,8 @@ public class ChatUtil {
         str = StrUtil.replace(str, "channel", channelName);
         str = StrUtil.replace(str, "player", player.getName());
         str = StrUtil.replace(str, "serverName", BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName")));
-        return str;
-    }
-
-    /**
-     * 解析内部变量
-     *
-     * @param player      玩家
-     * @param channelName 频道名称
-     * @param str         内容
-     * @param message     原消息
-     * @return 新内容
-     * @since 1.1.9
-     */
-    private static String replaceStr(Player player, String channelName, String str, String message) {
-        if (StrUtil.isEmpty(str)) {
-            return str;
-        }
-        str = StrUtil.replace(str, "channel", channelName);
-        str = StrUtil.replace(str, "player", player.getName());
-        str = StrUtil.replace(str, "message", message);
+        // 解析 papi 变量
+        str = PlaceholderApiUtil.set(player, str);
         return str;
     }
 

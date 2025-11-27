@@ -95,14 +95,14 @@ public class ChatConstants {
     /**
      * 违规
      *
-     * @since 1.5.0
+     * @since 2.0.0
      */
     public static final String ILLEGAL = "违规";
 
     /**
      * AI审核
      *
-     * @since 1.5.0
+     * @since 2.0.0
      */
     public static final String AI_ENABLE= "ai.enable";
 

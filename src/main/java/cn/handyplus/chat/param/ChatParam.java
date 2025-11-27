@@ -20,47 +20,9 @@ public class ChatParam {
     private String channel;
 
     /**
-     * 前缀消息
+     * 子消息
      */
-    private String prefixText;
-    /**
-     * 前缀hover
-     */
-    private List<String> prefixHover;
-    /**
-     * 前缀click
-     */
-    private String prefixClick;
-    /**
-     * 玩家消息
-     */
-    private String playerText;
-    /**
-     * 玩家hover
-     */
-    private List<String> playerHover;
-    /**
-     * 玩家click
-     */
-    private String playerClick;
-    /**
-     * 消息前缀
-     */
-    private String msgText;
-
-    /**
-     * 消息内容
-     */
-    private String msgContent;
-
-    /**
-     * 消息hover
-     */
-    private List<String> msgHover;
-    /**
-     * 消息click
-     */
-    private String msgClick;
+    private List<ChatChildParam> childList;
 
     /**
      * 聊天消息
@@ -71,21 +33,6 @@ public class ChatParam {
      * 聊天内容颜色权限
      */
     private boolean hasColor;
-
-    /**
-     * 物品名称
-     */
-    private String itemText;
-
-    /**
-     * 物品hover
-     */
-    private List<String> itemHover;
-
-    /**
-     * 物品ID
-     */
-    private Integer itemId;
 
     /**
      * 接收人

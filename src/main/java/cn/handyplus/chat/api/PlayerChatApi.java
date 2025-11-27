@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * API
@@ -208,7 +207,10 @@ public class PlayerChatApi {
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
-        ChatParam chatParam = ChatParam.builder().msgContent(message).build();
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        if (chatParam == null) {
+            return false;
+        }
         // 原消息内容
         chatParam.setMessage(message);
         // @玩家处理
@@ -225,8 +227,9 @@ public class PlayerChatApi {
 
     /**
      * 发送喇叭消息
-     * @param player 玩家
-     * @param type 类型
+     *
+     * @param player  玩家
+     * @param type    类型
      * @param message 消息
      * @since 1.2.7
      */

@@ -8,6 +8,7 @@ import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
+import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
@@ -82,7 +83,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel, message);
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {
             return;
         }
@@ -94,7 +95,6 @@ public class AsyncPlayerChatEventListener implements Listener {
         chatParam.setMentionedPlayers(mentionedPlayers);
         // 有权限进行颜色代码处理
         chatParam.setHasColor(player.hasPermission("playerChat.color"));
-        chatParam.setChannel(channel);
         chatParam.setSource(param.getPluginName());
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));
@@ -153,7 +153,7 @@ public class AsyncPlayerChatEventListener implements Listener {
         // 所在频道
         String channel = getChannel(player);
         // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel, "");
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {
             return;
         }
@@ -167,10 +167,12 @@ public class AsyncPlayerChatEventListener implements Listener {
         String itemText = StrUtil.replace(content, "item", displayName.replace("%", ""));
         itemText = message.replace(format, itemText);
 
-        chatParam.setChannel(channel);
-        chatParam.setItemText(PlaceholderApiUtil.set(player, itemText));
-        chatParam.setItemHover(itemMeta.getLore());
-        chatParam.setItemId(itemId);
+        // 给予展示属性
+        ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
+        chatChildParam.setText(PlaceholderApiUtil.set(player, itemText));
+        chatChildParam.setHover(itemMeta.getLore());
+        chatChildParam.setClick("/plc item " + itemId);
+
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件
