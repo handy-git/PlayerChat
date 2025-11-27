@@ -42,7 +42,7 @@ public class PlayerChannelChatEventListener implements Listener {
         // 发送Discord消息
         this.sendDiscord(event);
         // AI审核
-        this.aiReview(event.getPlayer(), event.getOriginalMessage());
+        this.aiReview(event);
     }
 
     /**
@@ -94,19 +94,23 @@ public class PlayerChannelChatEventListener implements Listener {
     /**
      * AI审核
      */
-    private void aiReview(Player player, String message) {
+    private void aiReview(PlayerChannelChatEvent event) {
         // 是否开启
         if (!PlayerChat.USE_AI || !BaseConstants.CONFIG.getBoolean(ChatConstants.AI_ENABLE)) {
             return;
         }
+        // 不处理非本插件消息
+        if (!PlayerChat.INSTANCE.getName().equals(event.getSource())) {
+            return;
+        }
         // 异步 AI 审核并提醒玩家
         HandySchedulerUtil.runTaskAsynchronously(() -> {
-            String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), message);
+            String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), event.getOriginalMessage());
             if (!chat.contains(ChatConstants.ILLEGAL)) {
                 return;
             }
-            MessageUtil.sendMessage(player, chat);
-            Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(player, message, chat));
+            MessageUtil.sendMessage(event.getPlayer(), chat);
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(event.getPlayer(), event.getOriginalMessage(), chat));
         });
     }
 

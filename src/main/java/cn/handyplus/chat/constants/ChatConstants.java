@@ -24,11 +24,6 @@ public class ChatConstants {
     public static final String TELL = "tell";
 
     /**
-     * AI频道
-     */
-    public final static String AI = "ai";
-
-    /**
      * 消息类型
      */
     public final static String CHAT_TYPE = "RICE_CHAT";
@@ -104,6 +99,6 @@ public class ChatConstants {
      *
      * @since 2.0.0
      */
-    public static final String AI_ENABLE= "ai.enable";
+    public static final String AI_ENABLE = "ai.enable";
 
 }
