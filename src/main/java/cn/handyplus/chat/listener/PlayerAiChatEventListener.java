@@ -13,6 +13,7 @@ import cn.handyplus.chat.service.ChatPlayerAiService;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
@@ -23,6 +24,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,15 +48,16 @@ public class PlayerAiChatEventListener implements Listener {
         Player player = event.getPlayer();
         int count = ChatPlayerAiService.getInstance().count(player.getUniqueId());
         boolean votingEnabled = count >= BaseConstants.CONFIG.getInt("ai.chatMaxCount", 3);
-        ChatPlayerAiEnter enter = new ChatPlayerAiEnter();
-        enter.setPlayerName(player.getName());
-        enter.setPlayerUuid(player.getUniqueId());
-        enter.setOriginalMessage(enter.getOriginalMessage());
-        enter.setAiMessage(enter.getAiMessage());
-        enter.setVotingEnabled(votingEnabled);
-        enter.setVoteNumber(0);
-        enter.setCreateTime(new Date());
-        int id = ChatPlayerAiService.getInstance().add(enter);
+        ChatPlayerAiEnter aiEnter = new ChatPlayerAiEnter();
+        aiEnter.setPlayerName(player.getName());
+        aiEnter.setPlayerUuid(player.getUniqueId());
+        aiEnter.setOriginalMessage(event.getOriginalMessage());
+        aiEnter.setAiMessage(event.getAiMessage());
+        aiEnter.setVotingEnabled(votingEnabled);
+        aiEnter.setVoteNumber(0);
+        aiEnter.setCreateTime(new Date());
+        aiEnter.setResult(false);
+        int id = ChatPlayerAiService.getInstance().add(aiEnter);
         if (votingEnabled && id > 0) {
             // 开启投票
             this.enabledVoting(player, id);
@@ -72,13 +76,17 @@ public class PlayerAiChatEventListener implements Listener {
 
         // 60秒后投票结束
         HandySchedulerUtil.runTaskLaterAsynchronously(() -> {
-            Optional<ChatPlayerAiEnter> chatPlayerAiOpt = ChatPlayerAiService.getInstance().findById(id);
+            Optional<ChatPlayerAiEnter> chatPlayerAiOpt = ChatPlayerAiService.getInstance().findChatAi(id);
             if (!chatPlayerAiOpt.isPresent()) {
                 return;
             }
             ChatPlayerAiEnter chatPlayerAi = chatPlayerAiOpt.get();
+            // 投票结束清空缓存
+            ChatConstants.PLAYER_VOTE_MAP.clear();
+            // 判断是否满足投票人数
             int aiVoteMaxNumber = BaseConstants.CONFIG.getInt("ai.voteMaxNumber");
             if (chatPlayerAi.getVoteNumber() >= aiVoteMaxNumber) {
+                // 执行自定义指令
                 List<String> commandList = BaseConstants.CONFIG.getStringList("ai.command");
                 for (String command : commandList) {
                     command = PlaceholderApiUtil.set(player, command);
@@ -86,6 +94,8 @@ public class PlayerAiChatEventListener implements Listener {
                     PlayerSchedulerUtil.syncDispatchCommand(command);
                 }
             }
+            // 更新处罚结果
+            ChatPlayerAiService.getInstance().updateResult(id, chatPlayerAi.getVoteNumber() >= aiVoteMaxNumber);
         }, 20 * 60);
     }
 
@@ -105,11 +115,14 @@ public class PlayerAiChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
-        String aiText = BaseUtil.getMsgNotColor("aiText");
+        String aiText = BaseUtil.getMsgNotColor("aiText", MapUtil.of("${player}", player.getName()));
         // 给予展示属性
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
-        chatChildParam.setText(PlaceholderApiUtil.set(player, aiText));
+        chatChildParam.setText(aiText);
         chatChildParam.setClick("/plc vote " + id);
+        chatChildParam.setHover(new ArrayList<>());
+        chatParam.setChildList(Collections.singletonList(chatChildParam));
+        chatParam.setMessage("");
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

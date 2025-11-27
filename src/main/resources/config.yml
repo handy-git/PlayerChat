@@ -23,8 +23,7 @@ ai:
   chatMaxCount: 3
   voteMaxNumber: 5
   command:
-    - "/lb xxx xxx"
-    - "/ban xxx xxx"
+    - "lb 全服大喇叭 &a${player}&c因违规发言,已被投票禁言5分钟"
 
 # 聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)
 # 0为关闭状态

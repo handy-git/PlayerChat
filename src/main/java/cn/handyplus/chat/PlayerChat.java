@@ -21,7 +21,6 @@ public class PlayerChat extends JavaPlugin {
     public static PlayerChat INSTANCE;
     public static boolean USE_PAPI;
     public static boolean USE_DISCORD_SRV;
-    public static boolean USE_AI;
 
     @Override
     public void onEnable() {
@@ -35,8 +34,6 @@ public class PlayerChat extends JavaPlugin {
         }
         // 加载DiscordSRV
         USE_DISCORD_SRV = BaseUtil.hook(HookPluginEnum.DISCORD_SRV);
-        // 加载 ai
-        USE_AI = BaseUtil.hook(HookPluginEnum.DEEP_SEEK);
         // 加载主数据
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")

@@ -140,13 +140,15 @@ public class ChatUtil {
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
             chatChildParam.setText(BaseUtil.replaceChatColor(chatChildParam.getText()));
             chatChildParam.setHover(BaseUtil.replaceChatColor(chatChildParam.getHover()));
-            chatChildParam.setContent(BaseUtil.replaceChatColor(chatChildParam.getContent()));
-            chatChildParam.setContent(StrUtil.replace(chatChildParam.getContent(), "message", chatParam.getMessage()));
+            if (StrUtil.isNotEmpty(chatChildParam.getContent())) {
+                chatChildParam.setContent(chatChildParam.getText() + BaseUtil.replaceChatColor(chatChildParam.getContent()));
+                chatChildParam.setContent(StrUtil.replace(chatChildParam.getContent(), "message", chatParam.getMessage()));
+            }
         }
         // 构建消息
         List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
-            RgbTextUtil textComponent = RgbTextUtil.getInstance().init(chatChildParam.getText());
+            RgbTextUtil textComponent = RgbTextUtil.getInstance().init(StrUtil.isNotEmpty(chatChildParam.getContent()) ? chatChildParam.getContent() : chatChildParam.getText());
             textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
             textComponent.addClickSuggestCommand(chatChildParam.getClickSuggest());
             textComponent.addClickCommand(chatChildParam.getClick());

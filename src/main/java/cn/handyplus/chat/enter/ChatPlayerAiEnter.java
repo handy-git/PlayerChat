@@ -43,4 +43,7 @@ public class ChatPlayerAiEnter {
     @TableField(value = "create_time", comment = "创建时间")
     private Date createTime;
 
+    @TableField(value = "result", comment = "处罚结果")
+    private Boolean result;
+
 }

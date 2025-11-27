@@ -3,7 +3,7 @@ main: cn.handyplus.chat.PlayerChat
 version: 2.0.0
 author: handy
 api-version: 1.13
-softdepend: [ PlaceholderAPI,DiscordSRV,DeepSeek ]
+softdepend: [ PlaceholderAPI,DiscordSRV ]
 website: https://ricedoc.handyplus.cn/wiki/PlayerChat/log/
 description: 一款有点好用的聊天插件
 folia-supported: true
@@ -31,6 +31,7 @@ permissions:
       playerChat.ignore: true
       playerChat.ignoreList: true
       playerChat.removeIgnore: true
+      playerChat.vote: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -81,4 +82,7 @@ permissions:
     default: true
   playerChat.removeIgnore:
     description: 移除屏蔽
+    default: true
+  playerChat.vote:
+    description: 投票
     default: true

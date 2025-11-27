@@ -47,6 +47,10 @@ ignoreParamFailureMsg: "&8[&c✘&8] &7请指定需要屏蔽的玩家名称"
 ignoreListEmptyMsg: "&8[&c✘&8] &7未屏蔽玩家"
 ignoreListMsg: "&8[&a✔&8] &7屏蔽数量:&a  ${number}"
 ignoreSelfFailureMsg: "&8[&c✘&8] &7无法屏蔽自己"
+aiText: "&8[&a!&8] &7玩家&a${player}&7因多次违规发言 &8[&a点击投票封禁&8]"
+voteSuccessMsg: "&8[&a✔&8] &7投票成功,当前票数&a${number}&7/&a${max}"
+hasVotedMsg: "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}"
+aiTip: "&8[&a!&8] &7请文明发言,多次违规将禁言!"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

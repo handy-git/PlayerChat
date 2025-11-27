@@ -39,6 +39,11 @@ public class ChatConstants {
     public static final Map<UUID, String> PLAYER_CHAT_CHANNEL = new HashMap<>();
 
     /**
+     * 玩家投票记录
+     */
+    public static final Map<UUID, Integer> PLAYER_VOTE_MAP = new HashMap<>();
+
+    /**
      * 插件频道
      * key 频道 value 插件名
      *

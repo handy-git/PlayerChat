@@ -48,13 +48,39 @@ public class ChatPlayerAiService {
     }
 
     /**
+     * 更新结果
+     *
+     * @param id     id
+     * @param result 结果
+     */
+    public void updateResult(Integer id, Boolean result) {
+        Db<ChatPlayerAiEnter> use = Db.use(ChatPlayerAiEnter.class);
+        use.update().set(ChatPlayerAiEnter::getResult, result);
+        use.execution().updateById(id);
+    }
+
+    /**
+     * 增加投票结果
+     *
+     * @param id id
+     */
+    public void addVoteNumber(Integer id) {
+        Db<ChatPlayerAiEnter> use = Db.use(ChatPlayerAiEnter.class);
+        use.update().add(ChatPlayerAiEnter::getVoteNumber, ChatPlayerAiEnter::getVoteNumber, 1);
+        use.execution().updateById(id);
+    }
+
+    /**
      * 查询
      *
      * @param id id
      * @return 数据
      */
-    public Optional<ChatPlayerAiEnter> findById(Integer id) {
-        return Db.use(ChatPlayerAiEnter.class).execution().selectById(id);
+    public Optional<ChatPlayerAiEnter> findChatAi(Integer id) {
+        Db<ChatPlayerAiEnter> use = Db.use(ChatPlayerAiEnter.class);
+        use.where().eq(ChatPlayerAiEnter::getId, id)
+                .eq(ChatPlayerAiEnter::getResult, false);
+        return use.execution().selectOne();
     }
 
 }

@@ -56,6 +56,11 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListEmptyMsg", "&8[&c✘&8] &7未屏蔽玩家", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListMsg", "&8[&a✔&8] &7屏蔽数量:&a  ${number}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreSelfFailureMsg", "&8[&c✘&8] &7无法屏蔽自己", null, language);
+        // 2.0.0 AI
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "aiText", "&8[&a!&8] &7玩家&a${player}&7因多次违规发言 &8[&a点击投票封禁&8]", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "voteSuccessMsg", "&8[&a✔&8] &7投票成功,当前票数&a${number}&7/&a${max}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "hasVotedMsg", "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "aiTip", "&8[&a!&8] &7请文明发言,多次违规将禁言!", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
