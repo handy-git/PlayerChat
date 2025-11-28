@@ -90,4 +90,14 @@ public class ChatPlayerHornService {
         db.execution().updateById(id);
     }
 
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 2.0.0
+     */
+    public List<ChatPlayerHornEnter> findAll() {
+        return Db.use(ChatPlayerHornEnter.class).execution().list();
+    }
+
 }

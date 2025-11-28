@@ -90,4 +90,14 @@ public class ChatPlayerChannelService {
         db.execution().update();
     }
 
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 2.0.0
+     */
+    public List<ChatPlayerChannelEnter> findAll() {
+        return Db.use(ChatPlayerChannelEnter.class).execution().list();
+    }
+
 }

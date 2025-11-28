@@ -32,6 +32,7 @@ permissions:
       playerChat.ignoreList: true
       playerChat.removeIgnore: true
       playerChat.vote: true
+      playerChat.convert: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -86,3 +87,6 @@ permissions:
   playerChat.vote:
     description: 投票
     default: true
+  playerChat.convert:
+    description: 转化数据库
+    default: op

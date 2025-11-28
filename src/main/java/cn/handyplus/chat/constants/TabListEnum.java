@@ -2,6 +2,7 @@ package cn.handyplus.chat.constants;
 
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.db.DbTypeEnum;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore", "convert"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
@@ -49,6 +50,8 @@ public enum TabListEnum {
 
     IGNORE_TWO(null, 1, "ignore", 2),
     REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),
+
+    CONVERT_ONE(DbTypeEnum.getEnum(), 1, "convert", 2),
     ;
 
     /**

@@ -5,6 +5,7 @@ import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.db.Db;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,6 +51,16 @@ public class ChatPlayerItemService {
         Db<ChatPlayerItemEnter> db = Db.use(ChatPlayerItemEnter.class);
         db.where().le(ChatPlayerItemEnter::getCreateTime, DateUtil.addDate(new Date(), -1));
         return db.execution().delete();
+    }
+
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 2.0.0
+     */
+    public List<ChatPlayerItemEnter> findAll() {
+        return Db.use(ChatPlayerItemEnter.class).execution().list();
     }
 
 }

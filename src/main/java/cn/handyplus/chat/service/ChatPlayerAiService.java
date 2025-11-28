@@ -4,6 +4,7 @@ import cn.handyplus.chat.enter.ChatPlayerAiEnter;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.db.Db;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -82,5 +83,16 @@ public class ChatPlayerAiService {
                 .eq(ChatPlayerAiEnter::getResult, false);
         return use.execution().selectOne();
     }
+
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 2.0.0
+     */
+    public List<ChatPlayerAiEnter> findAll() {
+        return Db.use(ChatPlayerAiEnter.class).execution().list();
+    }
+
 
 }

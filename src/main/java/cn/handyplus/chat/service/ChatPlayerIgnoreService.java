@@ -100,4 +100,14 @@ public class ChatPlayerIgnoreService {
         return use.execution().selectOne();
     }
 
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 2.0.0
+     */
+    public List<ChatPlayerIgnoreEnter> findAll() {
+        return Db.use(ChatPlayerIgnoreEnter.class).execution().list();
+    }
+
 }
