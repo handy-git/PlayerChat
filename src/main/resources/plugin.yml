@@ -33,6 +33,7 @@ permissions:
       playerChat.removeIgnore: true
       playerChat.vote: true
       playerChat.convert: true
+      playerChat.ai.ignore: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -89,4 +90,7 @@ permissions:
     default: true
   playerChat.convert:
     description: 转化数据库
+    default: op
+  playerChat.ai.ignore:
+    description: 忽略AI审核的权限
     default: op

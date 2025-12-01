@@ -105,6 +105,10 @@ public class PlayerChannelChatEventListener implements Listener {
         if (!PlayerChat.INSTANCE.getName().equals(event.getSource())) {
             return;
         }
+        // 玩家有忽略权限
+        if (event.getPlayer().hasPermission(ChatConstants.AI_IGNORE)) {
+            return;
+        }
         // 异步 AI 审核并提醒玩家
         HandySchedulerUtil.runTaskAsynchronously(() -> {
             String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), event.getOriginalMessage());

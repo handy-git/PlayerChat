@@ -105,5 +105,11 @@ public class ChatConstants {
      * @since 2.0.0
      */
     public static final String AI_ENABLE = "ai.enable";
+    /**
+     * AI审核忽略
+     *
+     * @since 2.0.0
+     */
+    public static final String AI_IGNORE = "playerChat.ai.ignore";
 
 }
