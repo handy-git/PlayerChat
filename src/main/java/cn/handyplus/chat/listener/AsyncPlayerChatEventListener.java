@@ -172,7 +172,8 @@ public class AsyncPlayerChatEventListener implements Listener {
         chatChildParam.setText(PlaceholderApiUtil.set(player, itemText));
         chatChildParam.setHover(itemMeta.getLore());
         chatChildParam.setClick("/plc item " + itemId);
-
+        // 消息内容
+        chatParam.setMessage(chatChildParam.getText());
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

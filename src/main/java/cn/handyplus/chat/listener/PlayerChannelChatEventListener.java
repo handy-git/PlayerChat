@@ -13,6 +13,7 @@ import cn.handyplus.lib.constants.HookPluginEnum;
 import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.HookPluginUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
@@ -98,7 +99,7 @@ public class PlayerChannelChatEventListener implements Listener {
      */
     private void aiReview(PlayerChannelChatEvent event) {
         // 是否开启
-        if (!BaseConstants.CONFIG.getBoolean(ChatConstants.AI_ENABLE) || !BaseUtil.hook(HookPluginEnum.DEEP_SEEK)) {
+        if (!BaseConstants.CONFIG.getBoolean(ChatConstants.AI_ENABLE) || !HookPluginUtil.hook(HookPluginEnum.DEEP_SEEK)) {
             return;
         }
         // 不处理非本插件消息

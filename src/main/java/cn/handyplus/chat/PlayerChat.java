@@ -6,8 +6,8 @@ import cn.handyplus.chat.util.ClearItemJob;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.HookPluginEnum;
-import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.HookPluginUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,12 +28,12 @@ public class PlayerChat extends JavaPlugin {
         InitApi initApi = InitApi.getInstance(this);
         ConfigUtil.init();
         // 加载PlaceholderApi
-        USE_PAPI = BaseUtil.hook(HookPluginEnum.PLACEHOLDER_API);
+        USE_PAPI = HookPluginUtil.hook(HookPluginEnum.PLACEHOLDER_API);
         if (USE_PAPI) {
             new PlaceholderUtil(this).register();
         }
         // 加载DiscordSRV
-        USE_DISCORD_SRV = BaseUtil.hook(HookPluginEnum.DISCORD_SRV);
+        USE_DISCORD_SRV = HookPluginUtil.hook(HookPluginEnum.DISCORD_SRV);
         // 加载主数据
         initApi.initCommand("cn.handyplus.chat.command")
                 .initListener("cn.handyplus.chat.listener")
