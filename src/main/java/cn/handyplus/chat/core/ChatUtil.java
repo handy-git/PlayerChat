@@ -134,11 +134,11 @@ public class ChatUtil {
      */
     public static @NotNull BaseComponent[] buildMsg(@NotNull ChatParam chatParam) {
         // 加载颜色
-        chatParam.setMessage(chatParam.isHasColor() ? BaseUtil.replaceChatColor(chatParam.getMessage()) : chatParam.getMessage());
+        chatParam.setMessage(chatParam.isHasColor() ? chatParam.getMessage() : BaseUtil.stripColor(chatParam.getMessage()));
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
-            chatChildParam.setText(BaseUtil.replaceChatColor(chatChildParam.getText()));
+            String text = StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage());
+            chatChildParam.setText(BaseUtil.replaceChatColor(text));
             chatChildParam.setHover(BaseUtil.replaceChatColor(chatChildParam.getHover()));
-            chatChildParam.setText(StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage()));
         }
         // 构建消息
         List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();

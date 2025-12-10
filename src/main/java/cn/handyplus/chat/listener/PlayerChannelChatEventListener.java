@@ -112,13 +112,14 @@ public class PlayerChannelChatEventListener implements Listener {
         }
         // 异步 AI 审核并提醒玩家
         HandySchedulerUtil.runTaskAsynchronously(() -> {
-            String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), event.getOriginalMessage());
+            String originalMessage = BaseUtil.stripColor(event.getOriginalMessage());
+            String chat = DeepSeekApi.chat(PlayerChat.INSTANCE.getName(), originalMessage);
             if (!chat.contains(ChatConstants.ILLEGAL)) {
                 return;
             }
             MessageUtil.sendConsoleDebugMessage("AI审核结果:" + chat);
             MessageUtil.sendMessage(event.getPlayer(), BaseUtil.getMsgNotColor("aiTip"));
-            Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(event.getPlayer(), event.getOriginalMessage(), chat));
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(event.getPlayer(), originalMessage, chat));
         });
     }
 
