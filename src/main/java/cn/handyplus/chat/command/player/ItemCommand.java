@@ -4,7 +4,7 @@ import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.inventory.ItemGui;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.lib.command.IHandyCommandEvent;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
+import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;

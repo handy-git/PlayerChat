@@ -8,14 +8,14 @@ import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
+import cn.handyplus.lib.internal.HandyLoginEvent;
+import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyHttpUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public class PlayerJoinEventListener implements Listener {
      * @param event 事件
      */
     @EventHandler
-    public void onEvent(PlayerJoinEvent event) {
+    public void onEvent(HandyLoginEvent event) {
         Player player = event.getPlayer();
         HandySchedulerUtil.runTaskAsynchronously(() -> {
             Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
@@ -71,7 +71,7 @@ public class PlayerJoinEventListener implements Listener {
      * @param event 事件
      */
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onOpPlayerJoin(PlayerJoinEvent event) {
+    public void onOpPlayerJoin(HandyLoginEvent event) {
         HandyHttpUtil.checkVersion(event.getPlayer());
     }
 
@@ -81,7 +81,7 @@ public class PlayerJoinEventListener implements Listener {
      * @param event 事件
      */
     @EventHandler
-    public void getPlayerList(PlayerJoinEvent event) {
+    public void getPlayerList(HandyLoginEvent event) {
         BcUtil.sendPlayerList();
         String name = event.getPlayer().getName();
         if (!ChatConstants.PLAYER_LIST.contains(name)) {

@@ -3,7 +3,7 @@ package cn.handyplus.chat.listener.gui;
 import cn.handyplus.chat.constants.GuiTypeEnum;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
+import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import cn.handyplus.lib.inventory.HandyInventory;
 import cn.handyplus.lib.inventory.HandyInventoryUtil;
 import cn.handyplus.lib.inventory.IHandyClickEvent;

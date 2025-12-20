@@ -15,8 +15,8 @@ import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
-import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
+import cn.handyplus.lib.internal.HandySchedulerUtil;
+import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
@@ -124,6 +124,7 @@ public class PlayerAiChatEventListener implements Listener {
         chatChildParam.setClickSuggest(null);
         chatParam.setChildList(Collections.singletonList(chatChildParam));
         chatParam.setMessage(aiText);
+        chatParam.setHasColor(true);
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

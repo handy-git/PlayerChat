@@ -2,7 +2,7 @@ package cn.handyplus.chat.util;
 
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.lib.core.DateUtil;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
+import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.util.MessageUtil;
 
 import java.util.Date;

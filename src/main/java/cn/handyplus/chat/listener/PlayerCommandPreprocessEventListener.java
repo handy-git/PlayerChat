@@ -3,7 +3,7 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.expand.adapter.PlayerSchedulerUtil;
+import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

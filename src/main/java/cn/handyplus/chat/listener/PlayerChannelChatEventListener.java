@@ -10,7 +10,7 @@ import cn.handyplus.deep.seek.api.DeepSeekApi;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.constants.HookPluginEnum;
-import cn.handyplus.lib.expand.adapter.HandySchedulerUtil;
+import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HookPluginUtil;
