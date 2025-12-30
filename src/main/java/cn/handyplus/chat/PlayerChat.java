@@ -8,18 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author handy
  */
 public class PlayerChat extends JavaPlugin {
-    private static PlayerChat INSTANCE;
+    public static PlayerChat INSTANCE;
 
     @Override
     public void onEnable() {
-    }
-
-    @Override
-    public void onDisable() {
-    }
-
-    public static PlayerChat getInstance() {
-        return INSTANCE;
     }
 
 }

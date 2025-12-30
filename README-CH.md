@@ -2,7 +2,7 @@
 
 -------------------------------------------------------------------------------
 
-[**🌎English Documentation**](README.md)
+[**🇬🇧 English Documentation**](README.md)
 
 -------------------------------------------------------------------------------
 
@@ -17,15 +17,12 @@
 如果本插件帮助到你，请帮忙右上角点个Star就对作者很大的支持了～
 
 使用教程: [点击查看](https://ricedoc.handyplus.cn/wiki/PlayerChat/README/)  
-购买地址: [点击查看](https://afdian.net/item/83c6b64614cd11ee8dee52540025c377)
+购买地址: [点击查看](https://afdian.com/item/83c6b64614cd11ee8dee52540025c377)
 
 购买后可获得售后服务，作者会指导使用，如未购买请自行查阅wiki了解如何使用
 
-## 本项目访问次数
+## 贡献免费许可证
 
-![Page Views Count](https://badges.toozhao.com/badges/01JHVDZ8QQD8XXTSHSSRDQEZRW/green.svg)
-
-## 贡献免费许可证 
 对本开源项目贡献代码、文档或其他资源，经审核通过后，您将获得免费的许可证。
 
 ## 贡献者

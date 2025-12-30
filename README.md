@@ -2,7 +2,7 @@
 
 -------------------------------------------------------------------------------
 
-[**🌎中文文档**](README-CH.md)
+[**🇨🇳中文文档**](README-CH.md)
 
 -------------------------------------------------------------------------------
 
@@ -18,17 +18,16 @@ If this plugin has been helpful to you, please consider giving it a Star in the 
 to the author!
 
 User Guide: [Click to View](https://ricedoc.handyplus.cn/wiki/PlayerChat/README/)  
-Purchase Link: [Click to View](https://afdian.net/item/83c6b64614cd11ee8dee52540025c377)
+Purchase Link: [AfDian](https://afdian.com/item/83c6b64614cd11ee8dee52540025c377)    
+Purchase Link: [SpigotMc](https://www.spigotmc.org/resources/126476/)
 
 Purchasing this plugin grants access to after-sales support. The author will guide you through usage. If you have not
 purchased it, please refer to the wiki for usage instructions.
 
-## Page Views Count
-
-![Page Views Count](https://badges.toozhao.com/badges/01JHVDZ8QQD8XXTSHSSRDQEZRW/green.svg)
-
 ## Free License for Contributions
-Contribute code, documentation, or other resources to this open-source project, and you can get a free license upon approval.
+
+Contribute code, documentation, or other resources to this open-source project, and you can get a free license upon
+approval.
 
 ## Contributors
 
