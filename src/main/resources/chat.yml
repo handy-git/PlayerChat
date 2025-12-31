@@ -90,6 +90,8 @@ chat:
   vip:
     # 是否开启
     enable: true
+    # 发言音效
+    sound: "ENTITY_ITEM_PICKUP"
     # 频道名称
     name: "&7[&aVIP频道&7]"
     # 聊天格式 支持变量

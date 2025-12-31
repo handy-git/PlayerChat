@@ -44,7 +44,7 @@ public class ItemCommand implements IHandyCommandEvent {
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 展示物品ID
-        Integer itemId = AssertUtil.isNumericToInt(args[1], BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer itemId = AssertUtil.isPositiveToInt(args[1], BaseUtil.getMsgNotColor("amountFailureMsg"));
         Optional<ChatPlayerItemEnter> chatPlayerItemOptional = ChatPlayerItemService.getInstance().findById(itemId);
         if (!chatPlayerItemOptional.isPresent()) {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("itemNotFoundMsg"));

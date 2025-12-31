@@ -83,6 +83,9 @@ public class ChatUtil {
                     playSound(onlinePlayer, sound);
                 }
             }
+            // 播放频道发言音效
+            String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".sound");
+            playSound(onlinePlayer, channelSound);
         }
         // 控制台消息
         if (isConsoleMsg) {

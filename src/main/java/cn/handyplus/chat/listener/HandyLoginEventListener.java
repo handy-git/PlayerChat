@@ -25,7 +25,7 @@ import java.util.Optional;
  * @author handy
  */
 @HandyListener
-public class PlayerJoinEventListener implements Listener {
+public class HandyLoginEventListener implements Listener {
 
     /**
      * 设置频道
@@ -66,7 +66,7 @@ public class PlayerJoinEventListener implements Listener {
     }
 
     /**
-     * op进入服务器发送更新提醒
+     * 进入服务器发送更新提醒
      *
      * @param event 事件
      */

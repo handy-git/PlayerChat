@@ -45,7 +45,7 @@ public class VoteCommand implements IHandyCommandEvent {
         AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("ignoreParamFailureMsg"));
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
         // 是否为id
-        Integer id = AssertUtil.isNumericToInt(args[1], BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer id = AssertUtil.isPositiveToInt(args[1], BaseUtil.getMsgNotColor("amountFailureMsg"));
         Optional<ChatPlayerAiEnter> chatPlayerAiOpt = ChatPlayerAiService.getInstance().findChatAi(id);
         if (!chatPlayerAiOpt.isPresent()) {
             return;
