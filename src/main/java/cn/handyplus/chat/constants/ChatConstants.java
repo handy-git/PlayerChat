@@ -68,6 +68,13 @@ public final class ChatConstants {
     public static final Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
 
     /**
+     * 玩家昵称缓存
+     *
+     * @since 2.0.5
+     */
+    public static final Map<UUID, String> PLAYER_CHAT_NICK = new HashMap<>();
+
+    /**
      * 频道使用权限
      *
      * @since 1.1.4
@@ -94,6 +101,14 @@ public final class ChatConstants {
      * @since 1.4.3
      */
     public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new HashMap<>();
+
+    /**
+     * 玩家昵称缓存
+     * key: 玩家UUID, value: 昵称
+     *
+     * @since 2.0.6
+     */
+    public static Map<UUID, String> PLAYER_NICK_CACHE = new HashMap<>();
     /**
      * 违规
      *

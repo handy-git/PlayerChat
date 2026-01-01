@@ -49,6 +49,7 @@ public class PlayerQuitEventListener implements Listener {
         ChatConstants.PLAYER_LIST.remove(player.getName());
         ChatConstants.PLAYER_IGNORE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_VOTE_MAP.remove(player.getUniqueId());
+        ChatConstants.PLAYER_CHAT_NICK.remove(player.getUniqueId());
         BcUtil.sendPlayerList();
     }
 

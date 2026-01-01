@@ -50,6 +50,10 @@ public class PlaceholderUtil extends PlaceholderExpansion {
         if (player == null) {
             return null;
         }
+        // %playerChat_nick%
+        if ("nick".equalsIgnoreCase(placeholder)) {
+            return ChatConstants.PLAYER_CHAT_NICK.getOrDefault(player.getUniqueId(), player.getName());
+        }
         // %playerChat_channel%
         if ("channel".equalsIgnoreCase(placeholder)) {
             String channelName = ChatConstants.PLAYER_CHAT_CHANNEL.get(player.getUniqueId());

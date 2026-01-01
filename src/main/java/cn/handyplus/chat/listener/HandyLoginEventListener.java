@@ -3,8 +3,10 @@ package cn.handyplus.chat.listener;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
+import cn.handyplus.chat.enter.ChatPlayerNickEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
+import cn.handyplus.chat.service.ChatPlayerNickService;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
@@ -73,6 +75,22 @@ public class HandyLoginEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onOpPlayerJoin(HandyLoginEvent event) {
         HandyHttpUtil.checkVersion(event.getPlayer());
+    }
+
+    /**
+     * 缓存昵称
+     *
+     * @param event 事件
+     * @since 2.0.5
+     */
+    @EventHandler
+    public void onCacheNickEvent(HandyLoginEvent event) {
+        Player player = event.getPlayer();
+        HandySchedulerUtil.runTaskAsynchronously(() -> {
+            Optional<ChatPlayerNickEnter> nickOptional = ChatPlayerNickService.getInstance().findByPlayerUuid(player.getUniqueId());
+            String nickName = nickOptional.map(ChatPlayerNickEnter::getNickName).orElse(player.getName());
+            ChatConstants.PLAYER_CHAT_NICK.put(player.getUniqueId(), nickName);
+        });
     }
 
     /**
