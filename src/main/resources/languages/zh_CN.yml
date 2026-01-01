@@ -17,6 +17,7 @@ helps:
   - "   &8&l- &f channel [频道名] &7切换聊天频道"
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
   - "   &8&l- &f tell [玩家] [消息]  &7私信玩家消息"
+  - "   &8&l- &f nick [昵称] (玩家名) &7设置昵称"
   - "   &8&l- &f clearBossBar   &7移除全部BossBar消息"
 
 succeedMsg: "&8[&a✔&8] &a命令执行成功"
@@ -51,6 +52,7 @@ aiText: "&8[&a!&8] &7玩家&a${player}&7因多次违规发言 &8[&a点击投票�
 voteSuccessMsg: "&8[&a✔&8] &7投票成功,当前票数&a${number}&7/&a${max}"
 hasVotedMsg: "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}"
 aiTip: "&8[&a!&8] &7请文明发言,多次违规将禁言!"
+nickSetSuccessMsg: "&8[&a✔&8] &a已成功设置玩家 ${player} 的昵称为 ${nickName}"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

@@ -27,7 +27,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore", "convert"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore", "convert", "nick"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
@@ -35,23 +35,26 @@ public enum TabListEnum {
 
     GIVE_TWO(null, 1, "give", 2),
     GIVE_THREE(null, 1, "give", 3),
-    GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "give", 4),
+    GIVE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "give", 4),
 
     TAKE_TWO(null, 1, "take", 2),
     TAKE_THREE(null, 1, "take", 3),
-    TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "take", 4),
+    TAKE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "take", 4),
 
     SET_TWO(null, 1, "set", 2),
     SET_THREE(null, 1, "set", 3),
-    SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "set", 4),
+    SET_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "set", 4),
 
     TELL_TWO(null, 1, "tell", 2),
-    TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
+    TELL_THREE(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.message")), 1, "tell", 3),
 
     IGNORE_TWO(null, 1, "ignore", 2),
     REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),
 
     CONVERT_ONE(DbTypeEnum.getEnum(), 1, "convert", 2),
+
+    NICK_TWO(null, 1, "nick", 2),
+    NICK_THREE(null, 1, "nick", 3),
     ;
 
     /**
