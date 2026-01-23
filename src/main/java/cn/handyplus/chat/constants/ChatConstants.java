@@ -11,7 +11,10 @@ import java.util.UUID;
  *
  * @author handy
  */
-public class ChatConstants {
+public final class ChatConstants {
+
+    private ChatConstants() {
+    }
 
     /**
      * 默认频道
@@ -111,5 +114,12 @@ public class ChatConstants {
      * @since 2.0.0
      */
     public static final String AI_IGNORE = "playerChat.ai.ignore";
+
+    /**
+     * 全部
+     *
+     * @since 2.1.0
+     */
+    public static final String ALL = "[ALL]";
 
 }

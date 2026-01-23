@@ -8,6 +8,7 @@ import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
+import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.PatternUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.internal.HandySchedulerUtil;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -68,6 +70,13 @@ public class ChatUtil {
             // 判断是否开启私信
             if (StrUtil.isNotEmpty(chatParam.getTellPlayerName()) && !onlinePlayer.getName().equals(chatParam.getTellPlayerName())) {
                 continue;
+            }
+            // 判断是否开启附近的人
+            Pair<Boolean, List<UUID>> nearbyPlayersPair = chatParam.getNearbyPlayers();
+            if (nearbyPlayersPair != null && nearbyPlayersPair.getKey()) {
+                if (!nearbyPlayersPair.getValue().contains(onlinePlayer.getUniqueId())) {
+                    continue;
+                }
             }
             // 判断是否开启屏蔽
             List<String> ignoreList = ChatConstants.PLAYER_IGNORE_MAP.get(onlinePlayer.getUniqueId());
