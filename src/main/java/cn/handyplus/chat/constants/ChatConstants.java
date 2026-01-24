@@ -12,6 +12,7 @@ import java.util.UUID;
  * @author handy
  */
 public final class ChatConstants {
+
     private ChatConstants() {
     }
 
@@ -135,5 +136,12 @@ public final class ChatConstants {
      * @since 2.0.5
      */
     public static final String NICK_OTHER = "playerChat.nick.other";
+
+    /**
+     * 全部
+     *
+     * @since 2.1.0
+     */
+    public static final String ALL = "[ALL]";
 
 }

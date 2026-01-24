@@ -2,13 +2,18 @@ package cn.handyplus.chat.core;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 频道处理
@@ -85,6 +90,30 @@ public class ChannelUtil {
             }
         }
         return playerList;
+    }
+
+    /**
+     * 获取附近玩家
+     *
+     * @param channel 频道
+     * @param player  玩家
+     * @return 玩家列表
+     * @since 2.1.0
+     */
+    public static Pair<Boolean, List<UUID>> getNearbyPlayers(String channel, Player player) {
+        // 渠道查找范围
+        String range = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".range", "");
+        if (StrUtil.isNotEmpty(range)) {
+            return Pair.of(false, new ArrayList<>());
+        }
+        // 附近玩家处理
+        List<String> rangeList = StrUtil.strToStrList(range, ",");
+        List<Entity> entityList = player.getNearbyEntities(Double.parseDouble(rangeList.get(0)),
+                Double.parseDouble(rangeList.get(1)),
+                Double.parseDouble(rangeList.get(2)));
+        // 过滤玩家列表
+        List<UUID> playerList = entityList.stream().filter(e -> EntityType.PLAYER.equals(e.getType())).map(Entity::getUniqueId).collect(Collectors.toList());
+        return Pair.of(true, playerList);
     }
 
 }

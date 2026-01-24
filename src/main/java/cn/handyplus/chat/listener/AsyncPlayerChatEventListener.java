@@ -87,8 +87,10 @@ public class AsyncPlayerChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
-        // 添加接收人 1.1.5
+        // 添加私信接收人 1.1.5
         chatParam.setTellPlayerName(tellPlayerName);
+        // 添加附近的人 2.1.0
+        chatParam.setNearbyPlayers(ChannelUtil.getNearbyPlayers(channel, player));
         // 原消息内容
         chatParam.setMessage(message);
         // @玩家处理

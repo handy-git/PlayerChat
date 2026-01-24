@@ -1,9 +1,11 @@
 package cn.handyplus.chat.param;
 
+import cn.handyplus.lib.core.Pair;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 跨服消息
@@ -47,6 +49,13 @@ public class ChatParam {
      * @since 1.2.2
      */
     private List<String> mentionedPlayers;
+
+    /**
+     * 附近的人
+     *
+     * @since 2.1.0
+     */
+    private Pair<Boolean, List<UUID>> nearbyPlayers;
 
     /**
      * 来源
