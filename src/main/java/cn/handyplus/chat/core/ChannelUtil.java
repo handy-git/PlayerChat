@@ -103,7 +103,7 @@ public class ChannelUtil {
     public static Pair<Boolean, List<UUID>> getNearbyPlayers(String channel, Player player) {
         // 渠道查找范围
         String range = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".range", "");
-        if (StrUtil.isNotEmpty(range)) {
+        if (StrUtil.isEmpty(range)) {
             return Pair.of(false, new ArrayList<>());
         }
         // 附近玩家处理
