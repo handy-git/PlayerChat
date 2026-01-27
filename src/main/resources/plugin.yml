@@ -1,9 +1,9 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 2.1.1
+version: 2.1.2
 author: handy
 api-version: 1.13
-softdepend: [ PlaceholderAPI,DiscordSRV,AuthMe,CatSeedLogin,OauthLogin ]
+softdepend: [ PlaceholderAPI, DiscordSRV, AuthMe, CatSeedLogin, OauthLogin ]
 website: https://ricedoc.handyplus.cn/wiki/PlayerChat/log/
 description: 一款有点好用的聊天插件
 folia-supported: true

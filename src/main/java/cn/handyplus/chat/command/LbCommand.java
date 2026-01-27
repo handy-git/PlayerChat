@@ -64,7 +64,13 @@ public class LbCommand implements TabExecutor {
             return true;
         }
         // 校验玩家
-        Player player = this.checkPlayer(sender, type);
+        Player player = null;
+        if (BaseUtil.isPlayer(sender)) {
+            player = this.checkPlayer((Player) sender, type);
+            if (player == null) {
+                return true;
+            }
+        }
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setType(type);
@@ -95,15 +101,11 @@ public class LbCommand implements TabExecutor {
     /**
      * 校验玩家喇叭
      *
-     * @param sender 控制台
+     * @param player 玩家
      * @param type   类型
      * @return 玩家或者 null
      */
-    private @Nullable Player checkPlayer(@NotNull CommandSender sender, String type) {
-        if (!BaseUtil.isPlayer(sender)) {
-            return null;
-        }
-        Player player = (Player) sender;
+    private @Nullable Player checkPlayer(@NotNull Player player, String type) {
         // 查询喇叭
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (!hornPlayerEnterOpt.isPresent()) {
