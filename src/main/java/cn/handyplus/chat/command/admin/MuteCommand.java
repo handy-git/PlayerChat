@@ -41,10 +41,11 @@ public class MuteCommand implements IHandyCommandEvent {
 
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
-        // 参数校验: /plc mute <玩家名> <时长(秒)> (原因)
+        // 参数校验: /plc mute <玩家名> <时长> (原因)
         AssertUtil.notTrue(args.length < 3, BaseUtil.getMsgNotColor("muteParamFailureMsg"));
         String playerName = args[1];
-        Integer muteTime = AssertUtil.isPositiveToInt(args[2], BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer muteTime = DateUtil.parseTime(args[2]);
+        AssertUtil.notNull(muteTime, BaseUtil.getMsgNotColor("timeFormatFailureMsg"));
         String reason = this.getArg(args, 3).orElse(BaseUtil.getMsgNotColor("muteDefaultReason"));
 
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);

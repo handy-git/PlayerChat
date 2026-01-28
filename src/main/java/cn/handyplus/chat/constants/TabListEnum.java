@@ -57,7 +57,7 @@ public enum TabListEnum {
     NICK_THREE(null, 1, "nick", 3),
 
     MUTE_TWO(null, 1, "mute", 2),
-    MUTE_THREE(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.muteTime")), 1, "mute", 3),
+    MUTE_THREE(Arrays.asList("10", "30", "1m", "5m", "10m", "30m", "1h", "6h", "12h", "1d", "7d"), 1, "mute", 3),
     MUTE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.muteReason")), 1, "mute", 4),
 
     UNMUTE_TWO(null, 1, "unmute", 2),

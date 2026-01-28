@@ -153,4 +153,12 @@ public final class ChatConstants {
      */
     public static final Map<UUID, Optional<ChatPlayerMuteEnter>> PLAYER_MUTE_CACHE = new HashMap<>();
 
+    /**
+     * 命令别名映射
+     * key: 别名, value: 实际命令
+     *
+     * @since 2.0.6
+     */
+    public static final Map<String, String> COMMAND_ALIAS_MAP = new HashMap<>();
+
 }

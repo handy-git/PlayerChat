@@ -8,10 +8,14 @@ server: "lobby"
 # 可以用 papi变量 %playerChat_server_name% 读取 或者内部变量 ${serverName} 读取
 serverName: ""
 
-# /plc tell 指令的简写
-tellAlias:
-  - "/tell"
-  - "/msg"
+# 命令别名
+# 格式: 别名: "替换为"
+# 例如: /tell xxx -> /plc tell xxx
+commandAlias:
+  tell: "plc tell"
+  msg: "plc tell"
+  mute: "plc mute"
+  unmute: "plc unmute"
 
 # 玩家第一次登录后的默认频道
 # 注意 如果修改为其他频道,请把对应的权限提前给予 查看: playerChat.chat.频道名 使用: playerChat.use.频道名

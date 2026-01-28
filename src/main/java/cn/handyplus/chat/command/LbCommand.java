@@ -8,6 +8,7 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -71,12 +72,14 @@ public class LbCommand implements TabExecutor {
                 return true;
             }
         }
+        String playerName = player != null ? player.getName() : "CONSOLE";
+        originalMessage = StrUtil.replace(originalMessage, "player", playerName);
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setType(type);
         param.setMessage(originalMessage);
         param.setTimestamp(System.currentTimeMillis());
-        param.setPlayerName(player != null ? player.getName() : "CONSOLE");
+        param.setPlayerName(playerName);
         BcUtil.sendParamForward(sender, param);
         // 发送消息
         HornUtil.sendMsg(player, param);

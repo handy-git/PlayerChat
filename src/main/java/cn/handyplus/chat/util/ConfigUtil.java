@@ -1,11 +1,14 @@
 package cn.handyplus.chat.util;
 
+import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.lib.command.HandyCommandWrapper;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * 配置
@@ -25,6 +28,21 @@ public class ConfigUtil {
         LB_CONFIG = HandyConfigUtil.load("lb.yml");
         ITEM_CONFIG = HandyConfigUtil.load("gui/item.yml");
         upConfig();
+        loadCommandAlias();
+    }
+
+    /**
+     * 加载命令别名配置
+     *
+     * @since 2.1.3
+     */
+    private static void loadCommandAlias() {
+        Set<String> commandAliasKey = HandyConfigUtil.getKey(BaseConstants.CONFIG, "commandAlias");
+        for (String key : commandAliasKey) {
+            ChatConstants.COMMAND_ALIAS_MAP.put(key, BaseConstants.CONFIG.getString("commandAlias." + key));
+            // 动态注入命令
+            HandyCommandWrapper.injectCommand(key);
+        }
     }
 
     /**
@@ -70,8 +88,9 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmuteNotFoundMsg", "&8[&c✘&8] &7玩家 ${player} 未被禁言", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerNotFoundMsg", "&8[&c✘&8] &7玩家不存在", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "mutedMsg", "&8[&c✘&8] &7你已被禁言, 剩余 ${time} 秒, 原因: ${reason}", null, language);
-        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.muteTime", "请输入禁言时长(秒)", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.muteReason", "请输入禁言原因(可选)", null, language);
+        // 时间格式错误
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "timeFormatFailureMsg", "&8[&c✘&8] &7时间格式错误, 支持: 数字(秒), 1m(分钟), 1h(小时), 1d(天), 1w(周), 1M(月), 1y(年)", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
@@ -81,8 +100,9 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip3", 0, null, "config.yml");
         // 1.2.6 增加登录后默认频道设置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
-        // 1.3.6 私信简化
-        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "tellAlias", Arrays.asList("/tell", "/msg"), Collections.singletonList("/plc tell 指令的简写"), "config.yml");
+        // 2.0.6 命令别名
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.tell", "plc tell", Collections.singletonList("命令别名, 格式: 别名: \"替换为\", 例如: /tell xxx -> /plc tell xxx"), "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.msg", "plc tell", null, "config.yml");
         // 2.0.0 AI审核
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.enable", false, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.chatMaxCount", 3, null, "config.yml");
