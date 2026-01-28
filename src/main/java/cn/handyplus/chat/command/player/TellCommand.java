@@ -1,7 +1,7 @@
 package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.listener.AsyncPlayerChatEventListener;
+import cn.handyplus.chat.listener.PlayerChatListener;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -49,7 +49,7 @@ public class TellCommand implements IHandyCommandEvent {
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
-        AsyncPlayerChatEventListener.sendMsg(player, message, ChatConstants.TELL, playerName);
+        PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
         MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("sendTell", map));
     }

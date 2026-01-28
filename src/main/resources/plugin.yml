@@ -36,6 +36,8 @@ permissions:
       playerChat.ai.ignore: true
       playerChat.nick: true
       playerChat.nick.other: true
+      playerChat.mute: true
+      playerChat.unmute: true
   playerChat.reload:
     description: 重新加载配置
     default: op
@@ -101,4 +103,10 @@ permissions:
     default: op
   playerChat.nick.other:
     description: 设置其他玩家的昵称
+    default: op
+  playerChat.mute:
+    description: 禁言玩家
+    default: op
+  playerChat.unmute:
+    description: 解除禁言
     default: op

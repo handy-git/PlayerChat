@@ -16,6 +16,7 @@ import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
+import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -259,6 +260,80 @@ public class ChatUtil {
             return;
         }
         PlayerSchedulerUtil.playSound(player, soundOptional.get(), 1, 1);
+    }
+
+    /**
+     * 聊天校验处理
+     *
+     * @param player  玩家
+     * @param message 消息
+     * @return true 不满足条件
+     */
+    public static boolean chatCheck(Player player, String message) {
+        // 内容黑名单处理
+        if (blackListCheck(message)) {
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("blacklistMsg"));
+            return true;
+        }
+        // 聊天间隔处理
+        int chatTime = HandyPermissionUtil.getReverseIntNumber(player, BaseConstants.CONFIG, "chatTime");
+        if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
+            long keepAlive = (System.currentTimeMillis() - ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId())) / 1000L;
+            if (keepAlive < chatTime) {
+                String waitTimeMsg = BaseUtil.getLangMsg("chatTime").replace("${chatTime}", (chatTime - keepAlive) + "");
+                MessageUtil.sendMessage(player, waitTimeMsg);
+                return true;
+            }
+        }
+        ChatConstants.PLAYER_CHAT_TIME.put(player.getUniqueId(), System.currentTimeMillis());
+        return false;
+    }
+
+    /**
+     * 黑名单控制
+     *
+     * @param message 消息
+     * @return true 存在黑名单语言
+     */
+    public static boolean blackListCheck(String message) {
+        List<String> blacklist = BaseConstants.CONFIG.getStringList("blacklist");
+        String stripColorMessage = BaseUtil.stripColor(message);
+        if (CollUtil.isNotEmpty(blacklist)) {
+            for (String blackMsg : blacklist) {
+                if (StrUtil.isEmpty(blackMsg)) {
+                    continue;
+                }
+                if (stripColorMessage.contains(blackMsg)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取所在频道
+     *
+     * @param player 玩家
+     * @return 频道
+     */
+    public static String getChannel(Player player) {
+        String channel = ChatConstants.PLAYER_CHAT_CHANNEL.getOrDefault(player.getUniqueId(), ChatConstants.DEFAULT);
+        // 插件频道直接返回
+        if (ChatConstants.PLUGIN_CHANNEL.containsKey(channel)) {
+            return channel;
+        }
+        // 是否有对应频道权限 如果没有权限回到默认频道
+        if (!ChatConstants.DEFAULT.equals(channel) && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
+            channel = ChatConstants.DEFAULT;
+            // 缓存为频道
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
+        }
+        // 频道是否开启
+        if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
+            return ChatConstants.DEFAULT;
+        }
+        return channel;
     }
 
 }

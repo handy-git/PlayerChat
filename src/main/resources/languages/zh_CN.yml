@@ -18,6 +18,8 @@ helps:
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
   - "   &8&l- &f tell [玩家] [消息]  &7私信玩家消息"
   - "   &8&l- &f nick [昵称] (玩家名) &7设置昵称"
+  - "   &8&l- &f mute [玩家名] [时长(秒)] (原因)  &7禁言玩家"
+  - "   &8&l- &f unmute [玩家名]  &7解除禁言"
   - "   &8&l- &f clearBossBar   &7移除全部BossBar消息"
 
 succeedMsg: "&8[&a✔&8] &a命令执行成功"
@@ -54,7 +56,19 @@ hasVotedMsg: "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}"
 aiTip: "&8[&a!&8] &7请文明发言,多次违规将禁言!"
 nickSetSuccessMsg: "&8[&a✔&8] &a已成功设置玩家 ${player} 的昵称为 ${nickName}"
 
+# 禁言相关
+muteParamFailureMsg: "&8[&c✘&8] &7参数错误 使用方法: &a/plc mute [玩家名] [时长(秒)] (原因)"
+muteSuccessMsg: "&8[&a✔&8] &a已禁言玩家 ${player} ${time}秒, 原因: ${reason}"
+muteDefaultReason: "违规发言"
+unmuteParamFailureMsg: "&8[&c✘&8] &7参数错误 使用方法: &a/plc unmute [玩家名]"
+unmuteSuccessMsg: "&8[&a✔&8] &a已解除玩家 ${player} 的禁言"
+unmuteNotFoundMsg: "&8[&c✘&8] &7玩家 ${player} 未被禁言"
+playerNotFoundMsg: "&8[&c✘&8] &7玩家不存在"
+mutedMsg: "&8[&c✘&8] &7你已被禁言, 剩余 ${time} 秒, 原因: ${reason}"
+
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:
   number: "请输入数量"
   message: "请输入私信内容"
+  muteTime: "请输入禁言时长(秒)"
+  muteReason: "请输入禁言原因(可选)"

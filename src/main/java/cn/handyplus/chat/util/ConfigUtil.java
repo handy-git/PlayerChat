@@ -61,6 +61,17 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "voteSuccessMsg", "&8[&a✔&8] &7投票成功,当前票数&a${number}&7/&a${max}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "hasVotedMsg", "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "aiTip", "&8[&a!&8] &7请文明发言,多次违规将禁言!", null, language);
+        // 禁言相关
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "muteParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/plc mute [玩家名] [时长(秒)] (原因)", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "muteSuccessMsg", "&8[&a✔&8] &a已禁言玩家 ${player} ${time}秒, 原因: ${reason}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "muteDefaultReason", "违规发言", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmuteParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/plc unmute [玩家名]", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmuteSuccessMsg", "&8[&a✔&8] &a已解除玩家 ${player} 的禁言", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmuteNotFoundMsg", "&8[&c✘&8] &7玩家 ${player} 未被禁言", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerNotFoundMsg", "&8[&c✘&8] &7玩家不存在", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "mutedMsg", "&8[&c✘&8] &7你已被禁言, 剩余 ${time} 秒, 原因: ${reason}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.muteTime", "请输入禁言时长(秒)", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.muteReason", "请输入禁言原因(可选)", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");

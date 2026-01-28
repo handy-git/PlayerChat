@@ -37,3 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+/.kiro/steering/product.md
+/.kiro/steering/structure.md
+/.kiro/steering/tech.md

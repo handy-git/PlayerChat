@@ -27,7 +27,7 @@ public enum TabListEnum {
     /**
      * 第一层提醒
      */
-    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore", "convert", "nick"), 0, null, 1),
+    FIRST(Arrays.asList("reload", "send", "give", "take", "set", "look", "channel", "tell", "clearBossBar", "ignore", "ignoreList", "removeIgnore", "convert", "nick", "mute", "unmute"), 0, null, 1),
 
     LOOK_TWO(null, 1, "look", 2),
 
@@ -55,6 +55,12 @@ public enum TabListEnum {
 
     NICK_TWO(null, 1, "nick", 2),
     NICK_THREE(null, 1, "nick", 3),
+
+    MUTE_TWO(null, 1, "mute", 2),
+    MUTE_THREE(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.muteTime")), 1, "mute", 3),
+    MUTE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.muteReason")), 1, "mute", 4),
+
+    UNMUTE_TWO(null, 1, "unmute", 2),
     ;
 
     /**

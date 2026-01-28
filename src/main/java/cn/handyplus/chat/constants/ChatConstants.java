@@ -1,9 +1,12 @@
 package cn.handyplus.chat.constants;
 
+import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -143,5 +146,11 @@ public final class ChatConstants {
      * @since 2.1.0
      */
     public static final String ALL = "[ALL]";
+
+    /**
+     * 玩家禁言缓存
+     * key: 玩家UUID, value: 禁言记录
+     */
+    public static final Map<UUID, Optional<ChatPlayerMuteEnter>> PLAYER_MUTE_CACHE = new HashMap<>();
 
 }

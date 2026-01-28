@@ -5,11 +5,13 @@ import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.enter.ChatPlayerIgnoreEnter;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
+import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
 import cn.handyplus.chat.service.ChatPlayerAiService;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.chat.service.ChatPlayerItemService;
+import cn.handyplus.chat.service.ChatPlayerMuteService;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.db.Db;
@@ -67,6 +69,7 @@ public class ConvertCommand implements IHandyCommandEvent {
         List<ChatPlayerHornEnter> all2 = ChatPlayerHornService.getInstance().findAll();
         List<ChatPlayerIgnoreEnter> all3 = ChatPlayerIgnoreService.getInstance().findAll();
         List<ChatPlayerItemEnter> all4 = ChatPlayerItemService.getInstance().findAll();
+        List<ChatPlayerMuteEnter> all5 = ChatPlayerMuteService.getInstance().findAll();
         // 修改链接方式
         HandyConfigUtil.setPath(BaseConstants.STORAGE_CONFIG, "storage-method", storageMethod, Collections.singletonList("存储方法(MySQL,SQLite)请复制括号内的类型,不要自己写"), "storage.yml");
         // 加载新连接
@@ -77,12 +80,14 @@ public class ConvertCommand implements IHandyCommandEvent {
         Db.use(ChatPlayerHornEnter.class).createTable();
         Db.use(ChatPlayerIgnoreEnter.class).createTable();
         Db.use(ChatPlayerItemEnter.class).createTable();
+        Db.use(ChatPlayerMuteEnter.class).createTable();
         // 插入数据
         Db.use(ChatPlayerAiEnter.class).execution().insertBatch(all);
         Db.use(ChatPlayerChannelEnter.class).execution().insertBatch(all1);
         Db.use(ChatPlayerHornEnter.class).execution().insertBatch(all2);
         Db.use(ChatPlayerIgnoreEnter.class).execution().insertBatch(all3);
         Db.use(ChatPlayerItemEnter.class).execution().insertBatch(all4);
+        Db.use(ChatPlayerMuteEnter.class).execution().insertBatch(all5);
         MessageUtil.sendMessage(sender, "&4转换数据完成，请务必重启服务器，不然有可能会出现未知bug");
     }
 

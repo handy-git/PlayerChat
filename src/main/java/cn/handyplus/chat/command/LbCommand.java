@@ -1,9 +1,9 @@
 package cn.handyplus.chat.command;
 
 import cn.handyplus.chat.PlayerChat;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
-import cn.handyplus.chat.listener.AsyncPlayerChatEventListener;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyCommand;
@@ -59,7 +59,7 @@ public class LbCommand implements TabExecutor {
         }
         String originalMessage = message.toString();
         // 内容黑名单处理
-        if (AsyncPlayerChatEventListener.blackListCheck(originalMessage)) {
+        if (ChatUtil.blackListCheck(originalMessage)) {
             MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("blacklistMsg"));
             return true;
         }
