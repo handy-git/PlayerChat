@@ -50,6 +50,10 @@ public class UnmuteCommand implements IHandyCommandEvent {
         Map<String, String> map = MapUtil.of("${player}", playerName);
         String msg = BaseUtil.getMsgNotColor(deleted > 0 ? "unmuteSuccessMsg" : "unmuteNotFoundMsg", map);
         MessageUtil.sendMessage(sender, msg);
+        // 通知被解除禁言玩家
+        if (deleted > 0) {
+            MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getMsgNotColor("unmutedNotifyMsg"));
+        }
     }
 
 }

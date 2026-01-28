@@ -66,6 +66,8 @@ unmuteSuccessMsg: "&8[&a✔&8] &a已解除玩家 ${player} 的禁言"
 unmuteNotFoundMsg: "&8[&c✘&8] &7玩家 ${player} 未被禁言"
 playerNotFoundMsg: "&8[&c✘&8] &7玩家不存在"
 mutedMsg: "&8[&c✘&8] &7你已被禁言, 剩余 ${time} 秒, 原因: ${reason}"
+mutedNotifyMsg: "&8[&c✘&8] &7你已被禁言 ${time} 秒, 原因: ${reason}"
+unmutedNotifyMsg: "&8[&a✔&8] &a你的禁言已被解除"
 
 # 用于输入指令时候tab自动提醒帮助(只建议翻译,不建议更改)
 tabHelp:

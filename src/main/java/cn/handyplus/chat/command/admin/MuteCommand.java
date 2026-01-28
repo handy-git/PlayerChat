@@ -68,6 +68,8 @@ public class MuteCommand implements IHandyCommandEvent {
         ChatPlayerMuteService.getInstance().add(muteEnter);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${reason}", reason, "${time}", muteTime.toString());
         MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("muteSuccessMsg", map));
+        // 通知被禁言玩家
+        MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getMsgNotColor("mutedNotifyMsg", map));
     }
 
 }
