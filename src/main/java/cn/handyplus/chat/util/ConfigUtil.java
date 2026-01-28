@@ -105,6 +105,8 @@ public class ConfigUtil {
         // 2.0.6 命令别名
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.tell", "plc tell", Collections.singletonList("命令别名, 格式: 别名: \"替换为\", 例如: /tell xxx -> /plc tell xxx"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.msg", "plc tell", null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.mute", "plc mute", null, "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "commandAlias.unmute", "plc unmute", null, "config.yml");
         // 2.0.0 AI审核
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.enable", false, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "ai.chatMaxCount", 3, null, "config.yml");
