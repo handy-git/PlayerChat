@@ -57,13 +57,13 @@ public class IgnoreListCommand implements IHandyCommandEvent {
         }
         RgbTextUtil rgbTextUtil = RgbTextUtil.getInstance().init("&7========================\n");
         String ignoreListMsg = BaseUtil.getMsgNotColor("ignoreListMsg", MapUtil.of("${number}", ignoreList.size() + ""));
-        rgbTextUtil.addExtra(RgbTextUtil.getInstance().init(ignoreListMsg).build());
+        rgbTextUtil.addExtra(RgbTextUtil.getInstance().init(ignoreListMsg));
         for (String playerName : ignoreList) {
             RgbTextUtil childText = RgbTextUtil.getInstance().init("\n" + playerName);
-            childText.addExtra(RgbTextUtil.getInstance().init(" &8[&cㄨ&8] ").addClickCommand("/plc removeIgnore " + playerName).build());
-            rgbTextUtil.addExtra(childText.build());
+            childText.addExtra(RgbTextUtil.getInstance().init(" &8[&cㄨ&8] ").addClickCommand("/plc removeIgnore " + playerName));
+            rgbTextUtil.addExtra(childText);
         }
-        rgbTextUtil.addExtra(RgbTextUtil.getInstance().init("\n&7========================").build());
+        rgbTextUtil.addExtra(RgbTextUtil.getInstance().init("\n&7========================"));
         rgbTextUtil.send(sender);
     }
 

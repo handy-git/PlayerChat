@@ -44,7 +44,7 @@ chat:
         click: '/spawn'
       # 聊天玩家名
       player:
-        text: '&f${player}&7: '
+        text: '&f${head}${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
@@ -75,7 +75,7 @@ chat:
         click: '/spawn'
       # 聊天玩家名
       player:
-        text: '&f${player}&7: '
+        text: '&f${head}${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
@@ -108,7 +108,7 @@ chat:
         click: '/spawn'
       # 聊天玩家名
       player:
-        text: '&f${player}&7: '
+        text: '&f${head}${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
@@ -138,7 +138,7 @@ chat:
         click: ''
       # 聊天玩家名
       player:
-        text: '&f${player}&7: '
+        text: '&f${head}${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令

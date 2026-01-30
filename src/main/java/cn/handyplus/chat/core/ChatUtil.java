@@ -15,11 +15,11 @@ import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.ComponentUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-
-import static org.bukkit.Bukkit.getServer;
 
 /**
  * 聊天解析工具
@@ -60,7 +58,7 @@ public class ChatUtil {
     public synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
-        BaseComponent[] textComponent = buildMsg(chatParam);
+        RgbTextUtil rgbTextUtil = buildMsg(chatParam);
         String channel = chatParam.getChannel();
         // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
@@ -84,7 +82,7 @@ public class ChatUtil {
             if (CollUtil.isNotEmpty(ignoreList) && ignoreList.contains(param.getPlayerName())) {
                 continue;
             }
-            MessageUtil.sendMessage(onlinePlayer, textComponent);
+            rgbTextUtil.send(onlinePlayer);
             // 如果开启艾特，发送消息
             if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable")) {
                 // 获取艾特玩家
@@ -99,11 +97,7 @@ public class ChatUtil {
         }
         // 控制台消息
         if (isConsoleMsg) {
-            StringBuilder str = new StringBuilder();
-            for (BaseComponent baseComponent : textComponent) {
-                str.append(baseComponent.toLegacyText());
-            }
-            getServer().getConsoleSender().sendMessage(str.toString());
+            rgbTextUtil.sendConsole();
         }
     }
 
@@ -145,13 +139,13 @@ public class ChatUtil {
      *
      * @param chatParam 入参
      */
-    public static @NotNull BaseComponent[] buildMsg(@NotNull ChatParam chatParam) {
+    public static @NotNull RgbTextUtil buildMsg(@NotNull ChatParam chatParam) {
         // 加载颜色
         chatParam.setMessage(chatParam.isHasColor() ? chatParam.getMessage() : BaseUtil.stripColor(chatParam.getMessage()));
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
             String text = StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage());
-            chatChildParam.setText(BaseUtil.replaceChatColor(text));
-            chatChildParam.setHover(BaseUtil.replaceChatColor(chatChildParam.getHover()));
+            chatChildParam.setText(text);
+            chatChildParam.setHover(chatChildParam.getHover());
         }
         // 构建消息
         List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();
@@ -165,9 +159,9 @@ public class ChatUtil {
         // 构建消息
         RgbTextUtil first = rgbTextUtilList.get(0);
         for (int i = 1; i < rgbTextUtilList.size(); i++) {
-            first.addExtra(rgbTextUtilList.get(i).build());
+            first.addExtra(rgbTextUtilList.get(i));
         }
-        return first.build();
+        return first;
     }
 
     /**
@@ -186,6 +180,8 @@ public class ChatUtil {
         str = StrUtil.replace(str, "player", player.getName());
         str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
         str = StrUtil.replace(str, "serverName", BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName")));
+        // head组件解析
+        str = ComponentUtil.headComponent(str, player.getName());
         // 解析 papi 变量
         str = PlaceholderApiUtil.set(player, str);
         return str;

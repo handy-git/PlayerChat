@@ -9,6 +9,7 @@ import cn.handyplus.lib.expand.BossBarUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.MessageUtil;
+import cn.handyplus.lib.util.RgbTextUtil;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
 
@@ -57,7 +58,8 @@ public class HornUtil {
         if (actionbar && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
             String actionbarFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.format", "${message}");
             actionbarFormat = actionbarFormat.replace("${message}", msgRgb);
-            MessageUtil.sendAllActionbar(PlaceholderApiUtil.set(player, actionbarFormat));
+            actionbarFormat = PlaceholderApiUtil.set(player, actionbarFormat);
+            RgbTextUtil.getInstance().init(actionbarFormat).sendAllActionBar();
         }
         // 1.9+ 才可使用
         if (title && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {
