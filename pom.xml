@@ -25,6 +25,7 @@
             <groupId>cn.handyplus.lib</groupId>
             <artifactId>HandyLib</artifactId>
             <version>${HandyLib.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
