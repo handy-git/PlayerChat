@@ -15,7 +15,6 @@ import cn.handyplus.lib.internal.HandySchedulerUtil;
 import cn.handyplus.lib.internal.PlayerSchedulerUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
-import cn.handyplus.lib.util.ComponentUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -181,7 +180,7 @@ public class ChatUtil {
         str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
         str = StrUtil.replace(str, "serverName", BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName")));
         // head组件解析
-        str = ComponentUtil.headComponent(str, player.getName());
+        str = BaseUtil.headComponent(str, player.getName());
         // 解析 papi 变量
         str = PlaceholderApiUtil.set(player, str);
         return str;
