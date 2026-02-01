@@ -23,6 +23,10 @@ public class ChatChildParam {
      */
     private List<String> hover;
     /**
+     * hover
+     */
+    private String hoverItem;
+    /**
      * click补全
      */
     private String clickSuggest;

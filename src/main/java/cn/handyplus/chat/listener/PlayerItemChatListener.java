@@ -90,17 +90,21 @@ public class PlayerItemChatListener implements Listener {
         // 内容格式
         String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &f${item} &a点击查看&5]");
         String displayName = BaseUtil.getDisplayName(itemInMainHand);
-        int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length");
+        int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length", 18);
         if (BaseUtil.stripColor(displayName).length() > itemLength) {
-            displayName = BaseUtil.stripColor(displayName).substring(0, 6) + "...";
+            displayName = BaseUtil.stripColor(displayName).substring(0, itemLength) + "...";
         }
         String itemText = StrUtil.replace(content, "item", displayName.replace("%", ""));
         itemText = message.replace(format, itemText);
-
+        // 解析变量
+        String text = PlaceholderApiUtil.set(player, itemText);
+        // 替换组件
+        text = BaseUtil.spriteComponent(text, itemInMainHand);
         // 给予展示属性
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
-        chatChildParam.setText(PlaceholderApiUtil.set(player, itemText));
+        chatChildParam.setText(text);
         chatChildParam.setHover(itemMeta.getLore());
+        chatChildParam.setHoverItem(itemEnter.getItem());
         chatChildParam.setClick("/plc item " + itemId);
         // 消息内容
         chatParam.setMessage(chatChildParam.getText());

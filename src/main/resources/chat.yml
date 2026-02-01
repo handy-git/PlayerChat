@@ -5,9 +5,9 @@ item:
   # 展示格式
   format: "[i]"
   # 内容格式
-  content: "&5[&a展示了一个 &f${item} &a点击查看&5]&r"
+  content: "${sprite}&5[&a${item}&5]"
   # 物品名称长度限制 多余的会显示为...
-  length: 6
+  length: 18
 
 # @
 at:

@@ -17,6 +17,7 @@ import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.HandyPermissionUtil;
+import cn.handyplus.lib.util.ItemStackUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import org.bukkit.ChatColor;
@@ -57,7 +58,7 @@ public class ChatUtil {
     public synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
-        RgbTextUtil rgbTextUtil = buildMsg(chatParam);
+        RgbTextUtil rgbTextUtil = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
         // 频道是否开启
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
@@ -137,20 +138,23 @@ public class ChatUtil {
      * 构建消息
      *
      * @param chatParam 入参
+     * @param type      类型
      */
-    public static @NotNull RgbTextUtil buildMsg(@NotNull ChatParam chatParam) {
-        // 加载颜色
+    public static @NotNull RgbTextUtil buildMsg(@NotNull ChatParam chatParam, @NotNull String type) {
+        // 加载玩家消息的颜色
         chatParam.setMessage(chatParam.isHasColor() ? chatParam.getMessage() : BaseUtil.stripColor(chatParam.getMessage()));
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
-            String text = StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage());
-            chatChildParam.setText(text);
-            chatChildParam.setHover(chatChildParam.getHover());
+            chatChildParam.setText(StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage()));
         }
         // 构建消息
         List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
             RgbTextUtil textComponent = RgbTextUtil.getInstance().init(chatChildParam.getText());
-            textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
+            if (ChatConstants.ITEM_TYPE.equals(type) && StrUtil.isNotEmpty(chatChildParam.getHoverItem())) {
+                textComponent.addHoverText(ItemStackUtil.itemStackDeserialize(chatChildParam.getHoverItem()));
+            } else {
+                textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
+            }
             textComponent.addClickSuggestCommand(chatChildParam.getClickSuggest());
             textComponent.addClickCommand(chatChildParam.getClick());
             rgbTextUtilList.add(textComponent);
