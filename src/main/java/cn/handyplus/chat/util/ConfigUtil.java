@@ -93,6 +93,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "timeFormatFailureMsg", "&8[&c✘&8] &7时间格式错误, 支持: 数字(秒), 1m(分钟), 1h(小时), 1d(天), 1w(周), 1M(月), 1y(年)", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "mutedNotifyMsg", "&8[&c✘&8] &7你已被禁言 ${time} 秒, 原因: ${reason}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmutedNotifyMsg", "&8[&a✔&8] &a你的禁言已被解除", null, language);
+        // 3.1.1 添加展示物品为空提醒
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "notAirItem", "&8[&c✘&8] &7展示物品为空", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");

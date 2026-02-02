@@ -17,7 +17,9 @@ import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -64,6 +66,10 @@ public class PlayerItemChatListener implements Listener {
         }
         // 获取物品参数
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());
+        if (itemInMainHand == null || Material.AIR.equals(itemInMainHand.getType())) {
+            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("notAirItem"));
+            return;
+        }
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
 
         // 存储数据
