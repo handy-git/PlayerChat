@@ -13,7 +13,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spigot-api.vesion>1.21.11-R0.1-SNAPSHOT</spigot-api.vesion>
         <HandyLib.version>3.33.5</HandyLib.version>
-        <lombok.version>1.18.38</lombok.version>
         <annotations.version>26.0.2</annotations.version>
     </properties>
 
@@ -23,12 +22,6 @@
             <artifactId>HandyLib</artifactId>
             <version>${HandyLib.version}</version>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

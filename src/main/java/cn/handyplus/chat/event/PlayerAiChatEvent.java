@@ -1,6 +1,5 @@
 package cn.handyplus.chat.event;
 
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,17 +16,14 @@ public class PlayerAiChatEvent extends Event {
     /**
      * 发送人
      */
-    @Getter
     private final Player player;
     /**
      * 获取消息内容
      */
-    @Getter
     private final String originalMessage;
     /**
      * AI消息
      */
-    @Getter
     private final String aiMessage;
 
     @Override
@@ -44,6 +40,33 @@ public class PlayerAiChatEvent extends Event {
         this.player = player;
         this.originalMessage = originalMessage;
         this.aiMessage = aiMessage;
+    }
+
+    /**
+     * 获取发送人
+     *
+     * @return 发送人
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * 获取消息内容
+     *
+     * @return 消息内容
+     */
+    public String getOriginalMessage() {
+        return originalMessage;
+    }
+
+    /**
+     * 获取AI消息
+     *
+     * @return AI消息
+     */
+    public String getAiMessage() {
+        return aiMessage;
     }
 
 }
