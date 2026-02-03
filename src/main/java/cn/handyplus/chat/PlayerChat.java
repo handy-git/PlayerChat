@@ -12,6 +12,7 @@ public class PlayerChat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
     }
 
 }
