@@ -26,7 +26,7 @@ public enum PlayerTabListEnum {
     CHANNEL_TWO(null, 1, "channel", 2),
 
     TELL_TWO(null, 1, "tell", 2),
-    TELL_THREE(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.message")), 1, "tell", 3),
+    TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
 
     IGNORE_TWO(null, 1, "ignore", 2),
     REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),

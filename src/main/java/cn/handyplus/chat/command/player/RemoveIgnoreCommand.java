@@ -33,7 +33,7 @@ public class RemoveIgnoreCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 是否为玩家
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 移除忽略
         ChatPlayerIgnoreService.getInstance().removeIgnore(player.getUniqueId(), args[1]);
         // 发送忽略列表

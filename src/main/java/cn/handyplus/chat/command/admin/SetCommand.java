@@ -35,10 +35,10 @@ public class SetCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 4, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 4, BaseUtil.getLangMsg("paramFailureMsg"));
         String type = args[1];
         String playerName = args[2];
-        Integer number = AssertUtil.isPositiveToInt(args[3], BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer number = AssertUtil.isPositiveToInt(args[3], BaseUtil.getLangMsg("amountFailureMsg"));
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(offlinePlayer.getUniqueId(), type);
@@ -52,7 +52,7 @@ public class SetCommand implements IHandyCommandEvent {
         } else {
             ChatPlayerHornService.getInstance().setNumber(hornPlayerEnterOpt.get().getId(), number);
         }
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("setSucceedMsg"));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("setSucceedMsg"));
     }
 
 }

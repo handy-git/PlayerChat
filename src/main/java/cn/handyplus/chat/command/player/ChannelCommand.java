@@ -39,21 +39,21 @@ public class ChannelCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         String channel = args[1];
         // 频道存在判断
         String chatChannel = ChannelUtil.isChannelEnable(channel);
-        AssertUtil.notNull(chatChannel, BaseUtil.getMsgNotColor("channelDoesNotExist"));
+        AssertUtil.notNull(chatChannel, BaseUtil.getLangMsg("channelDoesNotExist"));
         // 禁止切换到私信频道
-        AssertUtil.notTrue(ChatConstants.TELL.equals(chatChannel), BaseUtil.getMsgNotColor("channelDoesNotExist"));
+        AssertUtil.notTrue(ChatConstants.TELL.equals(chatChannel), BaseUtil.getLangMsg("channelDoesNotExist"));
         // 插件注册频道处理
         List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
-        AssertUtil.notTrue(pluginChannelList.contains(channel), BaseUtil.getMsgNotColor("pluginChannel"));
+        AssertUtil.notTrue(pluginChannelList.contains(channel), BaseUtil.getLangMsg("pluginChannel"));
         // 是否有频道权限
         String channelPermission = ChatConstants.PLAYER_CHAT_USE + chatChannel;
-        AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getMsgNotColor("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
+        AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getLangMsg("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
         // 设置频道
         ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
     }

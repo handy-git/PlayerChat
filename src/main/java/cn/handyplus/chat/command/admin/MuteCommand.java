@@ -42,14 +42,14 @@ public class MuteCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数校验: /plc mute <玩家名> <时长> (原因)
-        AssertUtil.notTrue(args.length < 3, BaseUtil.getMsgNotColor("muteParamFailureMsg"));
+        AssertUtil.notTrue(args.length < 3, BaseUtil.getLangMsg("muteParamFailureMsg"));
         String playerName = args[1];
         Integer muteTime = DateUtil.parseTime(args[2]);
-        AssertUtil.notNull(muteTime, BaseUtil.getMsgNotColor("timeFormatFailureMsg"));
-        String reason = this.getArg(args, 3).orElse(BaseUtil.getMsgNotColor("muteDefaultReason"));
+        AssertUtil.notNull(muteTime, BaseUtil.getLangMsg("timeFormatFailureMsg"));
+        String reason = this.getArg(args, 3).orElse(BaseUtil.getLangMsg("muteDefaultReason"));
 
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
-        AssertUtil.notNull(offlinePlayer, BaseUtil.getMsgNotColor("playerNotFoundMsg"));
+        AssertUtil.notNull(offlinePlayer, BaseUtil.getLangMsg("playerNotFoundMsg"));
 
         // 删除旧的禁言记录
         ChatPlayerMuteService.getInstance().removeByUuid(offlinePlayer.getUniqueId());
@@ -67,9 +67,9 @@ public class MuteCommand implements IHandyCommandEvent {
         muteEnter.setExpireTime(DateUtil.offset(new Date(), Calendar.SECOND, muteTime));
         ChatPlayerMuteService.getInstance().add(muteEnter);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${reason}", reason, "${time}", muteTime.toString());
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("muteSuccessMsg", map));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("muteSuccessMsg", map));
         // 通知被禁言玩家
-        MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getMsgNotColor("mutedNotifyMsg", map));
+        MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getLangMsg("mutedNotifyMsg", map));
     }
 
 }

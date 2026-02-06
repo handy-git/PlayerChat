@@ -67,7 +67,7 @@ public class PlayerItemChatListener implements Listener {
         // 获取物品参数
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());
         if (itemInMainHand == null || Material.AIR.equals(itemInMainHand.getType())) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("notAirItem"));
+            MessageUtil.sendMessage(player, BaseUtil.getLangMsg("notAirItem"));
             return;
         }
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);

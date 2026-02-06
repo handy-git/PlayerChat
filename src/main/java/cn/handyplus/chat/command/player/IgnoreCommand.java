@@ -37,17 +37,17 @@ public class IgnoreCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("ignoreParamFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("ignoreParamFailureMsg"));
         // 是否为玩家
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 禁止屏蔽自己
-        AssertUtil.notTrue(args[1].equals(player.getName()), BaseUtil.getMsgNotColor("ignoreSelfFailureMsg"));
+        AssertUtil.notTrue(args[1].equals(player.getName()), BaseUtil.getLangMsg("ignoreSelfFailureMsg"));
         ChatPlayerIgnoreEnter enter = new ChatPlayerIgnoreEnter();
         enter.setPlayerName(player.getName());
         enter.setPlayerUuid(player.getUniqueId());
         enter.setIgnorePlayer(args[1]);
         ChatPlayerIgnoreService.getInstance().setIgnore(enter);
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("ignorePlayer", MapUtil.of("${player}", args[1])));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("ignorePlayer", MapUtil.of("${player}", args[1])));
     }
 
 }

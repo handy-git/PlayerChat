@@ -38,21 +38,21 @@ public class UnmuteCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数校验: /plc unmute <玩家名>
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("unmuteParamFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("unmuteParamFailureMsg"));
         String playerName = args[1];
 
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
-        AssertUtil.notNull(offlinePlayer, BaseUtil.getMsgNotColor("playerNotFoundMsg"));
+        AssertUtil.notNull(offlinePlayer, BaseUtil.getLangMsg("playerNotFoundMsg"));
         int deleted = ChatPlayerMuteService.getInstance().removeByUuid(offlinePlayer.getUniqueId());
         // 移除缓存
         ChatConstants.PLAYER_MUTE_CACHE.remove(offlinePlayer.getUniqueId());
 
         Map<String, String> map = MapUtil.of("${player}", playerName);
-        String msg = BaseUtil.getMsgNotColor(deleted > 0 ? "unmuteSuccessMsg" : "unmuteNotFoundMsg", map);
+        String msg = BaseUtil.getLangMsg(deleted > 0 ? "unmuteSuccessMsg" : "unmuteNotFoundMsg", map);
         MessageUtil.sendMessage(sender, msg);
         // 通知被解除禁言玩家
         if (deleted > 0) {
-            MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getMsgNotColor("unmutedNotifyMsg"));
+            MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getLangMsg("unmutedNotifyMsg"));
         }
     }
 

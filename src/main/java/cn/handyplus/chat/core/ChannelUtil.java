@@ -4,7 +4,6 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.util.BaseUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -60,8 +59,7 @@ public class ChannelUtil {
      */
     public static String getChannelName(String channel) {
         String channelEnable = isChannelEnable(channel);
-        String pluginChannel = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".name", channelEnable);
-        return BaseUtil.replaceChatColor(pluginChannel);
+        return ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".name", channelEnable);
     }
 
     /**

@@ -42,10 +42,10 @@ public class VoteCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("ignoreParamFailureMsg"));
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("ignoreParamFailureMsg"));
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 是否为id
-        Integer id = AssertUtil.isPositiveToInt(args[1], BaseUtil.getMsgNotColor("amountFailureMsg"));
+        Integer id = AssertUtil.isPositiveToInt(args[1], BaseUtil.getLangMsg("amountFailureMsg"));
         Optional<ChatPlayerAiEnter> chatPlayerAiOpt = ChatPlayerAiService.getInstance().findChatAi(id);
         if (!chatPlayerAiOpt.isPresent()) {
             return;
@@ -57,14 +57,14 @@ public class VoteCommand implements IHandyCommandEvent {
         Integer existId = ChatConstants.PLAYER_VOTE_MAP.getOrDefault(player.getUniqueId(), 0);
         if (existId.equals(id)) {
             replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + "");
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("hasVotedMsg", replaceMap));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("hasVotedMsg", replaceMap));
             return;
         }
         replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + 1 + "");
         // 增加投票
         ChatPlayerAiService.getInstance().addVoteNumber(id);
         ChatConstants.PLAYER_VOTE_MAP.put(player.getUniqueId(), id);
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("voteSuccessMsg", replaceMap));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("voteSuccessMsg", replaceMap));
     }
 
 }

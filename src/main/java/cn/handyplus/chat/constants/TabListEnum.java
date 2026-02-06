@@ -35,18 +35,18 @@ public enum TabListEnum {
 
     GIVE_TWO(null, 1, "give", 2),
     GIVE_THREE(null, 1, "give", 3),
-    GIVE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "give", 4),
+    GIVE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "give", 4),
 
     TAKE_TWO(null, 1, "take", 2),
     TAKE_THREE(null, 1, "take", 3),
-    TAKE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "take", 4),
+    TAKE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "take", 4),
 
     SET_TWO(null, 1, "set", 2),
     SET_THREE(null, 1, "set", 3),
-    SET_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.number")), 1, "set", 4),
+    SET_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.number")), 1, "set", 4),
 
     TELL_TWO(null, 1, "tell", 2),
-    TELL_THREE(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.message")), 1, "tell", 3),
+    TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
 
     IGNORE_TWO(null, 1, "ignore", 2),
     REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),
@@ -58,7 +58,7 @@ public enum TabListEnum {
 
     MUTE_TWO(null, 1, "mute", 2),
     MUTE_THREE(Arrays.asList("10", "30", "1m", "5m", "10m", "30m", "1h", "6h", "12h", "1d", "7d"), 1, "mute", 3),
-    MUTE_FOUR(Collections.singletonList(BaseUtil.getMsgNotColor("tabHelp.muteReason")), 1, "mute", 4),
+    MUTE_FOUR(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.muteReason")), 1, "mute", 4),
 
     UNMUTE_TWO(null, 1, "unmute", 2),
     ;

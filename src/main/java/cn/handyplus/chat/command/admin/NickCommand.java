@@ -40,7 +40,7 @@ public class NickCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         // 昵称
         String nickName = args[1];
         // 获取玩家
@@ -50,14 +50,14 @@ public class NickCommand implements IHandyCommandEvent {
             playerName = args[2];
         } else {
             // 是否为玩家
-            Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
+            Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
             playerName = player.getName();
         }
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
         // 设置昵称
         ChatPlayerNickService.getInstance().setNickName(offlinePlayer.getUniqueId(), offlinePlayer.getName(), nickName);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${nickName}", nickName);
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("nickSetSuccessMsg", map));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("nickSetSuccessMsg", map));
     }
 
 }

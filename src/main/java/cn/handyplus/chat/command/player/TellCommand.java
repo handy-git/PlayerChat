@@ -40,18 +40,18 @@ public class TellCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         // 是否为玩家
-        Player player = AssertUtil.notPlayer(sender, BaseUtil.getMsgNotColor("noPlayerFailureMsg"));
+        Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 接收人
         String playerName = args[1];
-        AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getMsgNotColor("sendTellErrorMsg"));
+        AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
         PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
-        MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("sendTell", map));
+        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("sendTell", map));
     }
 
 }

@@ -57,7 +57,7 @@ public class PlayerMuteCheckListener implements Listener {
 
         event.setCancelled(true);
         HashMap<String, String> replaceMap = MapUtil.of("${time}", String.valueOf(remainingTime), "${reason}", mute.getReason());
-        String mutedMsg = BaseUtil.getMsgNotColor("mutedMsg", replaceMap);
+        String mutedMsg = BaseUtil.getLangMsg("mutedMsg", replaceMap);
         MessageUtil.sendMessage(player, mutedMsg);
     }
 

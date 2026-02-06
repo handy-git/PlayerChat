@@ -9,7 +9,7 @@ import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.LegacyUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -61,11 +61,11 @@ public class PlaceholderUtil extends PlaceholderExpansion {
                 Optional<ChatPlayerChannelEnter> enterOptional = ChatPlayerChannelService.getInstance().findByUid(player.getUniqueId());
                 channelName = enterOptional.isPresent() ? enterOptional.get().getChannel() : ChatConstants.DEFAULT;
             }
-            return ChannelUtil.getChannelName(channelName);
+            return LegacyUtil.parseColor(ChannelUtil.getChannelName(channelName));
         }
         // %playerChat_server_name%
         if ("server_name".equalsIgnoreCase(placeholder)) {
-            return BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName"));
+            return LegacyUtil.parseColor(BaseConstants.CONFIG.getString("serverName"));
         }
         // %playerChat_[类型]%
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), placeholder);

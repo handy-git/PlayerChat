@@ -59,7 +59,7 @@ public class HornUtil {
             String actionbarFormat = ConfigUtil.LB_CONFIG.getString("lb." + type + ".actionbar.format", "${message}");
             actionbarFormat = actionbarFormat.replace("${message}", msgRgb);
             actionbarFormat = PlaceholderApiUtil.set(player, actionbarFormat);
-            RgbTextUtil.getInstance().init(actionbarFormat).sendAllActionBar();
+            RgbTextUtil.init(actionbarFormat).sendAllActionBar();
         }
         // 1.9+ 才可使用
         if (title && BaseConstants.VERSION_ID > VersionCheckEnum.V_1_8.getVersionId()) {

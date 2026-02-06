@@ -33,7 +33,7 @@ public class ClearBossBarCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         BossBarUtil.removeAllBossBar();
-        MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("succeedMsg", "&8[&a✔&8] &a命令执行成功"));
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("succeedMsg", "&8[&a✔&8] &a命令执行成功"));
     }
 
 }

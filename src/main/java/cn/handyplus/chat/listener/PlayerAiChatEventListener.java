@@ -115,7 +115,7 @@ public class PlayerAiChatEventListener implements Listener {
         if (chatParam == null) {
             return;
         }
-        String aiText = BaseUtil.getMsgNotColor("aiText", MapUtil.of("${player}", player.getName()));
+        String aiText = BaseUtil.getLangMsg("aiText", MapUtil.of("${player}", player.getName()));
         // 给予展示属性
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
         chatChildParam.setText("${message}");

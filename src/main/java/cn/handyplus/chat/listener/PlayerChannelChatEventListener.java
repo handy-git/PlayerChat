@@ -118,7 +118,7 @@ public class PlayerChannelChatEventListener implements Listener {
                 return;
             }
             MessageUtil.sendConsoleDebugMessage("AI审核结果:" + chat);
-            MessageUtil.sendMessage(event.getPlayer(), BaseUtil.getMsgNotColor("aiTip"));
+            MessageUtil.sendMessage(event.getPlayer(), BaseUtil.getLangMsg("aiTip"));
             Bukkit.getServer().getPluginManager().callEvent(new PlayerAiChatEvent(event.getPlayer(), originalMessage, chat));
         });
     }

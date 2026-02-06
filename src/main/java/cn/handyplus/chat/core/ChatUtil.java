@@ -149,7 +149,7 @@ public class ChatUtil {
         // 构建消息
         List<RgbTextUtil> rgbTextUtilList = new ArrayList<>();
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
-            RgbTextUtil textComponent = RgbTextUtil.getInstance().init(chatChildParam.getText());
+            RgbTextUtil textComponent = RgbTextUtil.init(chatChildParam.getText());
             if (ChatConstants.ITEM_TYPE.equals(type) && StrUtil.isNotEmpty(chatChildParam.getHoverItem())) {
                 textComponent.addHoverText(ItemStackUtil.itemStackDeserialize(chatChildParam.getHoverItem()));
             } else {
@@ -182,7 +182,7 @@ public class ChatUtil {
         str = StrUtil.replace(str, "channel", channelName);
         str = StrUtil.replace(str, "player", player.getName());
         str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
-        str = StrUtil.replace(str, "serverName", BaseUtil.replaceChatColor(BaseConstants.CONFIG.getString("serverName")));
+        str = StrUtil.replace(str, "serverName", BaseConstants.CONFIG.getString("serverName"));
         // head组件解析
         str = BaseUtil.headComponent(str, player.getName());
         // 解析 papi 变量
@@ -237,7 +237,7 @@ public class ChatUtil {
         boolean keepAt = ConfigUtil.CHAT_CONFIG.getBoolean("at.keepAt", false);
         String atColor = ConfigUtil.CHAT_CONFIG.getString("at.atColor", "&9");
         for (String playerName : mentionedPlayers) {
-            message = message.replaceAll("@" + playerName, BaseUtil.replaceChatColor(atColor + (keepAt ? "@" : "") + playerName) + ChatColor.RESET);
+            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + ChatColor.RESET);
         }
         return message;
     }
@@ -271,7 +271,7 @@ public class ChatUtil {
     public static boolean chatCheck(Player player, String message) {
         // 内容黑名单处理
         if (blackListCheck(message)) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("blacklistMsg"));
+            MessageUtil.sendMessage(player, BaseUtil.getLangMsg("blacklistMsg"));
             return true;
         }
         // 聊天间隔处理

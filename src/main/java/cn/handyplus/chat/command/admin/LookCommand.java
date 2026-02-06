@@ -38,7 +38,7 @@ public class LookCommand implements IHandyCommandEvent {
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
         // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getMsgNotColor("paramFailureMsg"));
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         String playerName = args[1];
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
 
@@ -49,7 +49,7 @@ public class LookCommand implements IHandyCommandEvent {
                 MessageUtil.sendMessage(sender, playerName + "拥有 " + type + " 喇叭:" + hornPlayerMap.get(type));
             }
         } else {
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("noLook", "").replace("${player}", playerName));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("noLook", "").replace("${player}", playerName));
         }
     }
 

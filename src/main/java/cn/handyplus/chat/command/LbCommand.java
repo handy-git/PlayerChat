@@ -38,19 +38,19 @@ public class LbCommand implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         // 参数是否正常
         if (args.length < 2) {
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("lbParamFailureMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("lbParamFailureMsg"));
             return true;
         }
         // 获取类型
         String type = args[0];
         List<String> serverList = ConfigUtil.LB_CONFIG.getStringList("lb." + type + ".server");
         if (CollUtil.isEmpty(serverList)) {
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("lbConfigFailureMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("lbConfigFailureMsg"));
             return true;
         }
         boolean enable = ConfigUtil.LB_CONFIG.getBoolean("lb." + type + ".enable");
         if (!enable) {
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("lbEnableMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("lbEnableMsg"));
             return true;
         }
         // 获取消息
@@ -61,7 +61,7 @@ public class LbCommand implements TabExecutor {
         String originalMessage = message.toString();
         // 内容黑名单处理
         if (ChatUtil.blackListCheck(originalMessage)) {
-            MessageUtil.sendMessage(sender, BaseUtil.getMsgNotColor("blacklistMsg"));
+            MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("blacklistMsg"));
             return true;
         }
         // 校验玩家
@@ -112,13 +112,13 @@ public class LbCommand implements TabExecutor {
         // 查询喇叭
         Optional<ChatPlayerHornEnter> hornPlayerEnterOpt = ChatPlayerHornService.getInstance().findByUidAndType(player.getUniqueId(), type);
         if (!hornPlayerEnterOpt.isPresent()) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHave"));
+            MessageUtil.sendMessage(player, BaseUtil.getLangMsg("noHave"));
             return null;
         }
         // 校验喇叭数量
         ChatPlayerHornEnter hornPlayerEnter = hornPlayerEnterOpt.get();
         if (hornPlayerEnter.getNumber() < 1) {
-            MessageUtil.sendMessage(player, BaseUtil.getMsgNotColor("noHaveNumber"));
+            MessageUtil.sendMessage(player, BaseUtil.getLangMsg("noHaveNumber"));
             return null;
         }
         // 进行扣除
