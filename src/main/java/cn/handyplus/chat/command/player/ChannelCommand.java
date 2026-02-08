@@ -7,6 +7,7 @@ import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,6 +57,8 @@ public class ChannelCommand implements IHandyCommandEvent {
         AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getLangMsg("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
         // 设置频道
         ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
+        String channelName = ChannelUtil.getChannelName(chatChannel);
+        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("channelSwitchMsg", MapUtil.of("${channel}", channelName)));
     }
 
 }

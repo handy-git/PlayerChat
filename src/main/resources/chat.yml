@@ -23,6 +23,7 @@ at:
 # 聊天管理 频道可无限根据下面格式添加
 # 自定义频道权限 查看: playerChat.chat.频道名 使用: playerChat.use.频道名
 # 内部变量 ${player} 玩家名 ${channel} 频道名
+# clickSuggest 点击后补全在输入框的内容 click 点击后自动执行的内容
 # 对应频道附近的人配置格式 range: 6,6,6
 chat:
   # 默认频道(严禁删除本频道)
