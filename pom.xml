@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <paper-api.version>1.21.11-R0.1-SNAPSHOT</paper-api.version>
-        <HandyLib.version>3.34.5</HandyLib.version>
+        <HandyLib.version>3.34.6</HandyLib.version>
         <lombok.version>1.18.38</lombok.version>
         <annotations.version>26.0.2</annotations.version>
         <placeholderapi.version>2.11.7</placeholderapi.version>
