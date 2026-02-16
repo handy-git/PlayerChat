@@ -1,6 +1,7 @@
 package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.MuteUtil;
 import cn.handyplus.chat.listener.PlayerChatListener;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
@@ -43,6 +44,10 @@ public class TellCommand implements IHandyCommandEvent {
         AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
+        // 检查是否被禁言
+        if (MuteUtil.checkMute(player)) {
+            return;
+        }
         // 接收人
         String playerName = args[1];
         AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
