@@ -31,7 +31,7 @@ ai:
   voteMaxNumber: 5
   # AI投票成功后执行的指令
   command:
-    - "cmi mute ${player} 5m"
+    - "plc mute ${player} 5m"
     - "lb 全服大喇叭 &a${player}&c因违规发言,已被投票禁言5分钟"
 
 # 聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)
