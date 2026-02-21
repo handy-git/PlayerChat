@@ -6,13 +6,13 @@
 
     <groupId>cn.handyplus.chat</groupId>
     <artifactId>PlayerChat</artifactId>
-    <version>3.2.2</version>
+    <version>3.2.3</version>
     <description>一款有点好用的聊天插件</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <paper-api.version>1.21.11-R0.1-SNAPSHOT</paper-api.version>
-        <HandyLib.version>3.35.2</HandyLib.version>
+        <HandyLib.version>3.35.7</HandyLib.version>
         <lombok.version>1.18.38</lombok.version>
         <annotations.version>26.0.2</annotations.version>
         <placeholderapi.version>2.11.7</placeholderapi.version>
