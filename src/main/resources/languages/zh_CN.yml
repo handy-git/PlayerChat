@@ -58,6 +58,7 @@ hasVotedMsg: "&8[&a✔&8] &7您已投票,当前票数&a${number}&7/&a${max}"
 aiTip: "&8[&a!&8] &7请文明发言,多次违规将禁言!"
 nickSetSuccessMsg: "&8[&a✔&8] &a已成功设置玩家 ${player} 的昵称为 ${nickName}"
 notAirItem: "&8[&c✘&8] &7展示物品为空"
+playerOfflineMsg: "&8[&c✘&8] &7玩家 ${player} 不在线"
 
 # 禁言相关
 muteParamFailureMsg: "&8[&c✘&8] &7参数错误 使用方法: &a/plc mute [玩家名] [时长] (原因)"

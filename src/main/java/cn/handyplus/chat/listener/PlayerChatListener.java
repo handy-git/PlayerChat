@@ -82,7 +82,7 @@ public class PlayerChatListener implements Listener {
         // @玩家处理
         chatParam.setMentionedPlayers(mentionedPlayers);
         // 有权限进行颜色代码处理
-        chatParam.setHasColor(player.hasPermission("playerChat.color"));
+        chatParam.setHasColor(player.hasPermission(ChatConstants.CHAT_COLOR));
         chatParam.setSource(param.getPluginName());
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));

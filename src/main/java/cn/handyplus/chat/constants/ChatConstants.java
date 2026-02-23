@@ -148,6 +148,13 @@ public final class ChatConstants {
     public static final String ALL = "[ALL]";
 
     /**
+     * 聊天颜色
+     *
+     * @since 3.2.4
+     */
+    public static final String CHAT_COLOR = "playerChat.color";
+
+    /**
      * 玩家禁言缓存
      * key: 玩家UUID, value: 禁言记录
      */

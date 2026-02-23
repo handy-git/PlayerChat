@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -51,12 +52,20 @@ public class TellCommand implements IHandyCommandEvent {
         // 接收人
         String playerName = args[1];
         AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
+        // 私信玩家是否在线
+        Optional<Player> onlinePlayer = BaseUtil.getOnlinePlayer(playerName);
+        AssertUtil.isTrue(onlinePlayer.isPresent(), BaseUtil.getLangMsg("playerOfflineMsg", MapUtil.of("${player}", playerName)));
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
         PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName);
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
-        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("sendTell", map));
+        String sendTell = BaseUtil.getLangMsg("sendTell", map);
+        // 没有颜色代码权限，移除颜色代码
+        if (!sender.hasPermission(ChatConstants.CHAT_COLOR)) {
+            sendTell = BaseUtil.stripColor(sendTell);
+        }
+        MessageUtil.sendMessage(player, sendTell);
     }
 
 }

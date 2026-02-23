@@ -96,6 +96,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "unmutedNotifyMsg", "&8[&a✔&8] &a你的禁言已被解除", null, language);
         // 3.1.1 添加展示物品为空提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "notAirItem", "&8[&c✘&8] &7展示物品为空", null, language);
+        // 3.2.4 添加玩家不在线提醒
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerOfflineMsg", "&8[&c✘&8] &7玩家 ${player} 不在线", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
