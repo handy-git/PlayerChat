@@ -118,6 +118,11 @@ public class ChatUtil {
         Set<String> keySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat." + channelEnable + ".format");
         List<ChatChildParam> childList = new ArrayList<>();
         for (String key : keySet) {
+            // 节点权限
+            String permission = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".permission");
+            if (StrUtil.isNotEmpty(permission) && !player.hasPermission(permission)) {
+                continue;
+            }
             String text = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".text");
             List<String> hover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format." + key + ".hover");
             String click = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".click");

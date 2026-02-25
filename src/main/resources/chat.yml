@@ -30,11 +30,11 @@ chat:
   default:
     # 是否开启
     enable: true
-    # 频道名称 1.0.6+
+    # 频道名称
     name: "&7[&a默认频道&7]"
-    # 聊天格式 支持变量
+    # 聊天自定义节点 你可以自定义无数节点 支持变量
     format:
-      # 聊天前缀
+      # 自定义的前缀节点
       prefix:
         text: '${channel}%playerTitle_use%'
         # 1.16+可用hover
@@ -43,14 +43,25 @@ chat:
           - '&8▪ &6点击可执行命令/spawn'
         # 点击后执行的命令
         click: '/spawn'
-      # 聊天玩家名
+      # 自定义的需要权限的前缀节点
+      vipPrefix:
+        # 该节点的权限 每个节点都可以自定义对应的权限,如果不配置默认不需要权限
+        permission: "playerChat.chat.default.vipPrefix"
+        text: '${channel}%playerTitle_use%'
+        # 1.16+可用hover
+        hover:
+          - '&8▪ &6所在聊天频道: ${channel}'
+          - '&8▪ &6点击可执行命令/spawn'
+        # 点击后执行的命令
+        click: '/spawn'
+      # 自定义的玩家名节点
       player:
         text: '&f${head}${player}&7: '
         hover:
           - '快点击tpa我啦～'
         # 点击后执行的命令
         click: '/tpa ${player}'
-      # 聊天内容
+      # 自定义的聊天内容节点
       msg:
         text: '&f${message}'
         hover:
