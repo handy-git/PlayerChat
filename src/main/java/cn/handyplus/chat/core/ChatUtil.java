@@ -180,7 +180,7 @@ public class ChatUtil {
      * @param str         内容
      * @return 新内容
      */
-    private static String replaceStr(Player player, String channelName, String str) {
+    public static String replaceStr(Player player, String channelName, String str) {
         if (StrUtil.isEmpty(str)) {
             return str;
         }
@@ -203,7 +203,7 @@ public class ChatUtil {
      * @param strList     内容集合
      * @return 新内容
      */
-    private static List<String> replaceStr(Player player, String channelName, List<String> strList) {
+    public static List<String> replaceStr(Player player, String channelName, List<String> strList) {
         if (CollUtil.isEmpty(strList)) {
             return strList;
         }

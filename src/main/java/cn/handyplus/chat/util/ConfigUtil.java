@@ -16,7 +16,7 @@ import java.util.Set;
  * @author handy
  */
 public class ConfigUtil {
-    public static FileConfiguration CHAT_CONFIG, LB_CONFIG, ITEM_CONFIG;
+    public static FileConfiguration CHAT_CONFIG, LB_CONFIG, ITEM_CONFIG, SHORTCUT_CONFIG;
 
     /**
      * 加载全部配置
@@ -25,6 +25,7 @@ public class ConfigUtil {
         HandyConfigUtil.loadConfig();
         HandyConfigUtil.loadLangConfig(true);
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
+        SHORTCUT_CONFIG = HandyConfigUtil.load("shortcut.yml");
         LB_CONFIG = HandyConfigUtil.load("lb.yml");
         ITEM_CONFIG = HandyConfigUtil.load("gui/item.yml");
         upConfig();
