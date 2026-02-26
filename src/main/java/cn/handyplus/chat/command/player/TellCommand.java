@@ -59,13 +59,12 @@ public class TellCommand implements IHandyCommandEvent {
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
         PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName);
-        HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
-        String sendTell = BaseUtil.getLangMsg("sendTell", map);
         // 没有颜色代码权限，移除颜色代码
         if (!sender.hasPermission(ChatConstants.CHAT_COLOR)) {
-            sendTell = BaseUtil.stripColor(sendTell);
+            message = BaseUtil.stripColor(message);
         }
-        MessageUtil.sendMessage(player, sendTell);
+        HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
+        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("sendTell", map));
     }
 
 }
