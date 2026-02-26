@@ -4,6 +4,7 @@ import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.core.ChatUtil;
+import cn.handyplus.chat.core.ShortcutUtil;
 import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.chat.param.ChatParam;
@@ -79,6 +80,8 @@ public class PlayerChatListener implements Listener {
         chatParam.setNearbyPlayers(ChannelUtil.getNearbyPlayers(channel, player));
         // 原消息内容
         chatParam.setMessage(message);
+        // 快捷键节点替换
+        ShortcutUtil.convert(player, channel, chatParam);
         // @玩家处理
         chatParam.setMentionedPlayers(mentionedPlayers);
         // 有权限进行颜色代码处理
