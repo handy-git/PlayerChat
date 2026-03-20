@@ -4,6 +4,7 @@ import cn.handyplus.chat.hook.PlaceholderUtil;
 import cn.handyplus.chat.listener.ChatPluginMessageListener;
 import cn.handyplus.chat.util.ClearItemJob;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.VersionUtil;
 import cn.handyplus.lib.InitApi;
 import cn.handyplus.lib.constants.HookPluginEnum;
 import cn.handyplus.lib.util.BcUtil;
@@ -27,12 +28,16 @@ public class PlayerChat extends JavaPlugin {
         INSTANCE = this;
         InitApi initApi = InitApi.getInstance(this);
         ConfigUtil.init();
-        // 加载PlaceholderApi
+        // 初始化版本检测
+        VersionUtil.init();
+        // 初始化物品安全检查
+        cn.handyplus.chat.util.SafeItemUtil.init();
+        // 加载 PlaceholderApi
         USE_PAPI = HookPluginUtil.hook(HookPluginEnum.PLACEHOLDER_API);
         if (USE_PAPI) {
             new PlaceholderUtil(this).register();
         }
-        // 加载DiscordSRV
+        // 加载 DiscordSRV
         USE_DISCORD_SRV = HookPluginUtil.hook(HookPluginEnum.DISCORD_SRV);
         // 加载主数据
         initApi.initCommand("cn.handyplus.chat.command")
@@ -46,7 +51,8 @@ public class PlayerChat extends JavaPlugin {
         // 定时任务启动
         ClearItemJob.init();
         MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器!");
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy WIKI: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author: handy WIKI: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
+        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "服务器版本：" + VersionUtil.getVersionString());
     }
 
     @Override

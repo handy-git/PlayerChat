@@ -10,6 +10,7 @@ import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.SafeItemUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.JsonUtil;
@@ -70,14 +71,23 @@ public class PlayerItemChatListener implements Listener {
             MessageUtil.sendMessage(player, BaseUtil.getLangMsg("notAirItem"));
             return;
         }
-        ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
+        
+        // 安全检查：防止 NBT 过大导致客户端崩溃
+        if (!SafeItemUtil.isItemSafe(itemInMainHand)) {
+            MessageUtil.sendMessage(player, "&c[展示物品] &7物品数据过大或包含复杂 NBT，无法安全展示");
+            return;
+        }
+        
+        // 获取安全的物品用于展示
+        ItemStack safeItem = SafeItemUtil.getSafeItemForDisplay(itemInMainHand);
+        ItemMeta itemMeta = ItemStackUtil.getItemMeta(safeItem);
 
-        // 存储数据
+        // 存储数据 - 使用安全物品
         ChatPlayerItemEnter itemEnter = new ChatPlayerItemEnter();
         itemEnter.setPlayerName(player.getName());
         itemEnter.setPlayerUuid(player.getUniqueId());
         itemEnter.setVersion(BaseConstants.VERSION_ID);
-        itemEnter.setItem(ItemStackUtil.itemStackSerialize(itemInMainHand));
+        itemEnter.setItem(ItemStackUtil.itemStackSerialize(safeItem));
         itemEnter.setCreateTime(new Date());
         Integer itemId = ChatPlayerItemService.getInstance().add(itemEnter);
 
@@ -93,9 +103,9 @@ public class PlayerItemChatListener implements Listener {
         if (chatParam == null) {
             return;
         }
-        // 内容格式
+        // 内容格式 - 使用安全物品
         String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &f${item} &a点击查看&5]");
-        String displayName = BaseUtil.getDisplayName(itemInMainHand);
+        String displayName = BaseUtil.getDisplayName(safeItem);
         int itemLength = ConfigUtil.CHAT_CONFIG.getInt("item.length", 18);
         if (BaseUtil.stripColor(displayName).length() > itemLength) {
             displayName = BaseUtil.stripColor(displayName).substring(0, itemLength) + "...";
@@ -104,12 +114,12 @@ public class PlayerItemChatListener implements Listener {
         itemText = message.replace(format, itemText);
         // 解析变量
         String text = PlaceholderApiUtil.set(player, itemText);
-        // 替换组件
-        text = BaseUtil.spriteComponent(text, itemInMainHand);
+        // 替换组件 - 使用安全物品
+        text = BaseUtil.spriteComponent(text, safeItem);
         // 给予展示属性
         ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
         chatChildParam.setText(text);
-        chatChildParam.setHover(itemMeta.getLore());
+        chatChildParam.setHover(SafeItemUtil.getSafeLore(safeItem));
         chatChildParam.setHoverItem(itemEnter.getItem());
         chatChildParam.setClick("/plc item " + itemId);
         // 消息内容
