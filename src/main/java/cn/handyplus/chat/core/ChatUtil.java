@@ -231,7 +231,7 @@ public class ChatUtil {
                     // 解析 condition=perm "xxx" 或 condition=perm"xxx"
                     String conditionValue = value;
                     if (conditionValue.startsWith("perm \"")) {
-                        conditionValue = conditionValue.substring(7);
+                        conditionValue = conditionValue.substring(6);
                     } else if (conditionValue.startsWith("perm\"")) {
                         conditionValue = conditionValue.substring(5);
                     } else if (conditionValue.startsWith("perm ")) {
