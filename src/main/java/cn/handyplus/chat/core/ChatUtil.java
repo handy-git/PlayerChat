@@ -163,6 +163,7 @@ public class ChatUtil {
             }
             textComponent.addClickSuggestCommand(chatChildParam.getClickSuggest());
             textComponent.addClickCommand(chatChildParam.getClick());
+            textComponent.addClickUrl(chatChildParam.getUrl());
             rgbTextUtilList.add(textComponent);
         }
         // 构建消息

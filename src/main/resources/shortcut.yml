@@ -12,3 +12,97 @@ tp:
     hover:
       - '&7点击传送到 &e%player_name% &7身边'
     click: '/tpa %player_name%'
+
+tpta:
+  pattern: '((tpta)|(TPTA)|(TPta)|(tpTA))'
+  # text-filter: '[1-9]([0-9]{0,3})'
+  display:
+    text: '&8[&a&l传送邀请&8]'
+    hover:
+      - '&7邀请 &e%player_name% &7传送到我身边'
+      - '&7点击邀请'
+    click: '/tpahere %player_name%'
+
+# B 站视频分享
+bilibili:
+  pattern: 'BV( )?.{10}'
+  text-filter: '.{12}'
+  display:
+    text: '&8[&f&lBilibili&8]'
+    hover:
+      - ''
+      - '&7这可能是一个 Bilibili 视频，'
+      - '&7点击即可访问'
+      - ''
+      - '&3BV号：&b{0}'
+    url: 'https://www.bilibili.com/video/{0}'
+
+# QQ 分享
+qq:
+  pattern: 'QQ( )?[1-9]([0-9]{5,11})'
+  text-filter: '[1-9]([0-9]{5,11})'
+  display:
+    text: '&8[&3&lQQ&8]'
+    hover:
+      - ''
+      - '&3QQ: &b{0}'
+      - ''
+      - '&7这是一个 QQ 账号，'
+      - '&7你可以点击此项快速打开聊天'
+      - ''
+      - '&8[&c!&8] &7请勿进行任何金钱交易'
+      - '&8[&c!&8] &7交友需谨慎'
+    url: 'https://wpa.qq.com/msgrd?v=3&uin={0}&site=qq&menu=yes'
+
+# 隐藏手机号
+hidePhone:
+  pattern: '((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}'
+  display:
+    text: '&8[&c&m-&8]'
+    hover:
+      - '&7该内容疑似为手机号码，'
+      - '&7已自动屏蔽隐藏.'
+      - ''
+      - '&8[&c!&8] &7请勿分享任何隐私信息'
+
+# 隐藏身份证号
+hideIDCard:
+  pattern: '([1-9]\d{5}[12]\d{3}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{3}[0-9xX])'
+  display:
+    text: '&8[&c&m-&8]'
+    hover:
+      - '&7该内容疑似为身份证号，'
+      - '&7已自动屏蔽隐藏.'
+      - ''
+      - '&8[&c!&8] &7请勿分享任何隐私信息'
+      - '&7严重者可能处于禁言/封禁'
+
+# 高亮 IP
+glowIP:
+  pattern: '(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)'
+  display:
+    text: '&e&n{0}'
+    hover:
+      - '&7这是一个 IP 地址'
+      - '&7点击复制!'
+    copy: '{0}'
+
+# 高亮邮箱
+glowEmail:
+  pattern: '\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}'
+  display:
+    text: '&e&n{0}'
+    hover:
+      - '&7这是一个邮箱'
+      - '&7点击复制!'
+    copy: '{0}'
+
+# 地标宣传
+landmark:
+  pattern: '#地标 ( )?.([0-9]{0,3})'
+  text-filter: '[1-9]([0-9]{0,3})'
+  display:
+    text: '&8[&a&l地标传送&8]'
+    hover:
+      - '&7点击传送到地标 &e{0}'
+    copy: '/plw tpid {0}'
