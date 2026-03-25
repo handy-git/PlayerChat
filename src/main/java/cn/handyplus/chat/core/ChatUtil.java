@@ -20,6 +20,7 @@ import cn.handyplus.lib.util.HandyPermissionUtil;
 import cn.handyplus.lib.util.ItemStackUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
+import cn.handyplus.lib.util.XSeriesUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -258,7 +259,7 @@ public class ChatUtil {
         if (StrUtil.isEmpty(soundStr)) {
             return;
         }
-        Optional<Sound> soundOptional = BaseUtil.getSound(soundStr);
+        Optional<Sound> soundOptional = XSeriesUtil.getSound(soundStr);
         if (!soundOptional.isPresent()) {
             MessageUtil.sendMessage(player, "没有 " + soundStr + " 音效");
             return;
