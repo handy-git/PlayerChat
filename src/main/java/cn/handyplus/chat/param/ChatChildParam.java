@@ -38,4 +38,8 @@ public class ChatChildParam {
      * 打开链接
      */
     private String url;
+    /**
+     * 复制到聊天栏（与 click 互斥，有 click 时优先执行命令）
+     */
+    private String copy;
 }

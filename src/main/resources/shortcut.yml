@@ -2,6 +2,10 @@
 # pattern/text-filter 为整段匹配
 # text-filter 匹配成功后可在 display 中使用 {0}/{1}... 变量
 # {0}=整体匹配, {1}开始为分组
+# display.click   = 直接执行命令（优先级最高，有此字段时 copy 无效）
+# display.copy    = 复制到聊天栏（click 为空时生效）
+# display.url     = 打开网页链接
+# display.hover   = 鼠标悬停提示
 enable: false
 
 tp:
@@ -22,6 +26,36 @@ tpta:
       - '&7邀请 &e%player_name% &7传送到我身边'
       - '&7点击邀请'
     click: '/tpahere %player_name%'
+
+# 复制地标 id
+landmark:
+  pattern: '#地标 ( )?.([0-9]{0,3})'
+  text-filter: '[1-9]([0-9]{0,3})'
+  display:
+    text: '&8[&a&l地标传送&8]'
+    hover:
+      - '&7点击复制地标命令 &e{0}'
+    copy: '/plw tpid {0}'
+
+# 复制 IP
+glowIP:
+  pattern: '(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)'
+  display:
+    text: '&e&n{0}'
+    hover:
+      - '&7这是一个 IP 地址'
+      - '&7点击复制!'
+    copy: '{0}'
+
+# 复制邮箱
+glowEmail:
+  pattern: '\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}'
+  display:
+    text: '&e&n{0}'
+    hover:
+      - '&7这是一个邮箱'
+      - '&7点击复制!'
+    copy: '{0}'
 
 # B 站视频分享
 bilibili:
@@ -76,33 +110,3 @@ hideIDCard:
       - ''
       - '&8[&c!&8] &7请勿分享任何隐私信息'
       - '&7严重者可能处于禁言/封禁'
-
-# 高亮 IP
-glowIP:
-  pattern: '(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)\.(25[0-5]|2[0-4]\d|[0-1]\d{2}|[1-9]?\d)'
-  display:
-    text: '&e&n{0}'
-    hover:
-      - '&7这是一个 IP 地址'
-      - '&7点击复制!'
-    copy: '{0}'
-
-# 高亮邮箱
-glowEmail:
-  pattern: '\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}'
-  display:
-    text: '&e&n{0}'
-    hover:
-      - '&7这是一个邮箱'
-      - '&7点击复制!'
-    copy: '{0}'
-
-# 地标宣传
-landmark:
-  pattern: '#地标 ( )?.([0-9]{0,3})'
-  text-filter: '[1-9]([0-9]{0,3})'
-  display:
-    text: '&8[&a&l地标传送&8]'
-    hover:
-      - '&7点击传送到地标 &e{0}'
-    copy: '/plw tpid {0}'

@@ -160,8 +160,11 @@ public class ChatUtil {
             } else {
                 textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
             }
-            textComponent.addClickSuggestCommand(chatChildParam.getClickSuggest());
-            textComponent.addClickCommand(chatChildParam.getClick());
+            if (StrUtil.isNotEmpty(chatChildParam.getClick())) {
+                textComponent.addClickCommand(chatChildParam.getClick());
+            } else if (StrUtil.isNotEmpty(chatChildParam.getCopy())) {
+                textComponent.addClickSuggestCommand(chatChildParam.getCopy());
+            }
             textComponent.addClickUrl(chatChildParam.getUrl());
             rgbTextUtilList.add(textComponent);
         }
