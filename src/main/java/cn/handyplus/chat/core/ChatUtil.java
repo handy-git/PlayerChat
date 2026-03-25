@@ -7,6 +7,7 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.PatternUtil;
@@ -28,7 +29,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -118,16 +121,31 @@ public class ChatUtil {
         String channelName = ChannelUtil.getChannelName(channel);
         Set<String> keySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat." + channelEnable + ".format");
         List<ChatChildParam> childList = new ArrayList<>();
+
+        // 已匹配的组（同一组内只显示第一个满足条件的节点）
+        Set<String> matchedGroups = new java.util.HashSet<>();
+
         for (String key : keySet) {
             // 节点权限
             String permission = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".permission");
             if (StrUtil.isNotEmpty(permission) && !player.hasPermission(permission)) {
                 continue;
             }
+
             String text = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".text");
             List<String> hover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format." + key + ".hover");
             String click = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".click");
             String clickSuggest = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".clickSuggest");
+            String group = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".group");
+
+            // 处理分组：同组内只显示第一个满足条件的
+            if (StrUtil.isNotEmpty(group)) {
+                if (matchedGroups.contains(group)) {
+                    continue;
+                }
+                matchedGroups.add(group);
+            }
+
             // 替换变量
             text = replaceStr(player, channelName, text);
             hover = replaceStr(player, channelName, hover);
