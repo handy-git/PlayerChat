@@ -4,10 +4,10 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.chat.param.ConditionItem;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.PatternUtil;
@@ -28,7 +28,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -118,42 +120,29 @@ public class ChatUtil {
         String channelName = ChannelUtil.getChannelName(channel);
         Set<String> keySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat." + channelEnable + ".format");
         List<ChatChildParam> childList = new ArrayList<>();
+
+        // 已匹配的组（同一组内只显示第一个满足条件的节点）
+        Set<String> matchedGroups = new java.util.HashSet<>();
+
         for (String key : keySet) {
             // 节点权限
             String permission = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".permission");
             if (StrUtil.isNotEmpty(permission) && !player.hasPermission(permission)) {
                 continue;
             }
+
             String text = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".text");
             List<String> hover = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format." + key + ".hover");
             String click = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".click");
             String clickSuggest = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".clickSuggest");
+            String group = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".group");
 
-            // 处理条件前缀（按顺序匹配第一个满足条件的）
-            List<ConditionItem> conditions = buildConditionItems(player, channelEnable, key);
-            if (CollUtil.isNotEmpty(conditions)) {
-                // 使用第一个匹配的条件
-                ConditionItem matchedCondition = getMatchedCondition(player, conditions);
-                if (matchedCondition != null) {
-                    // 条件的text/hover/click会覆盖节点的默认值
-                    text = matchedCondition.getText();
-                    // hover: 条件有值则覆盖，否则保留节点配置
-                    if (StrUtil.isNotEmpty(matchedCondition.getHover())) {
-                        hover = new ArrayList<>();
-                        hover.add(matchedCondition.getHover());
-                    }
-                    // click: 条件有值则覆盖，否则保留节点配置
-                    if (StrUtil.isNotEmpty(matchedCondition.getClick())) {
-                        click = matchedCondition.getClick();
-                    }
-                    // clickSuggest: 条件有值则覆盖，否则保留节点配置
-                    if (StrUtil.isNotEmpty(matchedCondition.getClickSuggest())) {
-                        clickSuggest = matchedCondition.getClickSuggest();
-                    }
-                } else {
-                    // 没有匹配任何条件，跳过此节点
+            // 处理分组：同组内只显示第一个满足条件的
+            if (StrUtil.isNotEmpty(group)) {
+                if (matchedGroups.contains(group)) {
                     continue;
                 }
+                matchedGroups.add(group);
             }
 
             // 替换变量
@@ -161,112 +150,11 @@ public class ChatUtil {
             hover = replaceStr(player, channelName, hover);
             click = replaceStr(player, channelName, click);
             clickSuggest = replaceStr(player, channelName, clickSuggest);
-            ChatChildParam chatChildParam = ChatChildParam.builder().text(text).hover(hover).click(click).clickSuggest(clickSuggest).conditions(conditions).build();
+            ChatChildParam chatChildParam = ChatChildParam.builder().text(text).hover(hover).click(click).clickSuggest(clickSuggest).build();
             childList.add(chatChildParam);
         }
         // 构建参数
         return ChatParam.builder().channel(channel).childList(childList).build();
-    }
-
-    /**
-     * 构建条件项列表
-     *
-     * @param player  玩家
-     * @param channel 频道
-     * @param key     节点key
-     * @return 条件项列表
-     */
-    private static List<ConditionItem> buildConditionItems(Player player, String channel, String key) {
-        List<String> conditionList = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channel + ".format." + key + ".conditions");
-        if (CollUtil.isEmpty(conditionList)) {
-            return null;
-        }
-        List<ConditionItem> items = new ArrayList<>();
-        for (String conditionStr : conditionList) {
-            ConditionItem item = parseConditionString(conditionStr);
-            if (item != null) {
-                items.add(item);
-            }
-        }
-        return items;
-    }
-
-    /**
-     * 解析条件字符串
-     * 格式: text=显示内容 | 权限节点  或  text=显示内容 | condition=perm "权限节点"
-     * 提示: hover、click、clickSuggest 可省略，不写则使用节点的默认值
-     *
-     * @param conditionStr 条件字符串
-     * @return 条件项
-     */
-    private static ConditionItem parseConditionString(String conditionStr) {
-        ConditionItem.ConditionItemBuilder builder = ConditionItem.builder();
-        String[] parts = conditionStr.split("\\|");
-        for (String part : parts) {
-            String trimmed = part.trim();
-            int eqIndex = trimmed.indexOf('=');
-            if (eqIndex == -1) {
-                // 没有=的就是权限节点
-                builder.type("perm");
-                builder.value(trimmed);
-                continue;
-            }
-            String key = trimmed.substring(0, eqIndex).trim().toLowerCase();
-            String value = trimmed.substring(eqIndex + 1).trim();
-
-            switch (key) {
-                case "text":
-                    builder.text(value);
-                    break;
-                case "hover":
-                    builder.hover(value);
-                    break;
-                case "click":
-                    builder.click(value);
-                    break;
-                case "clicksuggest":
-                    builder.clickSuggest(value);
-                    break;
-                case "condition":
-                    // 解析 condition=perm "xxx" 或 condition=perm"xxx"
-                    String conditionValue = value;
-                    if (conditionValue.startsWith("perm \"")) {
-                        conditionValue = conditionValue.substring(6);
-                    } else if (conditionValue.startsWith("perm\"")) {
-                        conditionValue = conditionValue.substring(5);
-                    } else if (conditionValue.startsWith("perm ")) {
-                        conditionValue = conditionValue.substring(5);
-                    }
-                    // 去掉引号
-                    conditionValue = conditionValue.replace("\"", "").replace("'", "");
-                    builder.type("perm");
-                    builder.value(conditionValue);
-                    break;
-            }
-        }
-        return builder.build();
-    }
-
-    /**
-     * 获取匹配的条件项（按顺序第一个满足条件的）
-     *
-     * @param player     玩家
-     * @param conditions 条件列表
-     * @return 匹配的条件项，没有则返回null
-     */
-    private static ConditionItem getMatchedCondition(Player player, List<ConditionItem> conditions) {
-        if (CollUtil.isEmpty(conditions)) {
-            return null;
-        }
-        for (ConditionItem condition : conditions) {
-            if ("perm".equals(condition.getType())) {
-                if (player.hasPermission(condition.getValue())) {
-                    return condition;
-                }
-            }
-            // 可扩展其他条件类型
-        }
-        return null;
     }
 
     /**

@@ -55,25 +55,39 @@ chat:
         # 点击后执行的命令
         click: '/spawn'
       # ============================================
-      # 【示例】VIP条件前缀节点 - 使用conditions按权限优先级显示不同前缀
-      # 格式: text=显示内容 | 权限节点
-      # 注: hover/click/clickSuggest 可省略，不写则使用节点下方配置的默认值
+      # 【示例】称号组 - 同组节点按顺序只显示第一个满足权限的
+      # 格式: 有相同 group 的节点，按配置顺序只显示第一个有权限的
       # ============================================
-      vipConditionPrefix:
-        # 节点权限（需要此权限才能使用此节点）
-        permission: "playerChat.chat.default.vipConditionPrefix"
-        # 条件列表（从上往下匹配，匹配到就停止）
-        conditions:
-          - 'text=&6&l✯ &f%playerTitle_use% | vip6'
-          - 'text=&6&l✯ &f%playerTitle_use% | vip5'
-          - 'text=&b&l✯ &f%playerTitle_use% | vip4'
-          - 'text=&a&l✯ &f%playerTitle_use% | vip3'
-          - 'text=&e&l✯ &f%playerTitle_use% | vip2'
-          - 'text=&7&l✯ &f%playerTitle_use% | vip1'
-        # 节点默认的hover和click（条件里没配置时会用这里）
+      vip3Icon:
+        group: vip
+        permission: "vip3"
+        text: '&a&l✯ '
         hover:
-          - '&8▪ &6点击查看详情'
-        clickSuggest: '/msg ${player}'
+          - '&aVIP专属图标'
+        # 点击后执行的命令
+        click: '/spawn'
+      vip2Icon:
+        group: vip
+        permission: "vip2"
+        text: '&e&l✯ '
+        hover:
+          - '&eVIP专属图标'
+        # 点击后执行的命令
+        click: '/spawn'
+      vip1Icon:
+        group: vip
+        permission: "vip1"
+        text: '&7&l✯ '
+        hover:
+          - '&7VIP专属图标'
+        # 点击后执行的命令
+        click: '/spawn'
+      # 默认称号（无VIP权限时显示）
+      defaultTitle:
+        group: title
+        text: '&7&l✯ '
+        hover:
+          - '&7普通玩家'
 
       # ============================================
       # 自定义的玩家名节点
