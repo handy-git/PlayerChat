@@ -34,4 +34,8 @@ public class ChatChildParam {
      * click
      */
     private String click;
+    /**
+     * 打开链接
+     */
+    private String url;
 }

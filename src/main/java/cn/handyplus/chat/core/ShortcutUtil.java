@@ -70,6 +70,7 @@ public final class ShortcutUtil {
             List<String> hover = ConfigUtil.SHORTCUT_CONFIG.getStringList(key + ".display.hover");
             String click = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.click");
             String clickSuggest = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.clickSuggest");
+            String url = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.url");
             if (StrUtil.isEmpty(text)) {
                 continue;
             }
@@ -79,10 +80,12 @@ public final class ShortcutUtil {
             hover = replaceTextFilterVar(hover, textFilterVars);
             click = replaceTextFilterVar(click, textFilterVars);
             clickSuggest = replaceTextFilterVar(clickSuggest, textFilterVars);
+            url = replaceTextFilterVar(url, textFilterVars);
             msgNode.setText(ChatUtil.replaceStr(player, channelName, text));
             msgNode.setHover(ChatUtil.replaceStr(player, channelName, hover));
             msgNode.setClick(ChatUtil.replaceStr(player, channelName, click));
             msgNode.setClickSuggest(ChatUtil.replaceStr(player, channelName, clickSuggest));
+            msgNode.setUrl(ChatUtil.replaceStr(player, channelName, url));
             msgNode.setHoverItem(null);
             return;
         }
