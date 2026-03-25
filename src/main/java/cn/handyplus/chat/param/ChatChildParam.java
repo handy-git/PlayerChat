@@ -38,4 +38,10 @@ public class ChatChildParam {
      * 打开链接
      */
     private String url;
+    /**
+     * 条件列表（用于条件前缀，按顺序匹配第一个满足条件的）
+     *
+     * @since 2.x
+     */
+    private List<ConditionItem> conditions;
 }
