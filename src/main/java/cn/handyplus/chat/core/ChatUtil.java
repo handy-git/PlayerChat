@@ -7,7 +7,6 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.PatternUtil;
@@ -29,9 +28,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -123,7 +121,7 @@ public class ChatUtil {
         List<ChatChildParam> childList = new ArrayList<>();
 
         // 已匹配的组（同一组内只显示第一个满足条件的节点）
-        Set<String> matchedGroups = new java.util.HashSet<>();
+        Set<String> matchedGroups = new HashSet<>();
 
         for (String key : keySet) {
             // 节点权限
@@ -139,11 +137,8 @@ public class ChatUtil {
             String group = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".group");
 
             // 处理分组：同组内只显示第一个满足条件的
-            if (StrUtil.isNotEmpty(group)) {
-                if (matchedGroups.contains(group)) {
-                    continue;
-                }
-                matchedGroups.add(group);
+            if (StrUtil.isNotEmpty(group) && !matchedGroups.add(group)) {
+                continue;
             }
 
             // 替换变量

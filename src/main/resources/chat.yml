@@ -25,6 +25,7 @@ at:
 # 内部变量 ${player} 玩家名 ${channel} 频道名
 # clickSuggest 点击后补全在输入框的内容 click 点击后自动执行的内容
 # 对应频道附近的人配置格式 range: 6,6,6
+# group 有相同 group 的节点，按配置顺序只显示第一个有权限的
 chat:
   # 默认频道(严禁删除本频道)
   default:
@@ -54,42 +55,6 @@ chat:
           - '&8▪ &6点击可执行命令/spawn'
         # 点击后执行的命令
         click: '/spawn'
-      # ============================================
-      # 【示例】称号组 - 同组节点按顺序只显示第一个满足权限的
-      # 格式: 有相同 group 的节点，按配置顺序只显示第一个有权限的
-      # ============================================
-      vip3Icon:
-        group: vip
-        permission: "vip3"
-        text: '&a&l✯ '
-        hover:
-          - '&aVIP专属图标'
-        # 点击后执行的命令
-        click: '/spawn'
-      vip2Icon:
-        group: vip
-        permission: "vip2"
-        text: '&e&l✯ '
-        hover:
-          - '&eVIP专属图标'
-        # 点击后执行的命令
-        click: '/spawn'
-      vip1Icon:
-        group: vip
-        permission: "vip1"
-        text: '&7&l✯ '
-        hover:
-          - '&7VIP专属图标'
-        # 点击后执行的命令
-        click: '/spawn'
-      # 默认称号（无VIP权限时显示）
-      defaultTitle:
-        group: title
-        text: '&7&l✯ '
-        hover:
-          - '&7普通玩家'
-
-      # ============================================
       # 自定义的玩家名节点
       player:
         text: '&f${head}${player}&7: '
