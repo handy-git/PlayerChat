@@ -128,7 +128,7 @@ public final class ShortcutUtil {
     }
 
     /**
-     * 正则提取变量
+     * 在消息中提取第一个命中的正则变量
      *
      * @param message 消息
      * @param regex   正则
