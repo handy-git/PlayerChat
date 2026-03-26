@@ -52,43 +52,60 @@ public final class ShortcutUtil {
             if ("enable".equalsIgnoreCase(key)) {
                 continue;
             }
-            // 正则匹配
             String pattern = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".pattern", "");
-            if (!PatternUtil.isMatch(pattern, stripColorMessage)) {
-                continue;
-            }
-            // 文本过滤匹配
             String textFilter = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".text-filter");
-            List<String> textFilterVars = CollUtil.of();
-            if (StrUtil.isNotEmpty(textFilter)) {
-                textFilterVars = extractRegexVars(stripColorMessage, textFilter, key + ".text-filter");
-                if (textFilterVars == null) {
-                    continue;
-                }
-            }
             String text = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.text");
             List<String> hover = ConfigUtil.SHORTCUT_CONFIG.getStringList(key + ".display.hover");
             String click = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.click");
             String clickSuggest = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.clickSuggest");
             String url = ConfigUtil.SHORTCUT_CONFIG.getString(key + ".display.url");
-            if (StrUtil.isEmpty(text)) {
+            ChatChildParam shortcutDisplay = buildShortcutDisplay(stripColorMessage, pattern, textFilter, key, text, hover, click, clickSuggest, url);
+            if (shortcutDisplay == null) {
                 continue;
             }
-            // 处理替换
             ChatChildParam msgNode = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
-            text = replaceTextFilterVar(text, textFilterVars);
-            hover = replaceTextFilterVar(hover, textFilterVars);
-            click = replaceTextFilterVar(click, textFilterVars);
-            clickSuggest = replaceTextFilterVar(clickSuggest, textFilterVars);
-            url = replaceTextFilterVar(url, textFilterVars);
-            msgNode.setText(ChatUtil.replaceStr(player, channelName, text));
-            msgNode.setHover(ChatUtil.replaceStr(player, channelName, hover));
-            msgNode.setClick(ChatUtil.replaceStr(player, channelName, click));
-            msgNode.setClickSuggest(ChatUtil.replaceStr(player, channelName, clickSuggest));
-            msgNode.setUrl(ChatUtil.replaceStr(player, channelName, url));
+            msgNode.setText(ChatUtil.replaceStr(player, channelName, shortcutDisplay.getText()));
+            msgNode.setHover(ChatUtil.replaceStr(player, channelName, shortcutDisplay.getHover()));
+            msgNode.setClick(ChatUtil.replaceStr(player, channelName, shortcutDisplay.getClick()));
+            msgNode.setClickSuggest(ChatUtil.replaceStr(player, channelName, shortcutDisplay.getClickSuggest()));
+            msgNode.setUrl(ChatUtil.replaceStr(player, channelName, shortcutDisplay.getUrl()));
             msgNode.setHoverItem(null);
             return;
         }
+    }
+
+    /**
+     * 构建快捷展示节点
+     *
+     * @param message      消息
+     * @param pattern      整句匹配正则
+     * @param textFilter   文本提取正则
+     * @param key          节点
+     * @param text         展示内容
+     * @param hover        悬浮内容
+     * @param click        点击执行
+     * @param clickSuggest 点击补全
+     * @param url          跳转链接
+     * @return 快捷展示节点, null 表示未命中
+     */
+    static ChatChildParam buildShortcutDisplay(String message, String pattern, String textFilter, String key, String text, List<String> hover, String click, String clickSuggest, String url) {
+        if (!PatternUtil.isMatch(pattern, message) || StrUtil.isEmpty(text)) {
+            return null;
+        }
+        List<String> textFilterVars = CollUtil.of();
+        if (StrUtil.isNotEmpty(textFilter)) {
+            textFilterVars = extractRegexVars(message, textFilter, key + ".text-filter");
+            if (textFilterVars == null) {
+                return null;
+            }
+        }
+        return ChatChildParam.builder()
+                .text(replaceTextFilterVar(text, textFilterVars))
+                .hover(replaceTextFilterVar(hover, textFilterVars))
+                .click(replaceTextFilterVar(click, textFilterVars))
+                .clickSuggest(replaceTextFilterVar(clickSuggest, textFilterVars))
+                .url(replaceTextFilterVar(url, textFilterVars))
+                .build();
     }
 
     /**
@@ -98,7 +115,7 @@ public final class ShortcutUtil {
      * @param vars 变量
      * @return 新内容
      */
-    private static String replaceTextFilterVar(String str, List<String> vars) {
+    static String replaceTextFilterVar(String str, List<String> vars) {
         if (StrUtil.isEmpty(str) || CollUtil.isEmpty(vars)) {
             return str;
         }
@@ -116,7 +133,7 @@ public final class ShortcutUtil {
      * @param vars    变量
      * @return 新内容
      */
-    private static List<String> replaceTextFilterVar(List<String> strList, List<String> vars) {
+    static List<String> replaceTextFilterVar(List<String> strList, List<String> vars) {
         if (CollUtil.isEmpty(strList) || CollUtil.isEmpty(vars)) {
             return strList;
         }
@@ -135,7 +152,7 @@ public final class ShortcutUtil {
      * @param key     节点
      * @return 变量集合, null表示未匹配
      */
-    private static List<String> extractRegexVars(String message, String regex, String key) {
+    static List<String> extractRegexVars(String message, String regex, String key) {
         if (StrUtil.isEmpty(regex)) {
             return Collections.emptyList();
         }
