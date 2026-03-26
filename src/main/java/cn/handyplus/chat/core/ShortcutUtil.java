@@ -141,11 +141,14 @@ public final class ShortcutUtil {
         }
         try {
             Matcher matcher = Pattern.compile(regex).matcher(message);
-            if (!matcher.matches()) {
+            if (!matcher.find()) {
                 return null;
             }
             List<String> vars = new ArrayList<>();
-            for (int i = 0; i <= matcher.groupCount(); i++) {
+            // group(0) 是整体匹配
+            vars.add(matcher.group());
+            // 从 group(1) 开始是捕获组
+            for (int i = 1; i <= matcher.groupCount(); i++) {
                 vars.add(matcher.group(i));
             }
             return vars;

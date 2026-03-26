@@ -2,7 +2,7 @@
 # pattern/text-filter 为整段匹配
 # text-filter 匹配成功后可在 display 中使用 {0}/{1}... 变量
 # {0}=整体匹配, {1}开始为分组
-enable: false
+enable: true
 
 tp:
   pattern: '((tp我)|(TP我)|(TPme)|(TPW)|(TPw)|(TPME))'
@@ -25,8 +25,8 @@ tpta:
 
 # B 站视频分享
 bilibili:
-  pattern: 'BV( )?.{10}'
-  text-filter: '.{12}'
+  pattern: 'BV( )?[0-9A-Za-z]{10}'
+  text-filter: '[0-9A-Za-z]{10}'
   display:
     text: '&8[&f&lBilibili&8]'
     hover:
@@ -39,8 +39,8 @@ bilibili:
 
 # QQ 分享
 qq:
-  pattern: 'QQ( )?[1-9]([0-9]{5,11})'
-  text-filter: '[1-9]([0-9]{5,11})'
+  pattern: 'QQ( )?[1-9][0-9]{5,11}'
+  text-filter: '[1-9][0-9]{5,11}'
   display:
     text: '&8[&3&lQQ&8]'
     hover:
@@ -85,7 +85,7 @@ glowIP:
     hover:
       - '&7这是一个 IP 地址'
       - '&7点击复制!'
-    copy: '{0}'
+    click: '{0}'
 
 # 高亮邮箱
 glowEmail:
@@ -95,14 +95,14 @@ glowEmail:
     hover:
       - '&7这是一个邮箱'
       - '&7点击复制!'
-    copy: '{0}'
+    click: '{0}'
 
 # 地标宣传
 landmark:
-  pattern: '#地标 ( )?.([0-9]{0,3})'
-  text-filter: '[1-9]([0-9]{0,3})'
+  pattern: '#地标 ( )?[0-9][0-9]{0,3}'
+  text-filter: '[1-9][0-9]{0,3}'
   display:
-    text: '&8[&a&l地标传送&8]'
+    text: '&8[&a&l传送地标 &e{0}&8]'
     hover:
       - '&7点击传送到地标 &e{0}'
-    copy: '/plw tpid {0}'
+    click: '/plw tpid {0}'
