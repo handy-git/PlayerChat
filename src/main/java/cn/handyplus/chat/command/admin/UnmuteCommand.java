@@ -1,7 +1,6 @@
 package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.service.ChatPlayerMuteService;
+import cn.handyplus.chat.api.PlayerChatApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -43,15 +42,13 @@ public class UnmuteCommand implements IHandyCommandEvent {
 
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
         AssertUtil.notNull(offlinePlayer, BaseUtil.getLangMsg("playerNotFoundMsg"));
-        int deleted = ChatPlayerMuteService.getInstance().removeByUuid(offlinePlayer.getUniqueId());
-        // 移除缓存
-        ChatConstants.PLAYER_MUTE_CACHE.remove(offlinePlayer.getUniqueId());
+        boolean unmuted = PlayerChatApi.getInstance().unmutePlayer(offlinePlayer);
 
         Map<String, String> map = MapUtil.of("${player}", playerName);
-        String msg = BaseUtil.getLangMsg(deleted > 0 ? "unmuteSuccessMsg" : "unmuteNotFoundMsg", map);
+        String msg = BaseUtil.getLangMsg(unmuted ? "unmuteSuccessMsg" : "unmuteNotFoundMsg", map);
         MessageUtil.sendMessage(sender, msg);
         // 通知被解除禁言玩家
-        if (deleted > 0) {
+        if (unmuted) {
             MessageUtil.sendMessage(offlinePlayer.getUniqueId(), BaseUtil.getLangMsg("unmutedNotifyMsg"));
         }
     }
