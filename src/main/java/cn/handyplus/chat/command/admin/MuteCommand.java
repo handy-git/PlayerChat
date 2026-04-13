@@ -1,8 +1,6 @@
 package cn.handyplus.chat.command.admin;
 
-import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
-import cn.handyplus.chat.service.ChatPlayerMuteService;
+import cn.handyplus.chat.api.PlayerChatApi;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.core.MapUtil;
@@ -13,8 +11,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -51,21 +47,8 @@ public class MuteCommand implements IHandyCommandEvent {
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
         AssertUtil.notNull(offlinePlayer, BaseUtil.getLangMsg("playerNotFoundMsg"));
 
-        // 删除旧的禁言记录
-        ChatPlayerMuteService.getInstance().removeByUuid(offlinePlayer.getUniqueId());
-        // 移除缓存
-        ChatConstants.PLAYER_MUTE_CACHE.remove(offlinePlayer.getUniqueId());
-
-        // 创建新的禁言记录
-        ChatPlayerMuteEnter muteEnter = new ChatPlayerMuteEnter();
-        muteEnter.setPlayerName(offlinePlayer.getName());
-        muteEnter.setPlayerUuid(offlinePlayer.getUniqueId());
-        muteEnter.setReason(reason);
-        muteEnter.setOperatorName(sender.getName());
-        muteEnter.setMuteTime(muteTime);
-        muteEnter.setCreateTime(new Date());
-        muteEnter.setExpireTime(DateUtil.offset(new Date(), Calendar.SECOND, muteTime));
-        ChatPlayerMuteService.getInstance().add(muteEnter);
+        boolean muted = PlayerChatApi.getInstance().mutePlayer(offlinePlayer, muteTime, reason, sender.getName());
+        AssertUtil.isTrue(muted, BaseUtil.getLangMsg("timeFormatFailureMsg"));
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${reason}", reason, "${time}", muteTime.toString());
         MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("muteSuccessMsg", map));
         // 通知被禁言玩家
