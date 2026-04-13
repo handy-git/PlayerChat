@@ -1,6 +1,6 @@
 package cn.handyplus.chat.event;
 
-import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.chat.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

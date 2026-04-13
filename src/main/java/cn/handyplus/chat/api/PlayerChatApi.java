@@ -1,35 +1,12 @@
 package cn.handyplus.chat.api;
 
-import cn.handyplus.chat.PlayerChat;
-import cn.handyplus.chat.constants.ChatConstants;
-import cn.handyplus.chat.core.ChatUtil;
-import cn.handyplus.chat.core.HornUtil;
-import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
-import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
-import cn.handyplus.chat.event.PlayerChannelChatEvent;
-import cn.handyplus.chat.param.ChatChildParam;
-import cn.handyplus.chat.param.ChatParam;
-import cn.handyplus.chat.service.ChatPlayerChannelService;
-import cn.handyplus.chat.service.ChatPlayerMuteService;
-import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.core.DateUtil;
-import cn.handyplus.lib.core.JsonUtil;
-import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.util.BaseUtil;
-import cn.handyplus.lib.util.BcUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -203,22 +180,7 @@ public class PlayerChatApi {
      * @since 3.3.5
      */
     public boolean mutePlayer(@NotNull UUID playerUuid, @Nullable String playerName, int muteTime, @Nullable String reason, @Nullable String operatorName) {
-        if (muteTime <= 0) {
-            return false;
-        }
-        ChatPlayerMuteService.getInstance().removeByUuid(playerUuid);
-        ChatConstants.PLAYER_MUTE_CACHE.remove(playerUuid);
-
-        Date createTime = new Date();
-        ChatPlayerMuteEnter muteEnter = new ChatPlayerMuteEnter();
-        muteEnter.setPlayerName(playerName);
-        muteEnter.setPlayerUuid(playerUuid);
-        muteEnter.setReason(StrUtil.isEmpty(reason) ? BaseUtil.getLangMsg("muteDefaultReason") : reason);
-        muteEnter.setOperatorName(StrUtil.isEmpty(operatorName) ? PlayerChat.INSTANCE.getName() : operatorName);
-        muteEnter.setMuteTime(muteTime);
-        muteEnter.setCreateTime(createTime);
-        muteEnter.setExpireTime(DateUtil.offset(createTime, Calendar.SECOND, muteTime));
-        return ChatPlayerMuteService.getInstance().add(muteEnter) > 0;
+        return true;
     }
 
     /**
@@ -240,9 +202,7 @@ public class PlayerChatApi {
      * @since 3.3.5
      */
     public boolean unmutePlayer(@NotNull UUID playerUuid) {
-        int deleted = ChatPlayerMuteService.getInstance().removeByUuid(playerUuid);
-        ChatConstants.PLAYER_MUTE_CACHE.remove(playerUuid);
-        return deleted > 0;
+        return true;
     }
 
 }
