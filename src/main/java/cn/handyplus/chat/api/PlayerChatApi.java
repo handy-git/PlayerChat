@@ -269,7 +269,7 @@ public class PlayerChatApi {
      * @param reason       禁言原因
      * @param operatorName 操作者名称
      * @return true成功
-     * @since 3.3.4
+     * @since 3.3.5
      */
     public boolean mutePlayer(@NotNull OfflinePlayer player, int muteTime, @Nullable String reason, @Nullable String operatorName) {
         return mutePlayer(player.getUniqueId(), player.getName(), muteTime, reason, operatorName);
@@ -284,7 +284,7 @@ public class PlayerChatApi {
      * @param reason       禁言原因
      * @param operatorName 操作者名称
      * @return true成功
-     * @since 3.3.4
+     * @since 3.3.5
      */
     public boolean mutePlayer(@NotNull UUID playerUuid, @Nullable String playerName, int muteTime, @Nullable String reason, @Nullable String operatorName) {
         if (muteTime <= 0) {
@@ -294,12 +294,11 @@ public class PlayerChatApi {
         ChatConstants.PLAYER_MUTE_CACHE.remove(playerUuid);
 
         Date createTime = new Date();
-        String defaultOperatorName = PlayerChat.INSTANCE == null ? "PlayerChat" : PlayerChat.INSTANCE.getName();
         ChatPlayerMuteEnter muteEnter = new ChatPlayerMuteEnter();
         muteEnter.setPlayerName(playerName);
         muteEnter.setPlayerUuid(playerUuid);
         muteEnter.setReason(StrUtil.isEmpty(reason) ? BaseUtil.getLangMsg("muteDefaultReason") : reason);
-        muteEnter.setOperatorName(StrUtil.isEmpty(operatorName) ? defaultOperatorName : operatorName);
+        muteEnter.setOperatorName(StrUtil.isEmpty(operatorName) ? PlayerChat.INSTANCE.getName() : operatorName);
         muteEnter.setMuteTime(muteTime);
         muteEnter.setCreateTime(createTime);
         muteEnter.setExpireTime(DateUtil.offset(createTime, Calendar.SECOND, muteTime));
@@ -311,7 +310,7 @@ public class PlayerChatApi {
      *
      * @param player 玩家
      * @return true成功
-     * @since 3.3.4
+     * @since 3.3.5
      */
     public boolean unmutePlayer(@NotNull OfflinePlayer player) {
         return unmutePlayer(player.getUniqueId());
@@ -322,7 +321,7 @@ public class PlayerChatApi {
      *
      * @param playerUuid 玩家UUID
      * @return true成功
-     * @since 3.3.4
+     * @since 3.3.5
      */
     public boolean unmutePlayer(@NotNull UUID playerUuid) {
         int deleted = ChatPlayerMuteService.getInstance().removeByUuid(playerUuid);
