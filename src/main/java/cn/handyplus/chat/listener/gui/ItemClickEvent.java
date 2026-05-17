@@ -42,7 +42,7 @@ public class ItemClickEvent implements IHandyClickEvent {
         Map<Integer, String> custom = HandyInventoryUtil.getCustomButton(ConfigUtil.ITEM_CONFIG, "custom");
         String command = custom.get(rawSlot);
         if (StrUtil.isNotEmpty(command)) {
-            PlayerSchedulerUtil.syncPerformReplaceCommand(player, command);
+            PlayerSchedulerUtil.performReplaceCommand(player, command);
         }
     }
 

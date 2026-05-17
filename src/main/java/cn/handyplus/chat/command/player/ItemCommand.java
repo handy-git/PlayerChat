@@ -51,7 +51,7 @@ public class ItemCommand implements IHandyCommandEvent {
             return;
         }
         Inventory inventory = ItemGui.getInstance().createGui(player, chatPlayerItemOptional.get());
-        PlayerSchedulerUtil.syncOpenInventory(player, inventory);
+        PlayerSchedulerUtil.openInventory(player, inventory);
     }
 
 }

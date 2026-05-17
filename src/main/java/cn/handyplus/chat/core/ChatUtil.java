@@ -180,9 +180,9 @@ public class ChatUtil {
             rgbTextUtilList.add(textComponent);
         }
         // 构建消息
-        RgbTextUtil first = rgbTextUtilList.get(0);
-        for (int i = 1; i < rgbTextUtilList.size(); i++) {
-            first.addExtra(rgbTextUtilList.get(i));
+        RgbTextUtil first = RgbTextUtil.init("");
+        for (RgbTextUtil rgbTextUtil : rgbTextUtilList) {
+            first.addExtra(rgbTextUtil);
         }
         return first;
     }

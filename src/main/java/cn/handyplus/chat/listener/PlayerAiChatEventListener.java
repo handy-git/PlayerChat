@@ -91,7 +91,7 @@ public class PlayerAiChatEventListener implements Listener {
                 for (String command : commandList) {
                     command = PlaceholderApiUtil.set(player, command);
                     command = StrUtil.replace(command, "player", player.getName());
-                    PlayerSchedulerUtil.syncDispatchCommand(command);
+                    PlayerSchedulerUtil.dispatchCommand(command);
                 }
             }
             // 更新处罚结果
