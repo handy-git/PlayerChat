@@ -5,6 +5,7 @@ import cn.handyplus.chat.hook.PlaceholderApiUtil;
 import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.PapiConditionUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
@@ -127,6 +128,11 @@ public class ChatUtil {
             // 节点权限
             String permission = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".format." + key + ".permission");
             if (StrUtil.isNotEmpty(permission) && !player.hasPermission(permission)) {
+                continue;
+            }
+            // 节点变量条件
+            List<String> conditionList = ConfigUtil.CHAT_CONFIG.getStringList("chat." + channelEnable + ".format." + key + ".condition");
+            if (!PapiConditionUtil.checkCondition(player, channelName, conditionList)) {
                 continue;
             }
 

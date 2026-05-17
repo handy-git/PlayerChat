@@ -26,6 +26,8 @@ at:
 # clickSuggest 点击后补全在输入框的内容 click 点击后自动执行的内容
 # 对应频道附近的人配置格式 range: 6,6,6
 # group 有相同 group 的节点，按配置顺序只显示第一个有权限的
+# condition 条件列表，全部满足才显示节点，支持 = != > < >= <=
+# = != 支持字符串判断，> < >= <= 必须为数字
 chat:
   # 默认频道(严禁删除本频道)
   default:
@@ -48,6 +50,8 @@ chat:
       vipPrefix:
         # 该节点的权限 每个节点都可以自定义对应的权限,如果不配置默认不需要权限
         permission: "playerChat.chat.default.vipPrefix"
+        # 该节点的条件列表,如果不配置默认不需要条件,例如: "%player_level%>=10"
+        condition: []
         text: ''
         # 1.16+可用hover
         hover: []
