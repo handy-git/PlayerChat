@@ -31,6 +31,8 @@ public class ChatPlayerIgnoreService {
 
     /**
      * 设置
+     *
+     * @param enter 玩家屏蔽记录
      */
     public void setIgnore(ChatPlayerIgnoreEnter enter) {
         Optional<ChatPlayerIgnoreEnter> ignoreOptional = this.findByUid(enter.getPlayerUuid());
@@ -39,11 +41,43 @@ public class ChatPlayerIgnoreService {
         } else {
             ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
             List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
+            if (ignorePlayerList.contains(enter.getIgnorePlayer())) {
+                this.refreshCache(enter.getPlayerUuid());
+                return;
+            }
             ignorePlayerList.add(enter.getIgnorePlayer());
             chatPlayerIgnoreEnter.setIgnorePlayer(CollUtil.listToStr(ignorePlayerList));
+            Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
+            use.update().set(ChatPlayerIgnoreEnter::getIgnorePlayer, chatPlayerIgnoreEnter.getIgnorePlayer());
+            use.execution().updateById(chatPlayerIgnoreEnter.getId());
         }
         // 重新缓存屏蔽列表
-        ChatConstants.PLAYER_IGNORE_MAP.put(enter.getPlayerUuid(), ChatPlayerIgnoreService.getInstance().findIgnoreByUid(enter.getPlayerUuid()));
+        this.refreshCache(enter.getPlayerUuid());
+    }
+
+    /**
+     * 设置白名单
+     *
+     * @param enter 玩家屏蔽记录
+     */
+    public void setWhite(ChatPlayerIgnoreEnter enter) {
+        Optional<ChatPlayerIgnoreEnter> ignoreOptional = this.findByUid(enter.getPlayerUuid());
+        if (!ignoreOptional.isPresent()) {
+            this.add(enter);
+        } else {
+            ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
+            List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
+            if (whitePlayerList.contains(enter.getWhitePlayer())) {
+                this.refreshCache(enter.getPlayerUuid());
+                return;
+            }
+            whitePlayerList.add(enter.getWhitePlayer());
+            Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
+            use.update().set(ChatPlayerIgnoreEnter::getWhitePlayer, CollUtil.listToStr(whitePlayerList));
+            use.execution().updateById(chatPlayerIgnoreEnter.getId());
+        }
+        // 重新缓存屏蔽列表
+        this.refreshCache(enter.getPlayerUuid());
     }
 
     /**
@@ -54,6 +88,16 @@ public class ChatPlayerIgnoreService {
      */
     public List<String> findIgnoreByUid(UUID playerUuid) {
         return this.findByUid(playerUuid).map(ignoreEnter -> StrUtil.strToStrList(ignoreEnter.getIgnorePlayer())).orElse(new ArrayList<>());
+    }
+
+    /**
+     * 根据uid查询白名单
+     *
+     * @param playerUuid uid
+     * @return 数据
+     */
+    public List<String> findWhiteByUid(UUID playerUuid) {
+        return this.findByUid(playerUuid).map(ignoreEnter -> StrUtil.strToStrList(ignoreEnter.getWhitePlayer())).orElse(new ArrayList<>());
     }
 
     /**
@@ -68,8 +112,9 @@ public class ChatPlayerIgnoreService {
         List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
         ignorePlayerList.remove(ignorePlayer);
         chatPlayerIgnoreEnter.setIgnorePlayer(CollUtil.listToStr(ignorePlayerList));
-        if (CollUtil.isEmpty(ignorePlayerList)) {
-            // 没有屏蔽人了直接删除
+        List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
+        if (CollUtil.isEmpty(ignorePlayerList) && CollUtil.isEmpty(whitePlayerList)) {
+            // 没有屏蔽人和白名单了直接删除
             Db.use(ChatPlayerIgnoreEnter.class).execution().deleteById(chatPlayerIgnoreEnter.getId());
         } else {
             // 还有屏蔽人就只更新
@@ -78,7 +123,51 @@ public class ChatPlayerIgnoreService {
             use.execution().updateById(chatPlayerIgnoreEnter.getId());
         }
         // 重新缓存屏蔽列表
-        ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, ChatPlayerIgnoreService.getInstance().findIgnoreByUid(playerUuid));
+        this.refreshCache(playerUuid);
+    }
+
+    /**
+     * 移除白名单
+     *
+     * @param playerUuid  玩家uuid
+     * @param whitePlayer 白名单玩家
+     */
+    public void removeWhite(UUID playerUuid, String whitePlayer) {
+        Optional<ChatPlayerIgnoreEnter> ignoreOptional = this.findByUid(playerUuid);
+        if (!ignoreOptional.isPresent()) {
+            return;
+        }
+        ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
+        List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
+        whitePlayerList.remove(whitePlayer);
+        List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
+        if (CollUtil.isEmpty(ignorePlayerList) && CollUtil.isEmpty(whitePlayerList)) {
+            // 没有屏蔽人和白名单了直接删除
+            Db.use(ChatPlayerIgnoreEnter.class).execution().deleteById(chatPlayerIgnoreEnter.getId());
+        } else {
+            Db<ChatPlayerIgnoreEnter> use = Db.use(ChatPlayerIgnoreEnter.class);
+            use.update().set(ChatPlayerIgnoreEnter::getWhitePlayer, CollUtil.listToStr(whitePlayerList));
+            use.execution().updateById(chatPlayerIgnoreEnter.getId());
+        }
+        // 重新缓存屏蔽列表
+        this.refreshCache(playerUuid);
+    }
+
+    /**
+     * 重新缓存屏蔽列表
+     *
+     * @param playerUuid 玩家uuid
+     */
+    private void refreshCache(UUID playerUuid) {
+        Optional<ChatPlayerIgnoreEnter> ignoreOptional = this.findByUid(playerUuid);
+        if (!ignoreOptional.isPresent()) {
+            ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, new ArrayList<>());
+            ChatConstants.PLAYER_IGNORE_WHITE_MAP.put(playerUuid, new ArrayList<>());
+            return;
+        }
+        ChatPlayerIgnoreEnter ignoreEnter = ignoreOptional.get();
+        ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, StrUtil.strToStrList(ignoreEnter.getIgnorePlayer()));
+        ChatConstants.PLAYER_IGNORE_WHITE_MAP.put(playerUuid, StrUtil.strToStrList(ignoreEnter.getWhitePlayer()));
     }
 
     /**

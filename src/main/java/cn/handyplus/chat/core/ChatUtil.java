@@ -82,7 +82,8 @@ public class ChatUtil {
             }
             // 判断是否开启屏蔽
             List<String> ignoreList = ChatConstants.PLAYER_IGNORE_MAP.get(onlinePlayer.getUniqueId());
-            if (CollUtil.isNotEmpty(ignoreList) && ignoreList.contains(param.getPlayerName())) {
+            List<String> whiteList = ChatConstants.PLAYER_IGNORE_WHITE_MAP.get(onlinePlayer.getUniqueId());
+            if (isIgnorePlayer(ignoreList, whiteList, param.getPlayerName(), onlinePlayer.getName())) {
                 continue;
             }
             rgbTextUtil.send(onlinePlayer);
@@ -102,6 +103,28 @@ public class ChatUtil {
         if (isConsoleMsg) {
             rgbTextUtil.sendConsole();
         }
+    }
+
+    /**
+     * 判断接收者是否屏蔽发送者消息
+     *
+     * @param ignoreList     接收者屏蔽列表
+     * @param whiteList      接收者屏蔽白名单
+     * @param sendPlayerName 发送者名称
+     * @param receiveName    接收者名称
+     * @return true 已屏蔽
+     */
+    private static boolean isIgnorePlayer(List<String> ignoreList, List<String> whiteList, String sendPlayerName, String receiveName) {
+        if (CollUtil.isEmpty(ignoreList)) {
+            return false;
+        }
+        if (!ignoreList.contains(ChatConstants.ALL)) {
+            return ignoreList.contains(sendPlayerName);
+        }
+        if (receiveName.equals(sendPlayerName)) {
+            return false;
+        }
+        return CollUtil.isEmpty(whiteList) || !whiteList.contains(sendPlayerName);
     }
 
     /**

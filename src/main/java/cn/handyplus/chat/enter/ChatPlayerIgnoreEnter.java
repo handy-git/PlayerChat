@@ -30,4 +30,7 @@ public class ChatPlayerIgnoreEnter {
     @TableField(value = "ignorePlayer", length = 20000, comment = "屏蔽的玩家")
     private String ignorePlayer;
 
+    @TableField(value = "whitePlayer", length = 20000, comment = "屏蔽全部时允许显示的玩家")
+    private String whitePlayer;
+
 }

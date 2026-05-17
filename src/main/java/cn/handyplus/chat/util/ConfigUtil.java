@@ -75,6 +75,7 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreParamFailureMsg", "&8[&c✘&8] &7请指定需要屏蔽的玩家名称", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListEmptyMsg", "&8[&c✘&8] &7未屏蔽玩家", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListMsg", "&8[&a✔&8] &7屏蔽数量:&a  ${number}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreWhiteListPrefix", "&f[白名单] &7", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreSelfFailureMsg", "&8[&c✘&8] &7无法屏蔽自己", null, language);
         // 2.0.0 AI
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "aiText", "&8[&a!&8] &7玩家&a${player}&7因多次违规发言 &8[&a点击投票封禁&8]", null, language);

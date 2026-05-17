@@ -107,6 +107,11 @@ public final class ChatConstants {
     public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new HashMap<>();
 
     /**
+     * 玩家屏蔽白名单
+     */
+    public static Map<UUID, List<String>> PLAYER_IGNORE_WHITE_MAP = new HashMap<>();
+
+    /**
      * 玩家昵称缓存
      * key: 玩家UUID, value: 昵称
      *

@@ -32,12 +32,32 @@ public class RemoveIgnoreCommand implements IHandyCommandEvent {
 
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+        // 参数是否正常
+        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("ignoreParamFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 移除忽略
-        ChatPlayerIgnoreService.getInstance().removeIgnore(player.getUniqueId(), args[1]);
+        String ignorePlayer = args[1];
+        boolean ignore = this.isIgnore(args);
+        if (ignore) {
+            ChatPlayerIgnoreService.getInstance().removeIgnore(player.getUniqueId(), ignorePlayer);
+        } else {
+            ChatPlayerIgnoreService.getInstance().removeWhite(player.getUniqueId(), ignorePlayer);
+        }
         // 发送忽略列表
         IgnoreListCommand.sendIgnoreList(sender);
+    }
+
+    /**
+     * 是否移除屏蔽列表
+     *
+     * @param args 命令参数
+     * @return true 移除屏蔽列表
+     */
+    private boolean isIgnore(String[] args) {
+        String ignore = this.getArg(args, 2).orElse("true");
+        AssertUtil.notTrue(!"true".equalsIgnoreCase(ignore) && !"false".equalsIgnoreCase(ignore), BaseUtil.getLangMsg("ignoreParamFailureMsg"));
+        return Boolean.parseBoolean(ignore);
     }
 
 }

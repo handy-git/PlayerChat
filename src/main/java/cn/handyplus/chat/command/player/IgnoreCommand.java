@@ -41,13 +41,32 @@ public class IgnoreCommand implements IHandyCommandEvent {
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         // 禁止屏蔽自己
-        AssertUtil.notTrue(args[1].equals(player.getName()), BaseUtil.getLangMsg("ignoreSelfFailureMsg"));
+        String ignorePlayer = args[1];
+        boolean ignore = this.isIgnore(args);
+        AssertUtil.notTrue(ignorePlayer.equals(player.getName()), BaseUtil.getLangMsg("ignoreSelfFailureMsg"));
         ChatPlayerIgnoreEnter enter = new ChatPlayerIgnoreEnter();
         enter.setPlayerName(player.getName());
         enter.setPlayerUuid(player.getUniqueId());
-        enter.setIgnorePlayer(args[1]);
-        ChatPlayerIgnoreService.getInstance().setIgnore(enter);
-        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("ignorePlayer", MapUtil.of("${player}", args[1])));
+        if (ignore) {
+            enter.setIgnorePlayer(ignorePlayer);
+            ChatPlayerIgnoreService.getInstance().setIgnore(enter);
+        } else {
+            enter.setWhitePlayer(ignorePlayer);
+            ChatPlayerIgnoreService.getInstance().setWhite(enter);
+        }
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("ignorePlayer", MapUtil.of("${player}", ignorePlayer)));
+    }
+
+    /**
+     * 是否添加到屏蔽列表
+     *
+     * @param args 命令参数
+     * @return true 添加到屏蔽列表
+     */
+    private boolean isIgnore(String[] args) {
+        String ignore = this.getArg(args, 2).orElse("true");
+        AssertUtil.notTrue(!"true".equalsIgnoreCase(ignore) && !"false".equalsIgnoreCase(ignore), BaseUtil.getLangMsg("ignoreParamFailureMsg"));
+        return Boolean.parseBoolean(ignore);
     }
 
 }

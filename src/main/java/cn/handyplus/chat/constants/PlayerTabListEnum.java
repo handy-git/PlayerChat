@@ -29,7 +29,9 @@ public enum PlayerTabListEnum {
     TELL_THREE(Collections.singletonList(BaseUtil.getLangMsg("tabHelp.message")), 1, "tell", 3),
 
     IGNORE_TWO(null, 1, "ignore", 2),
+    IGNORE_THREE(Arrays.asList("true", "false"), 1, "ignore", 3),
     REMOVE_IGNORE_TWO(null, 1, "removeIgnore", 2),
+    REMOVE_IGNORE_THREE(Arrays.asList("true", "false"), 1, "removeIgnore", 3),
 
     NICK_TWO(null, 1, "nick", 2),
     ;

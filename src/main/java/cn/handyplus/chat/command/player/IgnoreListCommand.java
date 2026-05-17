@@ -51,16 +51,22 @@ public class IgnoreListCommand implements IHandyCommandEvent {
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
         List<String> ignoreList = ChatPlayerIgnoreService.getInstance().findIgnoreByUid(player.getUniqueId());
-        if (CollUtil.isEmpty(ignoreList)) {
+        List<String> whiteList = ChatPlayerIgnoreService.getInstance().findWhiteByUid(player.getUniqueId());
+        if (CollUtil.isEmpty(ignoreList) && CollUtil.isEmpty(whiteList)) {
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("ignoreListEmptyMsg"));
             return;
         }
         RgbTextUtil rgbTextUtil = RgbTextUtil.init("&7========================\n");
-        String ignoreListMsg = BaseUtil.getLangMsg("ignoreListMsg", MapUtil.of("${number}", ignoreList.size() + ""));
+        String ignoreListMsg = BaseUtil.getLangMsg("ignoreListMsg", MapUtil.of("${number}", (ignoreList.size() + whiteList.size()) + ""));
         rgbTextUtil.addExtra(RgbTextUtil.init(ignoreListMsg));
         for (String playerName : ignoreList) {
             RgbTextUtil childText = RgbTextUtil.init("\n" + playerName);
             childText.addExtra(RgbTextUtil.init(" &8[&cㄨ&8] ").addClickCommand("/plc removeIgnore " + playerName));
+            rgbTextUtil.addExtra(childText);
+        }
+        for (String playerName : whiteList) {
+            RgbTextUtil childText = RgbTextUtil.init("\n" + BaseUtil.getLangMsg("ignoreWhiteListPrefix") + playerName);
+            childText.addExtra(RgbTextUtil.init(" &8[&cㄨ&8] ").addClickCommand("/plc removeIgnore " + playerName + " false"));
             rgbTextUtil.addExtra(childText);
         }
         rgbTextUtil.addExtra(RgbTextUtil.init("\n&7========================"));
