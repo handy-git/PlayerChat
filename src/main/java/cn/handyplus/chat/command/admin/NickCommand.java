@@ -2,6 +2,7 @@ package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.service.ChatPlayerNickService;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -35,6 +36,11 @@ public class NickCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull().nextNull();
     }
 
     @Override

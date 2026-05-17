@@ -3,6 +3,7 @@ package cn.handyplus.chat.command.player;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.MuteUtil;
 import cn.handyplus.chat.listener.PlayerChatListener;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -37,6 +38,11 @@ public class TellCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull().nextLang("tabHelp.message");
     }
 
     @Override

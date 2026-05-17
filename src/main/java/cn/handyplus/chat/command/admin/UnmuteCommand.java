@@ -1,6 +1,7 @@
 package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.api.PlayerChatApi;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -32,6 +33,11 @@ public class UnmuteCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull();
     }
 
     @Override

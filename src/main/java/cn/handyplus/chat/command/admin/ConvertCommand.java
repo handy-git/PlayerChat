@@ -12,6 +12,7 @@ import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.service.ChatPlayerMuteService;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.db.Db;
@@ -48,6 +49,11 @@ public class ConvertCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.next(DbTypeEnum.getEnum());
     }
 
     @Override

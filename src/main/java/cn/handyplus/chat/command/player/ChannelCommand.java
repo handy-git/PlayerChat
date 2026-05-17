@@ -3,16 +3,21 @@ package cn.handyplus.chat.command.player;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
 import cn.handyplus.lib.util.BaseUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +26,7 @@ import java.util.stream.Collectors;
  * @author handy
  */
 public class ChannelCommand implements IHandyCommandEvent {
+    private static final String ADMIN_PERMISSION = "playerChat.reload";
 
     @Override
     public String command() {
@@ -35,6 +41,11 @@ public class ChannelCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.next(context -> getChannel(context.getSender()));
     }
 
     @Override
@@ -59,6 +70,26 @@ public class ChannelCommand implements IHandyCommandEvent {
         ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
         String channelName = ChannelUtil.getChannelName(chatChannel);
         MessageUtil.sendMessage(player, BaseUtil.getLangMsg("channelSwitchMsg", MapUtil.of("${channel}", channelName)));
+    }
+
+    /**
+     * 获取可切换频道
+     *
+     * @param sender 发送人
+     * @return 频道列表
+     */
+    private static List<String> getChannel(CommandSender sender) {
+        Set<String> chatChannelKeySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat");
+        List<String> chatChannelList = new ArrayList<>(chatChannelKeySet);
+        // 过滤私信频道
+        chatChannelList = chatChannelList.stream().filter(s -> !ChatConstants.TELL.equals(s)).collect(Collectors.toList());
+        // 只显示有权限的频道
+        if (!sender.hasPermission(ADMIN_PERMISSION)) {
+            chatChannelList = chatChannelList.stream().filter(s -> sender.hasPermission(ChatConstants.PLAYER_CHAT_USE + s)).collect(Collectors.toList());
+        }
+        // 过滤插件频道
+        List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
+        return chatChannelList.stream().filter(s -> !pluginChannelList.contains(s)).collect(Collectors.toList());
     }
 
 }

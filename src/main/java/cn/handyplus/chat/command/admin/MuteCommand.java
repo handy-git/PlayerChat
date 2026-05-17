@@ -1,6 +1,7 @@
 package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.api.PlayerChatApi;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.core.MapUtil;
@@ -11,6 +12,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -33,6 +35,13 @@ public class MuteCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull()
+                .next(Arrays.asList("10", "30", "1m", "5m", "10m", "30m", "1h", "6h", "12h", "1d", "7d"))
+                .nextLang("tabHelp.muteReason");
     }
 
     @Override

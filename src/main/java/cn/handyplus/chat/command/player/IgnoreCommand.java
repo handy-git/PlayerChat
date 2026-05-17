@@ -2,6 +2,7 @@ package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.enter.ChatPlayerIgnoreEnter;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -10,6 +11,8 @@ import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 /**
  * 屏蔽
@@ -32,6 +35,11 @@ public class IgnoreCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull().next(Arrays.asList("true", "false"));
     }
 
     @Override

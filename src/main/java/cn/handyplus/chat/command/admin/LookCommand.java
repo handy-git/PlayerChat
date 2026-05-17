@@ -2,6 +2,7 @@ package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.service.ChatPlayerHornService;
+import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.util.AssertUtil;
@@ -33,6 +34,11 @@ public class LookCommand implements IHandyCommandEvent {
     @Override
     public boolean isAsync() {
         return true;
+    }
+
+    @Override
+    public void tab(HandyTab handyTab) {
+        handyTab.nextNull();
     }
 
     @Override
