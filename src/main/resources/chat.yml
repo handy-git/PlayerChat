@@ -48,13 +48,11 @@ chat:
       vipPrefix:
         # 该节点的权限 每个节点都可以自定义对应的权限,如果不配置默认不需要权限
         permission: "playerChat.chat.default.vipPrefix"
-        text: '${channel}%playerTitle_use%'
+        text: ''
         # 1.16+可用hover
-        hover:
-          - '&8▪ &6所在聊天频道: ${channel}'
-          - '&8▪ &6点击可执行命令/spawn'
+        hover: []
         # 点击后执行的命令
-        click: '/spawn'
+        click: ''
       # 自定义的玩家名节点
       player:
         text: '&f${head}${player}&7: '
