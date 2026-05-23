@@ -22,6 +22,7 @@ import cn.handyplus.lib.util.ItemStackUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import cn.handyplus.lib.util.XSeriesUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -101,9 +102,11 @@ public class ChatUtil {
         }
         // 控制台消息
         if (isConsoleMsg) {
+            Player sendPlayer = Bukkit.getPlayerExact(param.getPlayerName());
             String consoleFormat = BaseConstants.CONFIG.getString("consoleFormat", "[${channel}] ${player}: ${message}");
-            consoleFormat = StrUtil.replace(consoleFormat, "channel", channel);
-            consoleFormat = StrUtil.replace(consoleFormat, "player", param.getPlayerName());
+            if (sendPlayer != null) {
+                consoleFormat = replaceStr(sendPlayer, ChannelUtil.getChannelName(channel), consoleFormat);
+            }
             consoleFormat = StrUtil.replace(consoleFormat, "message", BaseUtil.stripColor(chatParam.getMessage()));
             MessageUtil.sendConsoleMessage(consoleFormat);
         }

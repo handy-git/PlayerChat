@@ -21,7 +21,7 @@ commandAlias:
 # 注意 如果修改为其他频道,请把对应的权限提前给予 查看: playerChat.chat.频道名 使用: playerChat.use.频道名
 firstLoginChatDefault: "default"
 
-# 控制台聊天消息格式, 支持变量: ${channel} ${player} ${message}
+# 控制台聊天消息格式, 支持内部变量和PAPI变量
 consoleFormat: "[${channel}] ${player}: ${message}"
 
 # 是否开启 AI 审核
