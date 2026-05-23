@@ -101,7 +101,11 @@ public class ChatUtil {
         }
         // 控制台消息
         if (isConsoleMsg) {
-            rgbTextUtil.sendConsole();
+            String consoleFormat = BaseConstants.CONFIG.getString("consoleFormat", "[${channel}] ${player}: ${message}");
+            consoleFormat = StrUtil.replace(consoleFormat, "channel", channel);
+            consoleFormat = StrUtil.replace(consoleFormat, "player", param.getPlayerName());
+            consoleFormat = StrUtil.replace(consoleFormat, "message", BaseUtil.stripColor(chatParam.getMessage()));
+            MessageUtil.sendConsoleMessage(consoleFormat);
         }
     }
 

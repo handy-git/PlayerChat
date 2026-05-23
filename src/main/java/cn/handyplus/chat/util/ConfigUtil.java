@@ -102,6 +102,7 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerOfflineMsg", "&8[&c✘&8] &7玩家 ${player} 不在线", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "consoleFormat", "[${channel}] ${player}: ${message}", Collections.singletonList("控制台聊天消息格式, 支持变量: ${channel} ${player} ${message}"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "blacklist", Arrays.asList("操", "草", "cao"), Collections.singletonList("黑名单,关键字替换成*"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.default", 0, Collections.singletonList("聊天冷却时间(单位秒)(可无限扩展和修改子节点，权限格式: playerChat.chatTime.vip1)"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip1", 0, null, "config.yml");
