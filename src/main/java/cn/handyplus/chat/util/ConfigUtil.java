@@ -92,6 +92,12 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerNotFoundMsg", "&8[&c✘&8] &7玩家不存在", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "mutedMsg", "&8[&c✘&8] &7你已被禁言, 剩余 ${time} 秒, 原因: ${reason}", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.muteReason", "请输入禁言原因(可选)", null, language);
+        // 玩家颜色相关
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "colorParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/plc setColor [玩家名] [类型] [颜色]", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "colorTypeFailureMsg", "&8[&c✘&8] &7颜色类型只能包含英文、数字和下划线", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "colorSetSuccessMsg", "&8[&a✔&8] &a已设置玩家 ${player} 的 ${type} 颜色为 ${color}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.colorType", "请输入类型", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.color", "请输入颜色", null, language);
         // 时间格式错误
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "timeFormatFailureMsg", "&8[&c✘&8] &7时间格式错误, 支持: 数字(秒), 1m(分钟), 1h(小时), 1d(天), 1w(周), 1M(月), 1y(年)", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "mutedNotifyMsg", "&8[&c✘&8] &7你已被禁言 ${time} 秒, 原因: ${reason}", null, language);

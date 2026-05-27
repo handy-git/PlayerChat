@@ -30,11 +30,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
 
 /**
  * 聊天解析工具
@@ -239,6 +242,7 @@ public class ChatUtil {
         str = StrUtil.replace(str, "player", player.getName());
         str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
         str = StrUtil.replace(str, "serverName", BaseConstants.CONFIG.getString("serverName"));
+        str = replaceColorStr(player, str);
         // head组件解析
         str = BaseUtil.headComponent(str, player.getName());
         // 解析 papi 变量
@@ -263,6 +267,25 @@ public class ChatUtil {
             newStrList.add(replaceStr(player, channelName, str));
         }
         return newStrList;
+    }
+
+    /**
+     * 解析玩家颜色变量
+     *
+     * @param player 玩家
+     * @param str    内容
+     * @return 新内容
+     */
+    private static String replaceColorStr(Player player, String str) {
+        Matcher matcher = ChatConstants.COLOR_VARIABLE_PATTERN.matcher(str);
+        StringBuffer stringBuffer = new StringBuffer();
+        Map<String, String> colorMap = ChatConstants.PLAYER_COLOR_CACHE.getOrDefault(player.getUniqueId(), Collections.emptyMap());
+        while (matcher.find()) {
+            String color = colorMap.getOrDefault(matcher.group(1), "");
+            matcher.appendReplacement(stringBuffer, Matcher.quoteReplacement(color));
+        }
+        matcher.appendTail(stringBuffer);
+        return stringBuffer.toString();
     }
 
     /**

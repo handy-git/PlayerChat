@@ -5,6 +5,7 @@ import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
 import cn.handyplus.chat.enter.ChatPlayerNickEnter;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.chat.service.ChatPlayerColorService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.chat.service.ChatPlayerNickService;
 import cn.handyplus.lib.annotation.HandyListener;
@@ -91,6 +92,7 @@ public class HandyLoginEventListener implements Listener {
             Optional<ChatPlayerNickEnter> nickOptional = ChatPlayerNickService.getInstance().findByPlayerUuid(player.getUniqueId());
             String nickName = nickOptional.map(ChatPlayerNickEnter::getNickName).orElse(player.getName());
             ChatConstants.PLAYER_CHAT_NICK.put(player.getUniqueId(), nickName);
+            ChatPlayerColorService.getInstance().refreshCache(player.getUniqueId());
         });
     }
 

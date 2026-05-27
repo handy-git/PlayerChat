@@ -18,6 +18,7 @@ helps:
   - "   &8&l- &f lb [喇叭类型] [消息]  &7玩家使用喇叭"
   - "   &8&l- &f tell [玩家] [消息]  &7私信玩家消息"
   - "   &8&l- &f nick [昵称] (玩家名) &7设置昵称"
+  - "   &8&l- &f setColor [玩家名] [类型] [颜色] &7设置玩家自定义颜色"
   - "   &8&l- &f mute [玩家名] [时长] (原因)  &7禁言玩家(支持: 60/1m/1h/1d/1w/1M/1y)"
   - "   &8&l- &f unmute [玩家名]  &7解除禁言"
   - "   &8&l- &f clearBossBar   &7移除全部BossBar消息"
@@ -60,6 +61,9 @@ aiTip: "&8[&a!&8] &7请文明发言,多次违规将禁言!"
 nickSetSuccessMsg: "&8[&a✔&8] &a已成功设置玩家 ${player} 的昵称为 ${nickName}"
 notAirItem: "&8[&c✘&8] &7展示物品为空"
 playerOfflineMsg: "&8[&c✘&8] &7玩家 ${player} 不在线"
+colorParamFailureMsg: "&8[&c✘&8] &7参数错误 使用方法: &a/plc setColor [玩家名] [类型] [颜色]"
+colorTypeFailureMsg: "&8[&c✘&8] &7颜色类型只能包含英文、数字和下划线"
+colorSetSuccessMsg: "&8[&a✔&8] &a已设置玩家 ${player} 的 ${type} 颜色为 ${color}"
 
 # 禁言相关
 muteParamFailureMsg: "&8[&c✘&8] &7参数错误 使用方法: &a/plc mute [玩家名] [时长] (原因)"
@@ -78,3 +82,5 @@ tabHelp:
   number: "请输入数量"
   message: "请输入私信内容"
   muteReason: "请输入禁言原因"
+  colorType: "请输入类型"
+  color: "请输入颜色"

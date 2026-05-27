@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * 常量
@@ -160,10 +161,26 @@ public final class ChatConstants {
     public static final String CHAT_COLOR = "playerChat.color";
 
     /**
+     * 玩家颜色变量正则
+     */
+    public static final Pattern COLOR_VARIABLE_PATTERN = Pattern.compile("\\$\\{([A-Za-z0-9_]+)_color}");
+
+    /**
+     * 玩家颜色类型正则
+     */
+    public static final Pattern COLOR_TYPE_PATTERN = Pattern.compile("[A-Za-z0-9_]+");
+
+    /**
      * 玩家禁言缓存
      * key: 玩家UUID, value: 禁言记录
      */
     public static final Map<UUID, Optional<ChatPlayerMuteEnter>> PLAYER_MUTE_CACHE = new HashMap<>();
+
+    /**
+     * 玩家颜色缓存
+     * key: 玩家UUID, value: 颜色类型和颜色
+     */
+    public static final Map<UUID, Map<String, String>> PLAYER_COLOR_CACHE = new HashMap<>();
 
     /**
      * 命令别名映射
