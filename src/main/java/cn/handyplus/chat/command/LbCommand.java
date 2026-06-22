@@ -35,7 +35,7 @@ import java.util.Optional;
 public class LbCommand implements TabExecutor {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String @NotNull [] args) {
         // 参数是否正常
         if (args.length < 2) {
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("lbParamFailureMsg"));

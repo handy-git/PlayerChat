@@ -89,7 +89,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
             return;
         }
         // 发送消息
-        HornUtil.sendMsg(player, bcMessageParam);
+        HornUtil.sendMsg(null, bcMessageParam);
     }
 
 }
