@@ -63,7 +63,7 @@ public class PlayerChatListener implements Listener {
         }
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();
-        message = ChatUtil.at(mentionedPlayers, message);
+        message = ChatUtil.at(player, mentionedPlayers, message);
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());

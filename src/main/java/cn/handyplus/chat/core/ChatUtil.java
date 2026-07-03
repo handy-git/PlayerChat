@@ -23,7 +23,6 @@ import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import cn.handyplus.lib.util.XSeriesUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -291,12 +290,13 @@ public class ChatUtil {
     /**
      * 处理@人
      *
+     * @param player           玩家
      * @param mentionedPlayers 被@的人
      * @param message          消息
      * @return 新消息
      * @since 1.0.9
      */
-    public static String at(List<String> mentionedPlayers, String message) {
+    public static String at(@NotNull Player player, List<String> mentionedPlayers, String message) {
         boolean enable = ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
         if (!enable) {
             return message;
@@ -315,8 +315,10 @@ public class ChatUtil {
         // 将 @玩家名 替换为高亮显示
         boolean keepAt = ConfigUtil.CHAT_CONFIG.getBoolean("at.keepAt", false);
         String atColor = ConfigUtil.CHAT_CONFIG.getString("at.atColor", "&9");
+        String afterColor = ConfigUtil.CHAT_CONFIG.getString("at.afterColor", "&r");
+        afterColor = replaceColorStr(player, afterColor);
         for (String playerName : mentionedPlayers) {
-            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + ChatColor.RESET);
+            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + afterColor);
         }
         return message;
     }

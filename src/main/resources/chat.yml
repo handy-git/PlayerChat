@@ -19,6 +19,8 @@ at:
   keepAt: false
   # @默认的颜色
   atColor: "&9"
+  # @后恢复的颜色, 支持玩家颜色变量, 例如: "${player_color}"
+  afterColor: "&r"
 
 # 聊天管理 频道可无限根据下面格式添加
 # 自定义频道权限 查看: playerChat.chat.频道名 使用: playerChat.use.频道名
