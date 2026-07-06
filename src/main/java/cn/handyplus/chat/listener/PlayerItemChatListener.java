@@ -102,6 +102,8 @@ public class PlayerItemChatListener implements Listener {
         }
         String itemText = StrUtil.replace(content, "item", displayName.replace("%", ""));
         itemText = message.replace(format, itemText);
+        // 解析玩家自定义颜色
+        itemText = ChatUtil.replaceColorStr(player, itemText);
         // 解析变量
         String text = PlaceholderApiUtil.set(player, itemText);
         // 替换组件

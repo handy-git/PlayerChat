@@ -275,7 +275,7 @@ public class ChatUtil {
      * @param str    内容
      * @return 新内容
      */
-    private static String replaceColorStr(Player player, String str) {
+    public static String replaceColorStr(Player player, String str) {
         Matcher matcher = ChatConstants.COLOR_VARIABLE_PATTERN.matcher(str);
         StringBuffer stringBuffer = new StringBuffer();
         Map<String, String> colorMap = ChatConstants.PLAYER_COLOR_CACHE.getOrDefault(player.getUniqueId(), Collections.emptyMap());
