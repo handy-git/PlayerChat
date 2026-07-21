@@ -21,6 +21,7 @@ import java.util.Optional;
  *
  * @author handy
  */
+@SuppressWarnings("deprecation")
 public class PlaceholderUtil extends PlaceholderExpansion {
     private final PlayerChat plugin;
 

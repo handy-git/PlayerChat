@@ -124,7 +124,6 @@ public class PlayerAiChatEventListener implements Listener {
         chatChildParam.setClickSuggest(null);
         chatParam.setChildList(Collections.singletonList(chatChildParam));
         chatParam.setMessage(aiText);
-        chatParam.setHasColor(true);
         param.setMessage(JsonUtil.toJson(chatParam));
         param.setType(ChatConstants.ITEM_TYPE);
         // 发送事件

@@ -32,11 +32,6 @@ public class ChatParam {
     private String message;
 
     /**
-     * 聊天内容颜色权限
-     */
-    private boolean hasColor;
-
-    /**
      * 接收人
      *
      * @since 1.1.5

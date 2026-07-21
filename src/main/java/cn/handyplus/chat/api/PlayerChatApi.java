@@ -231,7 +231,6 @@ public class PlayerChatApi {
         chatParam.setMessage(message);
         // @玩家处理
         chatParam.setMentionedPlayers(mentionedPlayers);
-        chatParam.setHasColor(true);
         chatParam.setChannel(channel);
         chatParam.setSource(source);
         param.setType(ChatConstants.CHAT_TYPE);

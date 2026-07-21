@@ -11,6 +11,7 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -61,6 +62,10 @@ public class PlayerChatListener implements Listener {
         if (ChatUtil.chatCheck(player, message)) {
             return;
         }
+        // 无颜色权限时，仅清理玩家输入的颜色代码
+        if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
+            message = BaseUtil.stripColor(message);
+        }
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();
         message = ChatUtil.at(player, mentionedPlayers, message);
@@ -84,8 +89,6 @@ public class PlayerChatListener implements Listener {
         ShortcutUtil.convert(player, channel, chatParam);
         // @玩家处理
         chatParam.setMentionedPlayers(mentionedPlayers);
-        // 有权限进行颜色代码处理
-        chatParam.setHasColor(player.hasPermission(ChatConstants.CHAT_COLOR));
         chatParam.setSource(param.getPluginName());
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));

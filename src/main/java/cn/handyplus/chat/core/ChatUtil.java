@@ -199,7 +199,6 @@ public class ChatUtil {
      */
     public static @NotNull RgbTextUtil buildMsg(@NotNull ChatParam chatParam, @NotNull String type) {
         // 加载玩家消息的颜色
-        chatParam.setMessage(chatParam.isHasColor() ? chatParam.getMessage() : BaseUtil.stripColor(chatParam.getMessage()));
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
             chatChildParam.setText(StrUtil.replace(chatChildParam.getText(), "message", chatParam.getMessage()));
         }
