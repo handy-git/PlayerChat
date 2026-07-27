@@ -1,6 +1,7 @@
 package cn.handyplus.chat.constants;
 
 import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
+import cn.handyplus.lib.core.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +72,11 @@ public final class ChatConstants {
      * @since 1.0.7
      */
     public static final Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
+
+    /**
+     * 玩家上一条聊天内容和发送时间
+     */
+    public static final Map<UUID, Pair<String, Long>> PLAYER_LAST_CHAT = new HashMap<>();
 
     /**
      * 玩家昵称缓存

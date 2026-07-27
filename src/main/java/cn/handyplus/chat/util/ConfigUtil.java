@@ -55,6 +55,7 @@ public class ConfigUtil {
         // 1.0.7 添加聊天频率提醒
         String language = "languages/" + BaseConstants.CONFIG.getString("language") + ".yml";
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "chatTime", "&7你必须等待 &a${chatTime} &7秒后 才可以继续发言.", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "repeatChatMsg", "&8[&c✘&8] &7请勿发送重复或相似的内容", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "itemNotFoundMsg", "&8[&c✘&8] &7展示物品超过可查看时间", null, language);
         // 1.1.4 频道不存在
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "channelDoesNotExist", "&8[&c✘&8] &7频道不存在", null, language);
@@ -114,6 +115,10 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip1", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip2", 0, null, "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatTime.vip3", 0, null, "config.yml");
+        // 重复或相似聊天限制
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.time", 30, Collections.singletonList("重复或相似聊天限制时间, 单位秒, 0为关闭"), "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.similarity", 80, Collections.singletonList("相似度百分比, 100为仅完全相同"), "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.minLength", 4, Collections.singletonList("相似度判断的最短消息长度, 完全相同不受限制"), "config.yml");
         // 1.2.6 增加登录后默认频道设置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
         // 2.0.6 命令别名

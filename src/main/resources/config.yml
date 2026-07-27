@@ -49,6 +49,15 @@ chatTime:
   # vip3的上限 需要权限 playerWarp.delayTime.vip3
   vip3: 0
 
+# 重复或相似聊天限制
+repeatChat:
+  # 限制时间, 单位秒, 0为关闭
+  time: 30
+  # 相似度百分比, 100为仅完全相同
+  similarity: 80
+  # 相似度判断的最短消息长度, 完全相同不受限制
+  minLength: 4
+
 # 聊天黑名单
 blacklist:
   - '操'

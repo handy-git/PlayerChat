@@ -364,8 +364,70 @@ public class ChatUtil {
                 return true;
             }
         }
+        // 重复或相似聊天处理
+        if (repeatChatCheck(player, message)) {
+            return true;
+        }
         ChatConstants.PLAYER_CHAT_TIME.put(player.getUniqueId(), System.currentTimeMillis());
         return false;
+    }
+
+    /**
+     * 重复或相似聊天校验
+     *
+     * @param player  玩家
+     * @param message 消息
+     * @return true 重复或相似
+     */
+    public static boolean repeatChatCheck(@NotNull Player player, @NotNull String message) {
+        int repeatTime = BaseConstants.CONFIG.getInt("repeatChat.time", 30);
+        if (repeatTime <= 0) {
+            return false;
+        }
+        long now = System.currentTimeMillis();
+        String currentMessage = StrUtil.toLowerCase(StrUtil.deleteWhitespace(BaseUtil.stripColor(message)));
+        Pair<String, Long> lastChat = ChatConstants.PLAYER_LAST_CHAT.get(player.getUniqueId());
+        if (currentMessage != null && lastChat != null && now - lastChat.getValue() < repeatTime * 1000L) {
+            String lastMessage = lastChat.getKey();
+            int minLength = Math.max(1, BaseConstants.CONFIG.getInt("repeatChat.minLength", 4));
+            int similarity = Math.max(0, Math.min(100, BaseConstants.CONFIG.getInt("repeatChat.similarity", 80)));
+            boolean sameMessage = currentMessage.equals(lastMessage);
+            boolean similarMessage = currentMessage.length() >= minLength && lastMessage.length() >= minLength && getSimilarity(currentMessage, lastMessage) >= similarity;
+            if (sameMessage || similarMessage) {
+                MessageUtil.sendMessage(player, BaseUtil.getLangMsg("repeatChatMsg"));
+                return true;
+            }
+        }
+        ChatConstants.PLAYER_LAST_CHAT.put(player.getUniqueId(), Pair.of(currentMessage, now));
+        return false;
+    }
+
+    /**
+     * 使用编辑距离计算文本相似度
+     *
+     * @param first  第一段文本
+     * @param second 第二段文本
+     * @return 相似度百分比
+     */
+    static int getSimilarity(@NotNull String first, @NotNull String second) {
+        int[] distance = new int[second.length() + 1];
+        for (int index = 0; index <= second.length(); index++) {
+            distance[index] = index;
+        }
+        for (int firstIndex = 1; firstIndex <= first.length(); firstIndex++) {
+            int previous = distance[0];
+            distance[0] = firstIndex;
+            for (int secondIndex = 1; secondIndex <= second.length(); secondIndex++) {
+                int current = distance[secondIndex];
+                int cost = first.charAt(firstIndex - 1) == second.charAt(secondIndex - 1) ? 0 : 1;
+                distance[secondIndex] = Math.min(
+                        Math.min(distance[secondIndex] + 1, distance[secondIndex - 1] + 1),
+                        previous + cost);
+                previous = current;
+            }
+        }
+        int maxLength = Math.max(first.length(), second.length());
+        return maxLength == 0 ? 100 : (maxLength - distance[second.length()]) * 100 / maxLength;
     }
 
     /**
