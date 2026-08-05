@@ -3,7 +3,7 @@ package cn.handyplus.chat.constants;
 import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
 import cn.handyplus.lib.core.Pair;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,11 +100,11 @@ public final class ChatConstants {
     public static final String PLAYER_CHAT_CHAT = "playerChat.chat.";
 
     /**
-     * 玩家列表
+     * BC 全服在线玩家列表
      *
      * @since 1.1.5
      */
-    public static List<String> PLAYER_LIST = new ArrayList<>();
+    public static volatile List<String> PLAYER_LIST = Collections.emptyList();
 
     /**
      * 玩家忽略列表

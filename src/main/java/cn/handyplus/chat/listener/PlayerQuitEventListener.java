@@ -1,6 +1,7 @@
 package cn.handyplus.chat.listener;
 
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.util.PlayerListUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.entity.Player;
@@ -47,7 +48,7 @@ public class PlayerQuitEventListener implements Listener {
         ChatConstants.PLAYER_PLUGIN_CHANNEL.remove(player.getUniqueId());
         ChatConstants.PLAYER_CHAT_TIME.remove(player.getUniqueId());
         ChatConstants.PLAYER_LAST_CHAT.remove(player.getUniqueId());
-        ChatConstants.PLAYER_LIST.remove(player.getName());
+        PlayerListUtil.removeOnlinePlayer(player.getName());
         ChatConstants.PLAYER_IGNORE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_VOTE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_CHAT_NICK.remove(player.getUniqueId());

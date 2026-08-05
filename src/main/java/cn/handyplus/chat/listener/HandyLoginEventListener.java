@@ -8,6 +8,7 @@ import cn.handyplus.chat.service.ChatPlayerChannelService;
 import cn.handyplus.chat.service.ChatPlayerColorService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.chat.service.ChatPlayerNickService;
+import cn.handyplus.chat.util.PlayerListUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.StrUtil;
@@ -103,11 +104,9 @@ public class HandyLoginEventListener implements Listener {
      */
     @EventHandler
     public void getPlayerList(HandyLoginEvent event) {
-        BcUtil.sendPlayerList();
         String name = event.getPlayer().getName();
-        if (!ChatConstants.PLAYER_LIST.contains(name)) {
-            ChatConstants.PLAYER_LIST.add(name);
-        }
+        PlayerListUtil.addOnlinePlayer(name);
+        BcUtil.sendPlayerList();
     }
 
 }

@@ -5,6 +5,7 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.chat.util.PlayerListUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
@@ -19,7 +20,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * BC消息处理
@@ -56,11 +56,9 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
         // 设置玩家列表
         List<String> playerList = BcUtil.getPlayerList(message);
-        MessageUtil.sendConsoleDebugMessage("当前BC在线玩家列表:" + playerList);
         if (CollUtil.isNotEmpty(playerList)) {
-            ChatConstants.PLAYER_LIST.addAll(playerList);
-            ChatConstants.PLAYER_LIST = ChatConstants.PLAYER_LIST.stream().distinct().collect(Collectors.toList());
-            MessageUtil.sendConsoleDebugMessage("聚合在线玩家数据列表:" + ChatConstants.PLAYER_LIST);
+            PlayerListUtil.replaceOnlinePlayers(playerList);
+            MessageUtil.sendConsoleDebugMessage("当前BC全服在线玩家列表:" + ChatConstants.PLAYER_LIST);
         }
         Optional<BcUtil.BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
         if (!paramOptional.isPresent()) {

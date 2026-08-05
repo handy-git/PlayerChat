@@ -3,6 +3,7 @@ package cn.handyplus.chat.command.player;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.core.MuteUtil;
 import cn.handyplus.chat.listener.PlayerChatListener;
+import cn.handyplus.chat.util.PlayerListUtil;
 import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.core.MapUtil;
@@ -58,9 +59,14 @@ public class TellCommand implements IHandyCommandEvent {
         // 接收人
         String playerName = args[1];
         AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
-        // 私信玩家是否在线
-        Optional<Player> onlinePlayer = BaseUtil.getOnlinePlayer(playerName);
-        AssertUtil.isTrue(onlinePlayer.isPresent(), BaseUtil.getLangMsg("playerOfflineMsg", MapUtil.of("${player}", playerName)));
+        // 优先查询本服玩家，再使用 BC 全服在线玩家快照
+        Optional<Player> localPlayer = BaseUtil.getOnlinePlayer(playerName);
+        Optional<String> onlinePlayerName = localPlayer.map(Player::getName);
+        if (!onlinePlayerName.isPresent()) {
+            onlinePlayerName = PlayerListUtil.getOnlinePlayerName(playerName);
+        }
+        AssertUtil.isTrue(onlinePlayerName.isPresent(), BaseUtil.getLangMsg("playerOfflineMsg", MapUtil.of("${player}", playerName)));
+        playerName = onlinePlayerName.get();
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
