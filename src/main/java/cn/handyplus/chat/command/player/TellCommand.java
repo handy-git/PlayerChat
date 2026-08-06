@@ -43,7 +43,7 @@ public class TellCommand implements IHandyCommandEvent {
 
     @Override
     public void tab(HandyTab handyTab) {
-        handyTab.nextNull().nextLang("tabHelp.message");
+        handyTab.next(context -> ChatConstants.PLAYER_LIST).nextLang("tabHelp.message");
     }
 
     @Override
