@@ -23,8 +23,10 @@ import cn.handyplus.lib.util.MessageUtil;
 import cn.handyplus.lib.util.RgbTextUtil;
 import cn.handyplus.lib.util.XSeriesUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -207,7 +209,11 @@ public class ChatUtil {
         for (ChatChildParam chatChildParam : chatParam.getChildList()) {
             RgbTextUtil textComponent = RgbTextUtil.init(chatChildParam.getText());
             if (ChatConstants.ITEM_TYPE.equals(type) && StrUtil.isNotEmpty(chatChildParam.getHoverItem())) {
-                textComponent.addHoverText(ItemStackUtil.itemStackDeserialize(chatChildParam.getHoverItem()));
+                ItemStack hoverItem = ItemStackUtil.itemStackDeserialize(chatChildParam.getHoverItem());
+                // 无效物品不构建 hover 事件
+                if (!Material.AIR.equals(hoverItem.getType())) {
+                    textComponent.addHoverText(hoverItem);
+                }
             } else {
                 textComponent.addHoverText(CollUtil.listToStr(chatChildParam.getHover(), "\n"));
             }
