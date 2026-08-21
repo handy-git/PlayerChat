@@ -36,8 +36,3 @@
 ## 使用统计
 
 ![](https://bstats.org/signatures/bukkit/PlayerChat.svg)
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=handy-git/PlayerChat&type=Date)](https://star-history.com/#handy-git/PlayerChat&Date)
-
