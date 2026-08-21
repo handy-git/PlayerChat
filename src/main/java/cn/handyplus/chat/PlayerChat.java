@@ -9,7 +9,6 @@ import cn.handyplus.lib.constants.HookPluginEnum;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HookPluginUtil;
 import cn.handyplus.lib.util.MessageUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -45,8 +44,8 @@ public class PlayerChat extends JavaPlugin {
         ChatPluginMessageListener.getInstance().register();
         // 定时任务启动
         ClearItemJob.init();
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "已成功载入服务器!");
-        MessageUtil.sendConsoleMessage(ChatColor.GREEN + "Author:handy WIKI: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
+        MessageUtil.sendConsoleMessage("&a已成功载入服务器!");
+        MessageUtil.sendConsoleMessage("&aAuthor:handy WIKI: https://ricedoc.handyplus.cn/wiki/PlayerChat/README/");
     }
 
     @Override

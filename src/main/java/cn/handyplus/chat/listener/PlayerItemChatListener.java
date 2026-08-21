@@ -35,6 +35,7 @@ import java.util.Date;
  *
  * @author handy
  */
+@SuppressWarnings("deprecation")
 @HandyListener
 public class PlayerItemChatListener implements Listener {
 
@@ -63,6 +64,10 @@ public class PlayerItemChatListener implements Listener {
         // 聊天频率处理
         if (ChatUtil.chatCheck(player, message)) {
             return;
+        }
+        // 无颜色权限时，仅清理玩家输入的颜色代码
+        if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
+            message = BaseUtil.stripColor(message);
         }
         // 获取物品参数
         ItemStack itemInMainHand = ItemStackUtil.getItemInMainHand(player.getInventory());

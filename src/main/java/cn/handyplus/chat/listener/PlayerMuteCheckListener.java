@@ -14,6 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  * @author handy
  */
 @HandyListener
+@SuppressWarnings("deprecation")
 public class PlayerMuteCheckListener implements Listener {
 
     /**
@@ -27,7 +28,6 @@ public class PlayerMuteCheckListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        
         // 检查是否被禁言
         if (MuteUtil.checkMute(player)) {
             event.setCancelled(true);

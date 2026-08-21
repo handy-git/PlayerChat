@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author handy
  */
+@SuppressWarnings("deprecation")
 @HandyListener
 public class PlayerChatListener implements Listener {
 
