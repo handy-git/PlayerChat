@@ -33,8 +33,7 @@ public class PlayerChatApi {
      * @param plugin  插件
      * @param channel 频道名
      */
-    public void regChannel(Plugin plugin, String channel) {
-    }
+    public native void regChannel(Plugin plugin, String channel);
 
     /**
      * 取消注册频道
@@ -42,8 +41,7 @@ public class PlayerChatApi {
      * @param plugin  插件
      * @param channel 频道名
      */
-    public void unRegChannel(Plugin plugin, String channel) {
-    }
+    public native void unRegChannel(Plugin plugin, String channel);
 
     /**
      * 注册频道
@@ -51,8 +49,7 @@ public class PlayerChatApi {
      * @param plugin      插件
      * @param channelList 频道名集合
      */
-    public void regChannel(Plugin plugin, List<String> channelList) {
-    }
+    public native void regChannel(Plugin plugin, List<String> channelList);
 
     /**
      * 取消注册频道
@@ -60,16 +57,14 @@ public class PlayerChatApi {
      * @param plugin      插件
      * @param channelList 频道名集合
      */
-    public void unRegChannel(Plugin plugin, List<String> channelList) {
-    }
+    public native void unRegChannel(Plugin plugin, List<String> channelList);
 
     /**
      * 取消注册频道
      *
      * @param plugin 插件
      */
-    public void unRegChannel(Plugin plugin) {
-    }
+    public native void unRegChannel(Plugin plugin);
 
     /**
      * 注册玩家监听的插件自定义的频道
@@ -79,9 +74,7 @@ public class PlayerChatApi {
      * @param channel 频道
      * @return true成功
      */
-    public boolean regPlayerChannel(Plugin plugin, String channel, Player player) {
-        return true;
-    }
+    public native boolean regPlayerChannel(Plugin plugin, String channel, Player player);
 
     /**
      * 取消注册玩家监听的插件自定义的频道
@@ -91,9 +84,7 @@ public class PlayerChatApi {
      * @param channel 频道
      * @return true成功
      */
-    public boolean unRegPlayerChannel(Plugin plugin, String channel, Player player) {
-        return true;
-    }
+    public native boolean unRegPlayerChannel(Plugin plugin, String channel, Player player);
 
     /**
      * 设置玩家正在使用的频道
@@ -104,9 +95,7 @@ public class PlayerChatApi {
      * @param channel 频道
      * @return true成功
      */
-    public boolean setPlayerChannel(Plugin plugin, String channel, Player player) {
-        return true;
-    }
+    public native boolean setPlayerChannel(Plugin plugin, String channel, Player player);
 
     /**
      * 设置玩家正在使用的频道为默认
@@ -114,9 +103,7 @@ public class PlayerChatApi {
      * @param player 玩家
      * @return true成功
      */
-    public boolean setPlayerChannelToDefault(Player player) {
-        return true;
-    }
+    public native boolean setPlayerChannelToDefault(Player player);
 
     /**
      * 处理频道名称
@@ -125,9 +112,7 @@ public class PlayerChatApi {
      * @param channel 频道名
      * @return 频道名称
      */
-    private String getPluginChannelName(Plugin plugin, String channel) {
-        return null;
-    }
+    private native String getPluginChannelName(Plugin plugin, String channel);
 
     /**
      * 发送消息
@@ -139,9 +124,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 1.2.4
      */
-    public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @Nullable String source) {
-        return true;
-    }
+    public native boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @Nullable String source);
 
     /**
      * 发送喇叭消息
@@ -151,8 +134,7 @@ public class PlayerChatApi {
      * @param message 消息
      * @since 1.2.7
      */
-    public void sendLb(@NotNull Player player, @NotNull String type, @NotNull String message) {
-    }
+    public native void sendLb(@NotNull Player player, @NotNull String type, @NotNull String message);
 
     /**
      * 禁言玩家
@@ -164,9 +146,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 3.3.5
      */
-    public boolean mutePlayer(@NotNull OfflinePlayer player, int muteTime, @Nullable String reason, @Nullable String operatorName) {
-        return mutePlayer(player.getUniqueId(), player.getName(), muteTime, reason, operatorName);
-    }
+    public native boolean mutePlayer(@NotNull OfflinePlayer player, int muteTime, @Nullable String reason, @Nullable String operatorName);
 
     /**
      * 禁言玩家
@@ -179,9 +159,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 3.3.5
      */
-    public boolean mutePlayer(@NotNull UUID playerUuid, @Nullable String playerName, int muteTime, @Nullable String reason, @Nullable String operatorName) {
-        return true;
-    }
+    public native boolean mutePlayer(@NotNull UUID playerUuid, @Nullable String playerName, int muteTime, @Nullable String reason, @Nullable String operatorName);
 
     /**
      * 解除禁言
@@ -190,9 +168,7 @@ public class PlayerChatApi {
      * @return true成功
      * @since 3.3.5
      */
-    public boolean unmutePlayer(@NotNull OfflinePlayer player) {
-        return unmutePlayer(player.getUniqueId());
-    }
+    public native boolean unmutePlayer(@NotNull OfflinePlayer player);
 
     /**
      * 解除禁言
@@ -201,8 +177,6 @@ public class PlayerChatApi {
      * @return true成功
      * @since 3.3.5
      */
-    public boolean unmutePlayer(@NotNull UUID playerUuid) {
-        return true;
-    }
+    public native boolean unmutePlayer(@NotNull UUID playerUuid);
 
 }
