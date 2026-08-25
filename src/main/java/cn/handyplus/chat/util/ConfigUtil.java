@@ -62,6 +62,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "pluginChannel", "&8[&c✘&8] &7无法切换到该频道", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "noChannelPermission", "&8[&c✘&8] &7你没有 &a${permission} &7权限切换到该频道", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "channelSwitchMsg", "&8[&a✔&8] &7已切换到频道 ${channel}", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "setChannelParamFailureMsg", "&8[&c✘&8] &7参数错误 使用方法: &a/plc setChannel [玩家名] [频道名]", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "channelSetSuccessMsg", "&8[&a✔&8] &a已设置玩家 ${player} 的聊天频道为 ${channel}", null, language);
         // 1.1.5 私信提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "tabHelp.message", "&7请输入私信内容", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "sendTell", "&8&o你悄悄地对 ${player} 说: ${message}", null, language);

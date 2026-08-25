@@ -14,6 +14,7 @@ import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +46,26 @@ public class ChannelCommand implements IHandyCommandEvent {
 
     @Override
     public void tab(HandyTab handyTab) {
-        handyTab.next(context -> getChannel(context.getSender()));
+        handyTab.next(context -> getChannelList(context.getSender()));
     }
 
     @Override
     public void onCommand(CommandSender sender, Command command, String s, String[] args) {
-        // 参数是否正常
-        AssertUtil.notTrue(args.length < 2, BaseUtil.getLangMsg("paramFailureMsg"));
         // 是否为玩家
         Player player = AssertUtil.notPlayer(sender, BaseUtil.getLangMsg("noPlayerFailureMsg"));
-        String channel = args[1];
+        String channel = this.getArg(args, 1, BaseUtil.getLangMsg("paramFailureMsg"));
+        String channelName = setChannel(player, channel);
+        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("channelSwitchMsg", MapUtil.of("${channel}", channelName)));
+    }
+
+    /**
+     * 设置玩家频道
+     *
+     * @param player  玩家
+     * @param channel 频道
+     * @return 频道显示名称
+     */
+    public static @NotNull String setChannel(@NotNull Player player, @NotNull String channel) {
         // 频道存在判断
         String chatChannel = ChannelUtil.isChannelEnable(channel);
         AssertUtil.notNull(chatChannel, BaseUtil.getLangMsg("channelDoesNotExist"));
@@ -68,8 +79,7 @@ public class ChannelCommand implements IHandyCommandEvent {
         AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getLangMsg("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
         // 设置频道
         ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
-        String channelName = ChannelUtil.getChannelName(chatChannel);
-        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("channelSwitchMsg", MapUtil.of("${channel}", channelName)));
+        return ChannelUtil.getChannelName(chatChannel);
     }
 
     /**
@@ -78,7 +88,7 @@ public class ChannelCommand implements IHandyCommandEvent {
      * @param sender 发送人
      * @return 频道列表
      */
-    private static List<String> getChannel(CommandSender sender) {
+    public static @NotNull List<String> getChannelList(@NotNull CommandSender sender) {
         Set<String> chatChannelKeySet = HandyConfigUtil.getKey(ConfigUtil.CHAT_CONFIG, "chat");
         List<String> chatChannelList = new ArrayList<>(chatChannelKeySet);
         // 过滤私信频道

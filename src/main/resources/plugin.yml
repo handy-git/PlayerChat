@@ -1,6 +1,6 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 3.6.3
+version: 3.7.0
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI, DiscordSRV, AuthMe, CatSeedLogin, OauthLogin ]
@@ -25,6 +25,7 @@ permissions:
       playerChat.look: true
       playerChat.color: true
       playerChat.setColor: true
+      playerChat.setChannel: true
       playerChat.channel: true
       playerChat.item: true
       playerChat.tell: true
@@ -59,6 +60,9 @@ permissions:
     default: op
   playerChat.setColor:
     description: 设置玩家自定义类型颜色
+    default: op
+  playerChat.setChannel:
+    description: 设置玩家聊天频道
     default: op
   playerChat.channel:
     description: 切换频道
