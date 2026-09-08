@@ -47,7 +47,7 @@ public class HandyLoginEventListener implements Listener {
                 ChatPlayerChannelEnter enter = new ChatPlayerChannelEnter();
                 enter.setPlayerName(player.getName());
                 enter.setPlayerUuid(player.getUniqueId());
-                enter.setChannel(ChatConstants.DEFAULT);
+                enter.setChannel(channel);
                 enter.setIsApi(false);
                 ChatPlayerChannelService.getInstance().add(enter);
             } else {
