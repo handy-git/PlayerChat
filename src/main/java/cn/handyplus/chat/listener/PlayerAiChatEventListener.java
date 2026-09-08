@@ -12,6 +12,7 @@ import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.service.ChatPlayerAiService;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.MapUtil;
 import cn.handyplus.lib.core.StrUtil;
@@ -112,12 +113,13 @@ public class PlayerAiChatEventListener implements Listener {
         param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, ChatConstants.DEFAULT);
-        if (chatParam == null) {
+        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
+        if (CollUtil.isEmpty(childList)) {
             return;
         }
         String aiText = BaseUtil.getLangMsg("aiText", MapUtil.of("${player}", player.getName()));
         // 给予展示属性
-        ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
+        ChatChildParam chatChildParam = childList.get(childList.size() - 1);
         chatChildParam.setText("${message}");
         chatChildParam.setClick("/plc vote " + id);
         chatChildParam.setHover(new ArrayList<>());

@@ -12,6 +12,7 @@ import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
@@ -29,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 展示物品聊天监听器
@@ -95,7 +97,8 @@ public class PlayerItemChatListener implements Listener {
         String channel = ChatUtil.getChannel(player);
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        if (chatParam == null) {
+        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
+        if (CollUtil.isEmpty(childList)) {
             return;
         }
         // 内容格式
@@ -114,7 +117,7 @@ public class PlayerItemChatListener implements Listener {
         // 替换组件
         text = BaseUtil.spriteComponent(text, itemInMainHand);
         // 给予展示属性
-        ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
+        ChatChildParam chatChildParam = childList.get(childList.size() - 1);
         chatChildParam.setText(text);
         chatChildParam.setHover(itemMeta.getLore());
         chatChildParam.setHoverItem(itemEnter.getItem());

@@ -219,10 +219,11 @@ public class PlayerChatApi {
         param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        if (chatParam == null) {
+        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
+        if (CollUtil.isEmpty(childList)) {
             return false;
         }
-        ChatChildParam chatChildParam = chatParam.getChildList().get(chatParam.getChildList().size() - 1);
+        ChatChildParam chatChildParam = childList.get(childList.size() - 1);
         chatChildParam.setText("${message}");
         chatChildParam.setHover(new ArrayList<>());
         chatChildParam.setClick(null);
