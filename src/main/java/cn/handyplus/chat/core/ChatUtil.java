@@ -97,7 +97,7 @@ public class ChatUtil {
             }
             rgbTextUtil.send(onlinePlayer);
             // 如果开启艾特，发送消息
-            if (atEnable && CollUtil.isNotEmpty(chatParam.getMentionedPlayers()) && chatParam.getMentionedPlayers().contains(onlinePlayer.getName())) {
+            if (atEnable && CollUtil.isNotEmpty(chatParam.getMentionedPlayers()) && CollUtil.contains(chatParam.getMentionedPlayers(), onlinePlayer.getName())) {
                 playSound(onlinePlayer, atSound);
             }
             // 播放频道发言音效
