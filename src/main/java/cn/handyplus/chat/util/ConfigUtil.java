@@ -39,6 +39,7 @@ public class ConfigUtil {
      * @since 2.1.3
      */
     private static void loadCommandAlias() {
+        ChatConstants.COMMAND_ALIAS_MAP.clear();
         Set<String> commandAliasKey = HandyConfigUtil.getKey(BaseConstants.CONFIG, "commandAlias");
         for (String key : commandAliasKey) {
             String command = BaseConstants.CONFIG.getString("commandAlias." + key);
