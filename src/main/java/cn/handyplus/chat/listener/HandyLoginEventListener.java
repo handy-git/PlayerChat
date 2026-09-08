@@ -52,10 +52,10 @@ public class HandyLoginEventListener implements Listener {
                 ChatPlayerChannelService.getInstance().add(enter);
             } else {
                 channel = enterOptional.get().getChannel();
-                // 判断是否有权限
+                // 判断是否有权限, 无权限则降级为默认频道
                 if (!enterOptional.get().getIsApi() && !player.hasPermission(ChatConstants.PLAYER_CHAT_USE + channel)) {
                     ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), defaultChannel);
-                    return;
+                    channel = defaultChannel;
                 }
             }
             // 缓存频道
