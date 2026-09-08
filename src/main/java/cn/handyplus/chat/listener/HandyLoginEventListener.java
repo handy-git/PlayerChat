@@ -58,12 +58,13 @@ public class HandyLoginEventListener implements Listener {
                     channel = defaultChannel;
                 }
             }
-            // 缓存频道
-            ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
             // 判断频道是否存在
             if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
                 ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
+                channel = ChatConstants.DEFAULT;
             }
+            // 缓存频道
+            ChatConstants.PLAYER_CHAT_CHANNEL.put(player.getUniqueId(), channel);
             // 缓存屏蔽列表
             ChatPlayerIgnoreService.getInstance().refreshCache(player.getUniqueId());
         });
