@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 聊天解析工具
@@ -308,7 +309,8 @@ public class ChatUtil {
         List<String> messageList = StrUtil.strToStrList(message, " ");
         for (String name : messageList) {
             if (CollUtil.contains(ChatConstants.PLAYER_LIST, name)) {
-                message = message.replaceFirst(name, "@" + name);
+                String namePattern = "(?<!\\S)" + Pattern.quote(name) + "(?!\\S)";
+                message = message.replaceFirst(namePattern, Matcher.quoteReplacement("@" + name));
             }
         }
         // 提取@的玩家名
@@ -322,7 +324,9 @@ public class ChatUtil {
         String afterColor = ConfigUtil.CHAT_CONFIG.getString("at.afterColor", "&r");
         afterColor = replaceColorStr(player, afterColor);
         for (String playerName : mentionedPlayers) {
-            message = message.replaceAll("@" + playerName, atColor + (keepAt ? "@" : "") + playerName + afterColor);
+            String mentionPattern = "(?<!\\S)" + Pattern.quote("@" + playerName) + "(?!\\S)";
+            String replacement = atColor + (keepAt ? "@" : "") + playerName + afterColor;
+            message = message.replaceAll(mentionPattern, Matcher.quoteReplacement(replacement));
         }
         return message;
     }
