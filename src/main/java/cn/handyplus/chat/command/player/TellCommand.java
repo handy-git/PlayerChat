@@ -58,7 +58,7 @@ public class TellCommand implements IHandyCommandEvent {
         }
         // 接收人
         String playerName = args[1];
-        AssertUtil.notTrue(player.getName().equals(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
+        AssertUtil.notTrue(player.getName().equalsIgnoreCase(playerName), BaseUtil.getLangMsg("sendTellErrorMsg"));
         // 优先查询本服玩家，再使用 BC 全服在线玩家快照
         Optional<Player> localPlayer = BaseUtil.getOnlinePlayer(playerName);
         Optional<String> onlinePlayerName = localPlayer.map(Player::getName);
