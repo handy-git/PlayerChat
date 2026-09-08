@@ -158,7 +158,7 @@ public class ChatPlayerIgnoreService {
      *
      * @param playerUuid 玩家uuid
      */
-    private void refreshCache(UUID playerUuid) {
+    public void refreshCache(UUID playerUuid) {
         Optional<ChatPlayerIgnoreEnter> ignoreOptional = this.findByUid(playerUuid);
         if (!ignoreOptional.isPresent()) {
             ChatConstants.PLAYER_IGNORE_MAP.put(playerUuid, new ArrayList<>());

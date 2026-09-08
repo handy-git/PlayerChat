@@ -65,8 +65,7 @@ public class HandyLoginEventListener implements Listener {
                 ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), ChatConstants.DEFAULT);
             }
             // 缓存屏蔽列表
-            ChatConstants.PLAYER_IGNORE_MAP.put(player.getUniqueId(), ChatPlayerIgnoreService.getInstance().findIgnoreByUid(player.getUniqueId()));
-            ChatConstants.PLAYER_IGNORE_WHITE_MAP.put(player.getUniqueId(), ChatPlayerIgnoreService.getInstance().findWhiteByUid(player.getUniqueId()));
+            ChatPlayerIgnoreService.getInstance().refreshCache(player.getUniqueId());
         });
     }
 
