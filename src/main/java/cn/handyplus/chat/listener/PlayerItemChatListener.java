@@ -69,6 +69,13 @@ public class PlayerItemChatListener implements Listener {
             MessageUtil.sendMessage(player, BaseUtil.getLangMsg("notAirItem"));
             return;
         }
+        // 构建消息参数
+        String channel = ChatUtil.getChannel(player);
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
+        if (CollUtil.isEmpty(childList)) {
+            return;
+        }
         // 聊天频率处理
         if (ChatUtil.chatCheck(player, message)) {
             return;
@@ -84,14 +91,6 @@ public class PlayerItemChatListener implements Listener {
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
-        // 所在频道
-        String channel = ChatUtil.getChannel(player);
-        // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
-        if (CollUtil.isEmpty(childList)) {
-            return;
-        }
         // 内容格式
         String content = ConfigUtil.CHAT_CONFIG.getString("item.content", "&5[&a展示了一个 &f${item} &a点击查看&5]");
         String displayName = BaseUtil.getDisplayName(itemInMainHand);
