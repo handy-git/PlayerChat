@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * API
@@ -131,11 +132,10 @@ public class PlayerChatApi {
             return false;
         }
         // 设置玩家拥有的插件频道
-        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
+        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.computeIfAbsent(player.getUniqueId(), key -> new CopyOnWriteArrayList<>());
         if (!channelNameList.contains(channelName)) {
             channelNameList.add(channelName);
         }
-        ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
         return true;
     }
 
@@ -153,9 +153,10 @@ public class PlayerChatApi {
             return false;
         }
         // 取消玩家频道
-        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(player.getUniqueId(), new ArrayList<>());
-        channelNameList.remove(channelName);
-        ChatConstants.PLAYER_PLUGIN_CHANNEL.put(player.getUniqueId(), channelNameList);
+        List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.get(player.getUniqueId());
+        if (CollUtil.isNotEmpty(channelNameList)) {
+            channelNameList.remove(channelName);
+        }
         return true;
     }
 

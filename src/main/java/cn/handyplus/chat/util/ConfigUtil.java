@@ -3,6 +3,7 @@ package cn.handyplus.chat.util;
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.lib.command.HandyCommandWrapper;
 import cn.handyplus.lib.constants.BaseConstants;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -40,7 +41,12 @@ public class ConfigUtil {
     private static void loadCommandAlias() {
         Set<String> commandAliasKey = HandyConfigUtil.getKey(BaseConstants.CONFIG, "commandAlias");
         for (String key : commandAliasKey) {
-            ChatConstants.COMMAND_ALIAS_MAP.put(key, BaseConstants.CONFIG.getString("commandAlias." + key));
+            String command = BaseConstants.CONFIG.getString("commandAlias." + key);
+            // 并发容器不允许 null 值, 别名或目标命令为空时跳过
+            if (StrUtil.isEmpty(key) || StrUtil.isEmpty(command)) {
+                continue;
+            }
+            ChatConstants.COMMAND_ALIAS_MAP.put(key, command);
             // 动态注入命令
             HandyCommandWrapper.injectCommand(key);
         }

@@ -4,11 +4,11 @@ import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
 import cn.handyplus.lib.core.Pair;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -44,12 +44,12 @@ public final class ChatConstants {
     /**
      * 玩家当前频道
      */
-    public static final Map<UUID, String> PLAYER_CHAT_CHANNEL = new HashMap<>();
+    public static final Map<UUID, String> PLAYER_CHAT_CHANNEL = new ConcurrentHashMap<>();
 
     /**
      * 玩家投票记录
      */
-    public static final Map<UUID, Integer> PLAYER_VOTE_MAP = new HashMap<>();
+    public static final Map<UUID, Integer> PLAYER_VOTE_MAP = new ConcurrentHashMap<>();
 
     /**
      * 插件频道
@@ -57,33 +57,33 @@ public final class ChatConstants {
      *
      * @since 1.0.6
      */
-    public static final Map<String, String> PLUGIN_CHANNEL = new HashMap<>();
+    public static final Map<String, String> PLUGIN_CHANNEL = new ConcurrentHashMap<>();
 
     /**
      * 玩家注册的插件频道
      *
      * @since 1.0.6
      */
-    public static final Map<UUID, List<String>> PLAYER_PLUGIN_CHANNEL = new HashMap<>();
+    public static final Map<UUID, List<String>> PLAYER_PLUGIN_CHANNEL = new ConcurrentHashMap<>();
 
     /**
      * 玩家聊天冷却
      *
      * @since 1.0.7
      */
-    public static final Map<UUID, Long> PLAYER_CHAT_TIME = new HashMap<>();
+    public static final Map<UUID, Long> PLAYER_CHAT_TIME = new ConcurrentHashMap<>();
 
     /**
      * 玩家上一条聊天内容和发送时间
      */
-    public static final Map<UUID, Pair<String, Long>> PLAYER_LAST_CHAT = new HashMap<>();
+    public static final Map<UUID, Pair<String, Long>> PLAYER_LAST_CHAT = new ConcurrentHashMap<>();
 
     /**
      * 玩家昵称缓存
      *
      * @since 2.0.5
      */
-    public static final Map<UUID, String> PLAYER_CHAT_NICK = new HashMap<>();
+    public static final Map<UUID, String> PLAYER_CHAT_NICK = new ConcurrentHashMap<>();
 
     /**
      * 频道使用权限
@@ -111,12 +111,12 @@ public final class ChatConstants {
      *
      * @since 1.4.3
      */
-    public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new HashMap<>();
+    public static Map<UUID, List<String>> PLAYER_IGNORE_MAP = new ConcurrentHashMap<>();
 
     /**
      * 玩家屏蔽白名单
      */
-    public static Map<UUID, List<String>> PLAYER_IGNORE_WHITE_MAP = new HashMap<>();
+    public static Map<UUID, List<String>> PLAYER_IGNORE_WHITE_MAP = new ConcurrentHashMap<>();
 
     /**
      * 违规
@@ -173,13 +173,13 @@ public final class ChatConstants {
      * 玩家禁言缓存
      * key: 玩家UUID, value: 禁言记录
      */
-    public static final Map<UUID, Optional<ChatPlayerMuteEnter>> PLAYER_MUTE_CACHE = new HashMap<>();
+    public static final Map<UUID, Optional<ChatPlayerMuteEnter>> PLAYER_MUTE_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 玩家颜色缓存
      * key: 玩家UUID, value: 颜色类型和颜色
      */
-    public static final Map<UUID, Map<String, String>> PLAYER_COLOR_CACHE = new HashMap<>();
+    public static final Map<UUID, Map<String, String>> PLAYER_COLOR_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 命令别名映射
@@ -187,6 +187,6 @@ public final class ChatConstants {
      *
      * @since 2.0.6
      */
-    public static final Map<String, String> COMMAND_ALIAS_MAP = new HashMap<>();
+    public static final Map<String, String> COMMAND_ALIAS_MAP = new ConcurrentHashMap<>();
 
 }
