@@ -244,7 +244,7 @@ public class ChatUtil {
         }
         str = StrUtil.replace(str, "channel", channelName);
         str = StrUtil.replace(str, "player", player.getName());
-        str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
+        str = StrUtil.replace(str, "nickName", ChatConstants.PLAYER_CHAT_NICK.getOrDefault(player.getUniqueId(), player.getName()));
         str = StrUtil.replace(str, "serverName", BaseConstants.CONFIG.getString("serverName"));
         str = replaceColorStr(player, str);
         // head组件解析

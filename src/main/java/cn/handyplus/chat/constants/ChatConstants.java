@@ -119,13 +119,6 @@ public final class ChatConstants {
     public static Map<UUID, List<String>> PLAYER_IGNORE_WHITE_MAP = new HashMap<>();
 
     /**
-     * 玩家昵称缓存
-     * key: 玩家UUID, value: 昵称
-     *
-     * @since 2.0.6
-     */
-    public static Map<UUID, String> PLAYER_NICK_CACHE = new HashMap<>();
-    /**
      * 违规
      *
      * @since 2.0.0

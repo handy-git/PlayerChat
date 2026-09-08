@@ -90,7 +90,7 @@ public final class PapiConditionUtil {
     private static String replaceConditionVar(@NotNull Player player, @NotNull String channelName, @NotNull String condition) {
         condition = StrUtil.replace(condition, "channel", channelName);
         condition = StrUtil.replace(condition, "player", player.getName());
-        condition = StrUtil.replace(condition, "nickName", ChatConstants.PLAYER_NICK_CACHE.getOrDefault(player.getUniqueId(), player.getName()));
+        condition = StrUtil.replace(condition, "nickName", ChatConstants.PLAYER_CHAT_NICK.getOrDefault(player.getUniqueId(), player.getName()));
         condition = StrUtil.replace(condition, "serverName", BaseConstants.CONFIG.getString("serverName"));
         condition = BaseUtil.headComponent(condition, player.getName());
         return PlaceholderApiUtil.set(player, condition);

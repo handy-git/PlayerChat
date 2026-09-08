@@ -62,6 +62,11 @@ public class NickCommand implements IHandyCommandEvent {
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
         // 设置昵称
         ChatPlayerNickService.getInstance().setNickName(offlinePlayer.getUniqueId(), offlinePlayer.getName(), nickName);
+        // 刷新在线玩家的昵称缓存
+        Player target = offlinePlayer.getPlayer();
+        if (target != null) {
+            ChatConstants.PLAYER_CHAT_NICK.put(target.getUniqueId(), nickName);
+        }
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${nickName}", nickName);
         MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("nickSetSuccessMsg", map));
     }
