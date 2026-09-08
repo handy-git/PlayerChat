@@ -2,16 +2,20 @@ package cn.handyplus.chat.command.admin;
 
 import cn.handyplus.chat.enter.ChatPlayerAiEnter;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
+import cn.handyplus.chat.enter.ChatPlayerColorEnter;
 import cn.handyplus.chat.enter.ChatPlayerHornEnter;
 import cn.handyplus.chat.enter.ChatPlayerIgnoreEnter;
 import cn.handyplus.chat.enter.ChatPlayerItemEnter;
 import cn.handyplus.chat.enter.ChatPlayerMuteEnter;
+import cn.handyplus.chat.enter.ChatPlayerNickEnter;
 import cn.handyplus.chat.service.ChatPlayerAiService;
 import cn.handyplus.chat.service.ChatPlayerChannelService;
+import cn.handyplus.chat.service.ChatPlayerColorService;
 import cn.handyplus.chat.service.ChatPlayerHornService;
 import cn.handyplus.chat.service.ChatPlayerIgnoreService;
 import cn.handyplus.chat.service.ChatPlayerItemService;
 import cn.handyplus.chat.service.ChatPlayerMuteService;
+import cn.handyplus.chat.service.ChatPlayerNickService;
 import cn.handyplus.lib.command.HandyTab;
 import cn.handyplus.lib.command.IHandyCommandEvent;
 import cn.handyplus.lib.constants.BaseConstants;
@@ -76,6 +80,8 @@ public class ConvertCommand implements IHandyCommandEvent {
         List<ChatPlayerIgnoreEnter> all3 = ChatPlayerIgnoreService.getInstance().findAll();
         List<ChatPlayerItemEnter> all4 = ChatPlayerItemService.getInstance().findAll();
         List<ChatPlayerMuteEnter> all5 = ChatPlayerMuteService.getInstance().findAll();
+        List<ChatPlayerNickEnter> all6 = ChatPlayerNickService.getInstance().findAll();
+        List<ChatPlayerColorEnter> all7 = ChatPlayerColorService.getInstance().findAll();
         // 修改链接方式
         HandyConfigUtil.setPath(BaseConstants.STORAGE_CONFIG, "storage-method", storageMethod, Collections.singletonList("存储方法(MySQL,SQLite)请复制括号内的类型,不要自己写"), "storage.yml");
         // 加载新连接
@@ -87,6 +93,8 @@ public class ConvertCommand implements IHandyCommandEvent {
         Db.use(ChatPlayerIgnoreEnter.class).createTable();
         Db.use(ChatPlayerItemEnter.class).createTable();
         Db.use(ChatPlayerMuteEnter.class).createTable();
+        Db.use(ChatPlayerNickEnter.class).createTable();
+        Db.use(ChatPlayerColorEnter.class).createTable();
         // 插入数据
         Db.use(ChatPlayerAiEnter.class).execution().insertBatch(all);
         Db.use(ChatPlayerChannelEnter.class).execution().insertBatch(all1);
@@ -94,6 +102,8 @@ public class ConvertCommand implements IHandyCommandEvent {
         Db.use(ChatPlayerIgnoreEnter.class).execution().insertBatch(all3);
         Db.use(ChatPlayerItemEnter.class).execution().insertBatch(all4);
         Db.use(ChatPlayerMuteEnter.class).execution().insertBatch(all5);
+        Db.use(ChatPlayerNickEnter.class).execution().insertBatch(all6);
+        Db.use(ChatPlayerColorEnter.class).execution().insertBatch(all7);
         MessageUtil.sendMessage(sender, "&4转换数据完成，请务必重启服务器，不然有可能会出现未知bug");
     }
 

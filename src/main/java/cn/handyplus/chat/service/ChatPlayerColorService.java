@@ -101,4 +101,14 @@ public class ChatPlayerColorService {
         return use.execution().selectOne();
     }
 
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 3.9.0
+     */
+    public List<ChatPlayerColorEnter> findAll() {
+        return Db.use(ChatPlayerColorEnter.class).execution().list();
+    }
+
 }

@@ -3,6 +3,7 @@ package cn.handyplus.chat.service;
 import cn.handyplus.chat.enter.ChatPlayerNickEnter;
 import cn.handyplus.lib.db.Db;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,6 +68,16 @@ public class ChatPlayerNickService {
             nickEnter.setNickName(nickName);
             add(nickEnter);
         }
+    }
+
+    /**
+     * 查询全部
+     *
+     * @return list
+     * @since 3.9.0
+     */
+    public List<ChatPlayerNickEnter> findAll() {
+        return Db.use(ChatPlayerNickEnter.class).execution().list();
     }
 
 }
