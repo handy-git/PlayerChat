@@ -113,6 +113,7 @@ public class ChannelUtil {
                 Double.parseDouble(rangeList.get(2)));
         // 过滤玩家列表
         List<UUID> playerList = entityList.stream().filter(e -> EntityType.PLAYER.equals(e.getType())).map(Entity::getUniqueId).collect(Collectors.toList());
+        playerList.add(player.getUniqueId());
         return Pair.of(true, playerList);
     }
 
