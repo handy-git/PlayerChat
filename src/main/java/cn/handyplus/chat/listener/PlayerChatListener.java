@@ -56,12 +56,13 @@ public class PlayerChatListener implements Listener {
      * @param message        消息
      * @param channel        渠道
      * @param tellPlayerName 接收人
+     * @return true 已进入消息发送流程
      * @since 1.1.5
      */
-    public static void sendMsg(Player player, String message, String channel, String tellPlayerName) {
+    public static boolean sendMsg(Player player, String message, String channel, String tellPlayerName) {
         // 聊天校验处理
         if (ChatUtil.chatCheck(player, message)) {
-            return;
+            return false;
         }
         // 无颜色权限时，仅清理玩家输入的颜色代码
         if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
@@ -78,7 +79,7 @@ public class PlayerChatListener implements Listener {
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
         if (chatParam == null) {
-            return;
+            return false;
         }
         // 添加私信接收人 1.1.5
         chatParam.setTellPlayerName(tellPlayerName);
@@ -99,6 +100,7 @@ public class PlayerChatListener implements Listener {
         } else {
             Bukkit.getServer().getPluginManager().callEvent(new PlayerChannelTellEvent(player, param));
         }
+        return true;
     }
 
 }

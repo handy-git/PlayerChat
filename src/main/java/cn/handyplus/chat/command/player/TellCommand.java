@@ -70,7 +70,9 @@ public class TellCommand implements IHandyCommandEvent {
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
         // 发送消息
-        PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName);
+        if (!PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName)) {
+            return;
+        }
         // 没有颜色代码权限，移除颜色代码
         if (!sender.hasPermission(ChatConstants.CHAT_COLOR)) {
             message = BaseUtil.stripColor(message);
