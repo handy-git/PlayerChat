@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -74,15 +75,16 @@ public class ChannelUtil {
             return new ArrayList<>(Bukkit.getOnlinePlayers());
         }
         List<Player> playerList = new ArrayList<>();
+        // 频道是否启用
+        String channelEnable = isChannelEnable(channel);
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             // 判断插件自定义频道
-            List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(onlinePlayer.getUniqueId(), new ArrayList<>());
+            List<String> channelNameList = ChatConstants.PLAYER_PLUGIN_CHANNEL.getOrDefault(onlinePlayer.getUniqueId(), Collections.emptyList());
             if (channelNameList.contains(channel)) {
                 playerList.add(onlinePlayer);
                 continue;
             }
             // 判断是否存在对应频道权限
-            String channelEnable = isChannelEnable(channel);
             if (StrUtil.isNotEmpty(channelEnable) && onlinePlayer.hasPermission(ChatConstants.PLAYER_CHAT_CHAT + channelEnable)) {
                 playerList.add(onlinePlayer);
             }
