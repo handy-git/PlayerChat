@@ -50,6 +50,7 @@ public class PlayerQuitEventListener implements Listener {
         ChatConstants.PLAYER_LAST_CHAT.remove(player.getUniqueId());
         PlayerListUtil.removeOnlinePlayer(player.getName());
         ChatConstants.PLAYER_IGNORE_MAP.remove(player.getUniqueId());
+        ChatConstants.PLAYER_IGNORE_WHITE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_VOTE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_CHAT_NICK.remove(player.getUniqueId());
         ChatConstants.PLAYER_MUTE_CACHE.remove(player.getUniqueId());
