@@ -34,8 +34,8 @@ public class PlayerCommandPreprocessEventListener implements Listener {
         if (StrUtil.isEmpty(command)) {
             return;
         }
-        // 简单替换: tell xxx -> plc tell xxx
-        String replace = event.getMessage().replace("/" + alias, command);
+        // 仅替换命令前缀, 保留参数原文
+        String replace = command + event.getMessage().substring(param[0].length());
         event.setCancelled(true);
         PlayerSchedulerUtil.performCommand(event.getPlayer(), replace);
     }
