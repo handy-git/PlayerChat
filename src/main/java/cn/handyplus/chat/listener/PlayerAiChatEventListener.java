@@ -29,7 +29,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * AI审核
@@ -82,8 +85,14 @@ public class PlayerAiChatEventListener implements Listener {
                 return;
             }
             ChatPlayerAiEnter chatPlayerAi = chatPlayerAiOpt.get();
-            // 投票结束清空缓存
-            ChatConstants.PLAYER_VOTE_MAP.clear();
+            // 投票结束，仅清理本次投票的投票记录，避免影响其他并发投票
+            for (Map.Entry<UUID, Set<Integer>> entry : ChatConstants.PLAYER_VOTE_MAP.entrySet()) {
+                Set<Integer> ids = entry.getValue();
+                ids.remove(id);
+                if (ids.isEmpty()) {
+                    ChatConstants.PLAYER_VOTE_MAP.remove(entry.getKey());
+                }
+            }
             // 判断是否满足投票人数
             int aiVoteMaxNumber = BaseConstants.CONFIG.getInt("ai.voteMaxNumber");
             if (chatPlayerAi.getVoteNumber() >= aiVoteMaxNumber) {

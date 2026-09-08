@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -48,8 +49,9 @@ public final class ChatConstants {
 
     /**
      * 玩家投票记录
+     * key: 玩家UUID, value: 已投的投票id集合
      */
-    public static final Map<UUID, Integer> PLAYER_VOTE_MAP = new ConcurrentHashMap<>();
+    public static final Map<UUID, Set<Integer>> PLAYER_VOTE_MAP = new ConcurrentHashMap<>();
 
     /**
      * 插件频道

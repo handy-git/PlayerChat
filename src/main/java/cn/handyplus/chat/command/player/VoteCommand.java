@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 投票
@@ -54,8 +56,8 @@ public class VoteCommand implements IHandyCommandEvent {
         Map<String, String> replaceMap = new HashMap<>();
         replaceMap.put("${max}", aiVoteMaxNumber);
         // 是否已投票
-        Integer existId = ChatConstants.PLAYER_VOTE_MAP.getOrDefault(player.getUniqueId(), 0);
-        if (existId.equals(id)) {
+        Set<Integer> votedIds = ChatConstants.PLAYER_VOTE_MAP.computeIfAbsent(player.getUniqueId(), key -> ConcurrentHashMap.newKeySet());
+        if (votedIds.contains(id)) {
             replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + "");
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("hasVotedMsg", replaceMap));
             return;
@@ -63,7 +65,7 @@ public class VoteCommand implements IHandyCommandEvent {
         replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + 1 + "");
         // 增加投票
         ChatPlayerAiService.getInstance().addVoteNumber(id);
-        ChatConstants.PLAYER_VOTE_MAP.put(player.getUniqueId(), id);
+        votedIds.add(id);
         MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("voteSuccessMsg", replaceMap));
     }
 
