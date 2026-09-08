@@ -449,7 +449,7 @@ public class ChatUtil {
                 if (StrUtil.isEmpty(blackMsg)) {
                     continue;
                 }
-                if (stripColorMessage.contains(blackMsg)) {
+                if (StrUtil.contains(stripColorMessage, blackMsg)) {
                     return true;
                 }
             }
