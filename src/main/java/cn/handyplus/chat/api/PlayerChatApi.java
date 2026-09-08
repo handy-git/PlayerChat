@@ -115,7 +115,14 @@ public class PlayerChatApi {
      * @param plugin 插件
      */
     public void unRegChannel(Plugin plugin) {
-        ChatConstants.PLUGIN_CHANNEL.entrySet().removeIf(entry -> entry.getValue().equals(plugin.getName()));
+        String channelPrefix = plugin.getName() + "_";
+        List<String> channelList = new ArrayList<>();
+        ChatConstants.PLUGIN_CHANNEL.forEach((channelName, pluginName) -> {
+            if (plugin.getName().equals(pluginName)) {
+                channelList.add(channelName.substring(channelPrefix.length()));
+            }
+        });
+        this.unRegChannel(plugin, channelList);
     }
 
     /**
