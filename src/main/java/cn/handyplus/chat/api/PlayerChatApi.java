@@ -77,7 +77,7 @@ public class PlayerChatApi {
             return;
         }
         // 重新设置频道
-        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT, true);
+        ChatPlayerChannelService.getInstance().setChannel(pluginChannelName, ChatConstants.DEFAULT, false);
         // 缓存频道
         for (ChatPlayerChannelEnter channelEnter : channelEnterList) {
             Optional<Player> playerOptional = BaseUtil.getOnlinePlayer(channelEnter.getPlayerUuid());
@@ -174,7 +174,7 @@ public class PlayerChatApi {
         if (StrUtil.isEmpty(ChatConstants.PLUGIN_CHANNEL.get(channelName))) {
             return false;
         }
-        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channelName);
+        return ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channelName, true);
     }
 
     /**

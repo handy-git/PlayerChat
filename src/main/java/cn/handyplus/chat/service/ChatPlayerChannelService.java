@@ -52,8 +52,21 @@ public class ChatPlayerChannelService {
      * @since 1.0.6
      */
     public boolean setChannel(UUID playerUuid, String channel) {
+        return this.setChannel(playerUuid, channel, false);
+    }
+
+    /**
+     * 根据playerUuid设置频道和来源
+     *
+     * @param playerUuid uid
+     * @param channel    频道
+     * @param isApi      是否api频道
+     * @return true成功
+     */
+    public boolean setChannel(UUID playerUuid, String channel, boolean isApi) {
         Db<ChatPlayerChannelEnter> db = Db.use(ChatPlayerChannelEnter.class);
-        db.update().set(ChatPlayerChannelEnter::getChannel, channel);
+        db.update().set(ChatPlayerChannelEnter::getChannel, channel)
+                .set(ChatPlayerChannelEnter::getIsApi, isApi);
         db.where().eq(ChatPlayerChannelEnter::getPlayerUuid, playerUuid);
         int update = db.execution().update();
         // 重新缓存数据
