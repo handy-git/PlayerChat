@@ -72,8 +72,7 @@ public class ChannelCommand implements IHandyCommandEvent {
         // 禁止切换到私信频道
         AssertUtil.notTrue(ChatConstants.TELL.equals(chatChannel), BaseUtil.getLangMsg("channelDoesNotExist"));
         // 插件注册频道处理
-        List<String> pluginChannelList = ChatConstants.PLUGIN_CHANNEL.values().stream().distinct().collect(Collectors.toList());
-        AssertUtil.notTrue(pluginChannelList.contains(channel), BaseUtil.getLangMsg("pluginChannel"));
+        AssertUtil.notTrue(ChatConstants.PLUGIN_CHANNEL.containsKey(channel), BaseUtil.getLangMsg("pluginChannel"));
         // 是否有频道权限
         String channelPermission = ChatConstants.PLAYER_CHAT_USE + chatChannel;
         AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getLangMsg("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
