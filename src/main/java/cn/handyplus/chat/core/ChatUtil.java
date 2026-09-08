@@ -72,6 +72,10 @@ public class ChatUtil {
         if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
             return;
         }
+        // 获取配置
+        boolean atEnable = ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
+        String atSound = atEnable ? ConfigUtil.CHAT_CONFIG.getString("at.sound") : null;
+        String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".sound");
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             // 判断是否开启私信
@@ -93,15 +97,10 @@ public class ChatUtil {
             }
             rgbTextUtil.send(onlinePlayer);
             // 如果开启艾特，发送消息
-            if (ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable")) {
-                // 获取艾特玩家
-                if (CollUtil.isNotEmpty(chatParam.getMentionedPlayers()) && chatParam.getMentionedPlayers().contains(onlinePlayer.getName())) {
-                    String sound = ConfigUtil.CHAT_CONFIG.getString("at.sound");
-                    playSound(onlinePlayer, sound);
-                }
+            if (atEnable && CollUtil.isNotEmpty(chatParam.getMentionedPlayers()) && chatParam.getMentionedPlayers().contains(onlinePlayer.getName())) {
+                playSound(onlinePlayer, atSound);
             }
             // 播放频道发言音效
-            String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".sound");
             playSound(onlinePlayer, channelSound);
         }
         // 控制台消息
