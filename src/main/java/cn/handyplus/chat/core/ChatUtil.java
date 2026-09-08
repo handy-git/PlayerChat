@@ -128,13 +128,13 @@ public class ChatUtil {
         if (CollUtil.isEmpty(ignoreList)) {
             return false;
         }
-        if (!ignoreList.contains(ChatConstants.ALL)) {
-            return ignoreList.contains(sendPlayerName);
+        if (!CollUtil.contains(ignoreList, ChatConstants.ALL)) {
+            return CollUtil.contains(ignoreList, sendPlayerName);
         }
         if (receiveName.equals(sendPlayerName)) {
             return false;
         }
-        return CollUtil.isEmpty(whiteList) || !whiteList.contains(sendPlayerName);
+        return CollUtil.isEmpty(whiteList) || !CollUtil.contains(whiteList, sendPlayerName);
     }
 
     /**

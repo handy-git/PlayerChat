@@ -41,7 +41,7 @@ public class ChatPlayerIgnoreService {
         } else {
             ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
             List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
-            if (ignorePlayerList.contains(enter.getIgnorePlayer())) {
+            if (CollUtil.contains(ignorePlayerList, enter.getIgnorePlayer())) {
                 this.refreshCache(enter.getPlayerUuid());
                 return;
             }
@@ -67,7 +67,7 @@ public class ChatPlayerIgnoreService {
         } else {
             ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
             List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
-            if (whitePlayerList.contains(enter.getWhitePlayer())) {
+            if (CollUtil.contains(whitePlayerList, enter.getWhitePlayer())) {
                 this.refreshCache(enter.getPlayerUuid());
                 return;
             }
@@ -110,7 +110,7 @@ public class ChatPlayerIgnoreService {
         }
         ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
         List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
-        ignorePlayerList.remove(ignorePlayer);
+        ignorePlayerList.removeIf(playerName -> playerName.equalsIgnoreCase(ignorePlayer));
         chatPlayerIgnoreEnter.setIgnorePlayer(CollUtil.listToStr(ignorePlayerList));
         List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
         if (CollUtil.isEmpty(ignorePlayerList) && CollUtil.isEmpty(whitePlayerList)) {
@@ -139,7 +139,7 @@ public class ChatPlayerIgnoreService {
         }
         ChatPlayerIgnoreEnter chatPlayerIgnoreEnter = ignoreOptional.get();
         List<String> whitePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getWhitePlayer());
-        whitePlayerList.remove(whitePlayer);
+        whitePlayerList.removeIf(playerName -> playerName.equalsIgnoreCase(whitePlayer));
         List<String> ignorePlayerList = StrUtil.strToStrList(chatPlayerIgnoreEnter.getIgnorePlayer());
         if (CollUtil.isEmpty(ignorePlayerList) && CollUtil.isEmpty(whitePlayerList)) {
             // 没有屏蔽人和白名单了直接删除
