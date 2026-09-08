@@ -51,7 +51,9 @@ public class MuteCommand implements IHandyCommandEvent {
         String playerName = args[1];
         Integer muteTime = DateUtil.parseTime(args[2]);
         AssertUtil.notNull(muteTime, BaseUtil.getLangMsg("timeFormatFailureMsg"));
-        String reason = this.getArg(args, 3).orElse(BaseUtil.getLangMsg("muteDefaultReason"));
+        String reason = this.getArg(args, 3).isPresent()
+                ? String.join(" ", Arrays.copyOfRange(args, 3, args.length))
+                : BaseUtil.getLangMsg("muteDefaultReason");
 
         OfflinePlayer offlinePlayer = BaseUtil.getOfflinePlayer(playerName);
         AssertUtil.notNull(offlinePlayer, BaseUtil.getLangMsg("playerNotFoundMsg"));
