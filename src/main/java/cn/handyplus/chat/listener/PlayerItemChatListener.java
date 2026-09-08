@@ -79,15 +79,6 @@ public class PlayerItemChatListener implements Listener {
         }
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
 
-        // 存储数据
-        ChatPlayerItemEnter itemEnter = new ChatPlayerItemEnter();
-        itemEnter.setPlayerName(player.getName());
-        itemEnter.setPlayerUuid(player.getUniqueId());
-        itemEnter.setVersion(BaseConstants.VERSION_ID);
-        itemEnter.setItem(ItemStackUtil.itemStackSerialize(itemInMainHand));
-        itemEnter.setCreateTime(new Date());
-        Integer itemId = ChatPlayerItemService.getInstance().add(itemEnter);
-
         // 参数构建
         BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
         param.setPluginName(PlayerChat.INSTANCE.getName());
@@ -116,6 +107,14 @@ public class PlayerItemChatListener implements Listener {
         String text = PlaceholderApiUtil.set(player, itemText);
         // 替换组件
         text = BaseUtil.spriteComponent(text, itemInMainHand);
+        // 存储数据
+        ChatPlayerItemEnter itemEnter = new ChatPlayerItemEnter();
+        itemEnter.setPlayerName(player.getName());
+        itemEnter.setPlayerUuid(player.getUniqueId());
+        itemEnter.setVersion(BaseConstants.VERSION_ID);
+        itemEnter.setItem(ItemStackUtil.itemStackSerialize(itemInMainHand));
+        itemEnter.setCreateTime(new Date());
+        Integer itemId = ChatPlayerItemService.getInstance().add(itemEnter);
         // 给予展示属性
         ChatChildParam chatChildParam = childList.get(childList.size() - 1);
         chatChildParam.setText(text);
