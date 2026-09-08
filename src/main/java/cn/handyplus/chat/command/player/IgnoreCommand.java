@@ -62,7 +62,8 @@ public class IgnoreCommand implements IHandyCommandEvent {
             enter.setWhitePlayer(ignorePlayer);
             ChatPlayerIgnoreService.getInstance().setWhite(enter);
         }
-        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("ignorePlayer", MapUtil.of("${player}", ignorePlayer)));
+        String messageKey = ignore ? "ignorePlayer" : "ignoreWhitePlayer";
+        MessageUtil.sendMessage(sender, BaseUtil.getLangMsg(messageKey, MapUtil.of("${player}", ignorePlayer)));
     }
 
     /**

@@ -82,6 +82,7 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "lbEnableMsg", "&8[&c✘&8] &7该喇叭已经被管理员禁用", null, language);
         // 1.4.3 屏蔽相关
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignorePlayer", "&8[&a✔&8] &7您已屏蔽玩家&a${player}&7的全部消息", null, language);
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreWhitePlayer", "&8[&a✔&8] &7已将玩家&a${player}&7加入屏蔽白名单", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreParamFailureMsg", "&8[&c✘&8] &7请指定需要屏蔽的玩家名称", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListEmptyMsg", "&8[&c✘&8] &7未屏蔽玩家", null, language);
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "ignoreListMsg", "&8[&a✔&8] &7屏蔽数量:&a  ${number}", null, language);
