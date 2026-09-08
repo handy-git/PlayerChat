@@ -51,7 +51,7 @@ public class IgnoreCommand implements IHandyCommandEvent {
         // 禁止屏蔽自己
         String ignorePlayer = args[1];
         boolean ignore = this.isIgnore(args);
-        AssertUtil.notTrue(ignorePlayer.equals(player.getName()), BaseUtil.getLangMsg("ignoreSelfFailureMsg"));
+        AssertUtil.notTrue(ignorePlayer.equalsIgnoreCase(player.getName()), BaseUtil.getLangMsg("ignoreSelfFailureMsg"));
         ChatPlayerIgnoreEnter enter = new ChatPlayerIgnoreEnter();
         enter.setPlayerName(player.getName());
         enter.setPlayerUuid(player.getUniqueId());
