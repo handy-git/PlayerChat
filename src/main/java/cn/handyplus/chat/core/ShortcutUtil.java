@@ -4,17 +4,19 @@ import cn.handyplus.chat.param.ChatChildParam;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.CollUtil;
-import cn.handyplus.lib.core.PatternUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -26,6 +28,12 @@ import java.util.regex.PatternSyntaxException;
  * @since 3.3.0
  */
 public final class ShortcutUtil {
+
+    /**
+     * 正则编译缓存
+     * key: 正则字符串, value: 编译后的 Pattern
+     */
+    private static final Map<String, Pattern> PATTERN_CACHE = new ConcurrentHashMap<>();
 
     private ShortcutUtil() {
     }
@@ -89,7 +97,7 @@ public final class ShortcutUtil {
      * @return 快捷展示节点, null 表示未命中
      */
     static ChatChildParam buildShortcutDisplay(String message, String pattern, String textFilter, String key, String text, List<String> hover, String click, String clickSuggest, String url) {
-        if (!PatternUtil.isMatch(pattern, message) || StrUtil.isEmpty(text)) {
+        if (!isMatch(pattern, message) || StrUtil.isEmpty(text)) {
             return null;
         }
         List<String> textFilterVars = CollUtil.of();
@@ -156,21 +164,59 @@ public final class ShortcutUtil {
         if (StrUtil.isEmpty(regex)) {
             return Collections.emptyList();
         }
-        try {
-            Matcher matcher = Pattern.compile(regex).matcher(message);
-            if (!matcher.find()) {
-                return null;
-            }
-            List<String> vars = new ArrayList<>();
-            // group(0) 是整体匹配
-            vars.add(matcher.group());
-            // 从 group(1) 开始是捕获组
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                vars.add(matcher.group(i));
-            }
-            return vars;
-        } catch (PatternSyntaxException ex) {
+        Pattern compiled = compilePattern(regex);
+        if (compiled == null) {
             MessageUtil.sendConsoleDebugMessage("shortcut." + key + " 正则配置错误: " + regex);
+            return null;
+        }
+        Matcher matcher = compiled.matcher(message);
+        if (!matcher.find()) {
+            return null;
+        }
+        List<String> vars = new ArrayList<>();
+        // group(0) 是整体匹配
+        vars.add(matcher.group());
+        // 从 group(1) 开始是捕获组
+        for (int i = 1; i <= matcher.groupCount(); i++) {
+            vars.add(matcher.group(i));
+        }
+        return vars;
+    }
+
+    /**
+     * 判断消息是否命中正则（整串匹配）
+     *
+     * @param pattern 正则
+     * @param message 消息
+     * @return true 命中
+     */
+    private static boolean isMatch(String pattern, String message) {
+        if (StrUtil.isEmpty(message)) {
+            return false;
+        }
+        Pattern compiled = compilePattern(pattern);
+        return compiled != null && compiled.matcher(message).matches();
+    }
+
+    /**
+     * 编译正则（带缓存，正则字符串作为 key）
+     *
+     * @param regex 正则
+     * @return Pattern, 配置错误返回 null
+     */
+    private static @Nullable Pattern compilePattern(String regex) {
+        if (StrUtil.isEmpty(regex)) {
+            return null;
+        }
+        Pattern cached = PATTERN_CACHE.get(regex);
+        if (cached != null) {
+            return cached;
+        }
+        try {
+            Pattern compiled = Pattern.compile(regex);
+            PATTERN_CACHE.put(regex, compiled);
+            return compiled;
+        } catch (PatternSyntaxException ex) {
             return null;
         }
     }
