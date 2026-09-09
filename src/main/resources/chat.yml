@@ -42,7 +42,6 @@ chat:
       # 自定义的前缀节点
       prefix:
         text: '${channel}%playerTitle_use%'
-        # 1.16+可用hover
         hover:
           - '&8▪ &6所在聊天频道: ${channel}'
           - '&8▪ &6点击可执行命令/spawn'
@@ -55,7 +54,6 @@ chat:
         # 该节点的条件列表,如果不配置默认不需要条件,例如: "%player_level%>=10"
         condition: []
         text: ''
-        # 1.16+可用hover
         hover: []
         # 点击后执行的命令
         click: ''
@@ -84,7 +82,6 @@ chat:
       # 聊天前缀
       prefix:
         text: '${channel}%playerTitle_use%'
-        # 1.16+可用hover
         hover:
           - '&8▪ &6所在聊天频道: ${channel}'
           - '&8▪ &6点击可执行命令/spawn'
@@ -117,7 +114,6 @@ chat:
       # 聊天前缀
       prefix:
         text: '${channel}%playerTitle_use%'
-        # 1.16+可用hover
         hover:
           - '&8▪ &6所在聊天频道: ${channel}'
           - '&8▪ &6点击可执行命令/spawn'
