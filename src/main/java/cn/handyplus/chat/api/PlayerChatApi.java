@@ -216,6 +216,12 @@ public class PlayerChatApi {
      * @since 1.2.4
      */
     public boolean sendMessage(@NotNull Player player, @NotNull String channel, @NotNull String message, @Nullable String source) {
+        // 构建消息参数
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
+        if (CollUtil.isEmpty(childList)) {
+            return false;
+        }
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();
         message = ChatUtil.at(player, mentionedPlayers, message);
@@ -224,12 +230,6 @@ public class PlayerChatApi {
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
-        // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
-        if (CollUtil.isEmpty(childList)) {
-            return false;
-        }
         ChatChildParam chatChildParam = childList.get(childList.size() - 1);
         chatChildParam.setText("${message}");
         chatChildParam.setHover(new ArrayList<>());

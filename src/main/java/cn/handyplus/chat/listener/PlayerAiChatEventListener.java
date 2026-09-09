@@ -116,16 +116,16 @@ public class PlayerAiChatEventListener implements Listener {
      * @param id     ID
      */
     private void sendVoteMsg(Player player, Integer id) {
-        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
-        param.setPluginName(PlayerChat.INSTANCE.getName());
-        param.setPlayerName(player.getName());
-        param.setTimestamp(System.currentTimeMillis());
         // 构建消息参数
         ChatParam chatParam = ChatUtil.buildChatParam(player, ChatConstants.DEFAULT);
         List<ChatChildParam> childList = chatParam == null ? null : chatParam.getChildList();
         if (CollUtil.isEmpty(childList)) {
             return;
         }
+        BcUtil.BcMessageParam param = new BcUtil.BcMessageParam();
+        param.setPluginName(PlayerChat.INSTANCE.getName());
+        param.setPlayerName(player.getName());
+        param.setTimestamp(System.currentTimeMillis());
         String aiText = BaseUtil.getLangMsg("aiText", MapUtil.of("${player}", player.getName()));
         // 给予展示属性
         ChatChildParam chatChildParam = childList.get(childList.size() - 1);

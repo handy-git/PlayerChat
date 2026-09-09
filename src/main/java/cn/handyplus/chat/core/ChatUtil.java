@@ -365,8 +365,9 @@ public class ChatUtil {
         }
         // 聊天间隔处理
         int chatTime = HandyPermissionUtil.getReverseIntNumber(player, BaseConstants.CONFIG, "chatTime");
-        if (ChatConstants.PLAYER_CHAT_TIME.containsKey(player.getUniqueId())) {
-            long keepAlive = (System.currentTimeMillis() - ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId())) / 1000L;
+        Long lastChatTime = ChatConstants.PLAYER_CHAT_TIME.get(player.getUniqueId());
+        if (lastChatTime != null) {
+            long keepAlive = (System.currentTimeMillis() - lastChatTime) / 1000L;
             if (keepAlive < chatTime) {
                 String waitTimeMsg = BaseUtil.getLangMsg("chatTime").replace("${chatTime}", (chatTime - keepAlive) + "");
                 MessageUtil.sendMessage(player, waitTimeMsg);

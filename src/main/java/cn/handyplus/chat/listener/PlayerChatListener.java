@@ -9,6 +9,7 @@ import cn.handyplus.chat.event.PlayerChannelChatEvent;
 import cn.handyplus.chat.event.PlayerChannelTellEvent;
 import cn.handyplus.chat.param.ChatParam;
 import cn.handyplus.lib.annotation.HandyListener;
+import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
@@ -60,6 +61,11 @@ public class PlayerChatListener implements Listener {
      * @since 1.1.5
      */
     public static boolean sendMsg(Player player, String message, String channel, String tellPlayerName) {
+        // 构建消息参数
+        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
+        if (chatParam == null || CollUtil.isEmpty(chatParam.getChildList())) {
+            return false;
+        }
         // 聊天校验处理
         if (ChatUtil.chatCheck(player, message)) {
             return false;
@@ -76,11 +82,6 @@ public class PlayerChatListener implements Listener {
         param.setPluginName(PlayerChat.INSTANCE.getName());
         param.setPlayerName(player.getName());
         param.setTimestamp(System.currentTimeMillis());
-        // 构建消息参数
-        ChatParam chatParam = ChatUtil.buildChatParam(player, channel);
-        if (chatParam == null) {
-            return false;
-        }
         // 添加私信接收人 1.1.5
         chatParam.setTellPlayerName(tellPlayerName);
         // 添加附近的人 2.1.0
