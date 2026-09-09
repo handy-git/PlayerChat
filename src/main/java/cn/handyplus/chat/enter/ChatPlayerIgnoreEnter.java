@@ -24,7 +24,7 @@ public class ChatPlayerIgnoreEnter {
     @TableField(value = "player_name", comment = "玩家名称")
     private String playerName;
 
-    @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.INDEX)
+    @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.UNIQUE)
     private UUID playerUuid;
 
     @TableField(value = "ignorePlayer", length = 20000, comment = "屏蔽的玩家")

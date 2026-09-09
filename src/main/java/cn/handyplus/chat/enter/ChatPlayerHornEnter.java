@@ -24,10 +24,10 @@ public class ChatPlayerHornEnter {
     @TableField(value = "player_name", comment = "玩家名称")
     private String playerName;
 
-    @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.INDEX)
+    @TableField(value = "player_uuid", comment = "玩家uuid", notNull = true, indexEnum = IndexEnum.UNIQUE, uniqueGroup = "player_horn")
     private UUID playerUuid;
 
-    @TableField(value = "type", comment = "类型")
+    @TableField(value = "type", comment = "类型", notNull = true, indexEnum = IndexEnum.UNIQUE, uniqueGroup = "player_horn")
     private String type;
 
     @TableField(value = "number", comment = "数量")

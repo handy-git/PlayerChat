@@ -78,6 +78,9 @@ public class ChatUtil {
         boolean atEnable = ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
         String atSound = atEnable ? ConfigUtil.CHAT_CONFIG.getString("at.sound") : null;
         String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".sound");
+        Pair<Boolean, List<UUID>> nearbyPlayersPair = chatParam.getNearbyPlayers();
+        boolean nearbyEnable = nearbyPlayersPair != null && Boolean.TRUE.equals(nearbyPlayersPair.getKey());
+        Set<UUID> nearbyPlayerSet = nearbyEnable ? new HashSet<>(nearbyPlayersPair.getValue()) : Collections.emptySet();
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             // 判断是否开启私信
@@ -85,11 +88,8 @@ public class ChatUtil {
                 continue;
             }
             // 判断是否开启附近的人
-            Pair<Boolean, List<UUID>> nearbyPlayersPair = chatParam.getNearbyPlayers();
-            if (nearbyPlayersPair != null && nearbyPlayersPair.getKey()) {
-                if (!nearbyPlayersPair.getValue().contains(onlinePlayer.getUniqueId())) {
-                    continue;
-                }
+            if (nearbyEnable && !nearbyPlayerSet.contains(onlinePlayer.getUniqueId())) {
+                continue;
             }
             // 判断是否开启屏蔽
             List<String> ignoreList = ChatConstants.PLAYER_IGNORE_MAP.get(onlinePlayer.getUniqueId());
