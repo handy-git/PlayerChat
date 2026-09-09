@@ -57,7 +57,7 @@ public class VoteCommand implements IHandyCommandEvent {
         replaceMap.put("${max}", aiVoteMaxNumber);
         // 是否已投票
         Set<Integer> votedIds = ChatConstants.PLAYER_VOTE_MAP.computeIfAbsent(player.getUniqueId(), key -> ConcurrentHashMap.newKeySet());
-        if (votedIds.contains(id)) {
+        if (!votedIds.add(id)) {
             replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + "");
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("hasVotedMsg", replaceMap));
             return;
@@ -65,7 +65,6 @@ public class VoteCommand implements IHandyCommandEvent {
         replaceMap.put("${number}", chatPlayerAiOpt.get().getVoteNumber() + 1 + "");
         // 增加投票
         ChatPlayerAiService.getInstance().addVoteNumber(id);
-        votedIds.add(id);
         MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("voteSuccessMsg", replaceMap));
     }
 

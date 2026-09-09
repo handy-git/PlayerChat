@@ -69,9 +69,12 @@ public class ChatPlayerChannelService {
                 .set(ChatPlayerChannelEnter::getIsApi, isApi);
         db.where().eq(ChatPlayerChannelEnter::getPlayerUuid, playerUuid);
         int update = db.execution().update();
+        if (update <= 0) {
+            return false;
+        }
         // 重新缓存数据
         ChatConstants.PLAYER_CHAT_CHANNEL.put(playerUuid, channel);
-        return update > 0;
+        return true;
     }
 
     /**

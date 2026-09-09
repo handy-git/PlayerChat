@@ -77,7 +77,8 @@ public class ChannelCommand implements IHandyCommandEvent {
         String channelPermission = ChatConstants.PLAYER_CHAT_USE + chatChannel;
         AssertUtil.notTrue(!player.hasPermission(channelPermission), BaseUtil.getLangMsg("noChannelPermission", MapUtil.of("${permission}", channelPermission)));
         // 设置频道
-        ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
+        boolean success = ChatPlayerChannelService.getInstance().setChannel(player.getUniqueId(), channel);
+        AssertUtil.isTrue(success, BaseUtil.getLangMsg("channelSwitchFailureMsg"));
         return ChannelUtil.getChannelName(chatChannel);
     }
 

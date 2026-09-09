@@ -4,6 +4,7 @@ import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ConfigUtil;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.StrUtil;
+import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -12,7 +13,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
  * @since 1.0.6
  */
 public class ChannelUtil {
+    private static final Set<String> INVALID_RANGE_WARNING_CACHE = ConcurrentHashMap.newKeySet();
 
     /**
      * 获取开启的频道
@@ -102,19 +106,52 @@ public class ChannelUtil {
      */
     public static Pair<Boolean, List<UUID>> getNearbyPlayers(String channel, Player player) {
         // 渠道查找范围
-        String range = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".range", "");
+        String channelEnable = isChannelEnable(channel);
+        if (StrUtil.isEmpty(channelEnable)) {
+            return Pair.of(false, new ArrayList<>());
+        }
+        String range = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".range", "");
         if (StrUtil.isEmpty(range)) {
             return Pair.of(false, new ArrayList<>());
         }
         // 附近玩家处理
         List<String> rangeList = StrUtil.strToStrList(range, ",");
-        List<Entity> entityList = player.getNearbyEntities(Double.parseDouble(rangeList.get(0)),
-                Double.parseDouble(rangeList.get(1)),
-                Double.parseDouble(rangeList.get(2)));
+        if (rangeList.size() != 3) {
+            return invalidRange(channel, range);
+        }
+        double x;
+        double y;
+        double z;
+        try {
+            x = Double.parseDouble(rangeList.get(0));
+            y = Double.parseDouble(rangeList.get(1));
+            z = Double.parseDouble(rangeList.get(2));
+        } catch (NumberFormatException e) {
+            return invalidRange(channel, range);
+        }
+        if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(z) || x < 0 || y < 0 || z < 0) {
+            return invalidRange(channel, range);
+        }
+        List<Entity> entityList = player.getNearbyEntities(x, y, z);
         // 过滤玩家列表
         List<UUID> playerList = entityList.stream().filter(e -> EntityType.PLAYER.equals(e.getType())).map(Entity::getUniqueId).collect(Collectors.toList());
         playerList.add(player.getUniqueId());
         return Pair.of(true, playerList);
+    }
+
+    /**
+     * 处理错误的附近频道范围配置
+     *
+     * @param channel 频道
+     * @param range   范围配置
+     * @return 未启用附近范围的结果
+     */
+    private static Pair<Boolean, List<UUID>> invalidRange(String channel, String range) {
+        String warningKey = channel + ":" + range;
+        if (INVALID_RANGE_WARNING_CACHE.add(warningKey)) {
+            MessageUtil.sendConsoleMessage("频道 " + channel + " 的 range 配置错误: " + range + "，格式应为三个非负数字，例如 6,6,6；已按未配置范围处理");
+        }
+        return Pair.of(false, new ArrayList<>());
     }
 
 }

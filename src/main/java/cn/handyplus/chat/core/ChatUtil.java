@@ -67,16 +67,17 @@ public class ChatUtil {
     public synchronized static void sendTextMsg(BcUtil.BcMessageParam param, boolean isConsoleMsg) {
         String chatParamJson = param.getMessage();
         ChatParam chatParam = JsonUtil.toBean(chatParamJson, ChatParam.class);
-        RgbTextUtil rgbTextUtil = buildMsg(chatParam, param.getType());
         String channel = chatParam.getChannel();
         // 频道是否开启
-        if (StrUtil.isEmpty(ChannelUtil.isChannelEnable(channel))) {
+        String channelEnable = ChannelUtil.isChannelEnable(channel);
+        if (StrUtil.isEmpty(channelEnable)) {
             return;
         }
+        RgbTextUtil rgbTextUtil = buildMsg(chatParam, param.getType());
         // 获取配置
         boolean atEnable = ChatConstants.CHAT_TYPE.equals(param.getType()) && ConfigUtil.CHAT_CONFIG.getBoolean("at.enable");
         String atSound = atEnable ? ConfigUtil.CHAT_CONFIG.getString("at.sound") : null;
-        String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channel + ".sound");
+        String channelSound = ConfigUtil.CHAT_CONFIG.getString("chat." + channelEnable + ".sound");
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             // 判断是否开启私信
