@@ -2,6 +2,7 @@ package cn.handyplus.chat.api;
 
 import cn.handyplus.chat.PlayerChat;
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.ChannelUtil;
 import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.HornUtil;
 import cn.handyplus.chat.enter.ChatPlayerChannelEnter;
@@ -242,6 +243,10 @@ public class PlayerChatApi {
         chatParam.setMentionedPlayers(mentionedPlayers);
         chatParam.setChannel(channel);
         chatParam.setSource(source);
+        // 世界隔离 3.10.0
+        if (ChannelUtil.isWorldIsolate(channel)) {
+            chatParam.setWorldKey(ChannelUtil.getWorldKey(player));
+        }
         param.setType(ChatConstants.CHAT_TYPE);
         param.setMessage(JsonUtil.toJson(chatParam));
         // 发送事件

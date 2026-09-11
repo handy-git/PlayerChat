@@ -2,6 +2,7 @@ package cn.handyplus.chat.core;
 
 import cn.handyplus.chat.constants.ChatConstants;
 import cn.handyplus.chat.util.ConfigUtil;
+import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.Pair;
 import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.MessageUtil;
@@ -54,6 +55,45 @@ public class ChannelUtil {
             return null;
         }
         return pluginChannel;
+    }
+
+    /**
+     * 获取频道的世界隔离配置
+     *
+     * @param channel 频道
+     * @return true 开启世界隔离
+     * @since 3.10.0
+     */
+    public static boolean isWorldIsolate(String channel) {
+        String channelEnable = isChannelEnable(channel);
+        if (StrUtil.isEmpty(channelEnable)) {
+            return false;
+        }
+        return ConfigUtil.CHAT_CONFIG.getBoolean("chat." + channelEnable + ".worldIsolate", false);
+    }
+
+    /**
+     * 获取玩家所在的世界隔离键
+     *
+     * @param player 玩家
+     * @return 世界隔离键 格式: 子服标识:世界名
+     * @since 3.10.0
+     */
+    public static String getWorldKey(Player player) {
+        return buildWorldKey(BaseConstants.CONFIG.getString("server", ""), player.getWorld().getName());
+    }
+
+    /**
+     * 构建世界隔离键
+     * 注意: 该值会随跨服消息传递, 修改格式会导致不同版本子服之间的隔离失效
+     *
+     * @param server 子服标识
+     * @param world  世界名
+     * @return 世界隔离键
+     * @since 3.10.0
+     */
+    static String buildWorldKey(String server, String world) {
+        return server + ":" + world;
     }
 
     /**
@@ -149,7 +189,7 @@ public class ChannelUtil {
     private static Pair<Boolean, List<UUID>> invalidRange(String channel, String range) {
         String warningKey = channel + ":" + range;
         if (INVALID_RANGE_WARNING_CACHE.add(warningKey)) {
-            MessageUtil.sendConsoleMessage("频道 " + channel + " 的 range 配置错误: " + range + "，格式应为三个非负数字，例如 6,6,6；已按未配置范围处理");
+            MessageUtil.sendConsoleMessage("频道 " + channel + " 的 range 配置错误: " + range + "，格式应为三个非负数字，例如 6,6,6；该频道已降级为全服广播");
         }
         return Pair.of(false, new ArrayList<>());
     }

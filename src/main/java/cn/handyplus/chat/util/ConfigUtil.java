@@ -152,6 +152,8 @@ public class ConfigUtil {
         // 1.3.5 at功能配置
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.keepAt", false, Collections.singletonList("是否保留@符号"), "chat.yml");
         HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "at.atColor", "&9", Collections.singletonList("@默认的颜色"), "chat.yml");
+        // 3.10.0 频道世界隔离
+        HandyConfigUtil.setPathIsNotContains(CHAT_CONFIG, "chat.default.worldIsolate", false, Arrays.asList("世界隔离, 开启后仅同服同世界的玩家可见该频道消息", "每个频道可单独配置, 默认关闭, 私聊不受世界隔离限制"), "chat.yml");
         CHAT_CONFIG = HandyConfigUtil.load("chat.yml");
     }
 

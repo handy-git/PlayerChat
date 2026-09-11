@@ -81,10 +81,17 @@ public class ChatUtil {
         Pair<Boolean, List<UUID>> nearbyPlayersPair = chatParam.getNearbyPlayers();
         boolean nearbyEnable = nearbyPlayersPair != null && Boolean.TRUE.equals(nearbyPlayersPair.getKey());
         Set<UUID> nearbyPlayerSet = nearbyEnable ? new HashSet<>(nearbyPlayersPair.getValue()) : Collections.emptySet();
+        // 世界隔离键, 为空时不启用
+        String worldKey = chatParam.getWorldKey();
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             // 判断是否开启私信
-            if (StrUtil.isNotEmpty(chatParam.getTellPlayerName()) && !onlinePlayer.getName().equals(chatParam.getTellPlayerName())) {
+            boolean tellPlayer = StrUtil.isNotEmpty(chatParam.getTellPlayerName());
+            if (tellPlayer && !onlinePlayer.getName().equals(chatParam.getTellPlayerName())) {
+                continue;
+            }
+            // 判断是否开启世界隔离, 私信不受世界隔离限制
+            if (!tellPlayer && StrUtil.isNotEmpty(worldKey) && !worldKey.equals(ChannelUtil.getWorldKey(onlinePlayer))) {
                 continue;
             }
             // 判断是否开启附近的人

@@ -86,6 +86,10 @@ public class PlayerChatListener implements Listener {
         chatParam.setTellPlayerName(tellPlayerName);
         // 添加附近的人 2.1.0
         chatParam.setNearbyPlayers(ChannelUtil.getNearbyPlayers(channel, player));
+        // 添加世界隔离 3.10.0
+        if (ChannelUtil.isWorldIsolate(channel)) {
+            chatParam.setWorldKey(ChannelUtil.getWorldKey(player));
+        }
         // 原消息内容
         chatParam.setMessage(message);
         // 快捷键节点替换

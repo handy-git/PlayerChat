@@ -53,6 +53,14 @@ public class ChatParam {
     private Pair<Boolean, List<UUID>> nearbyPlayers;
 
     /**
+     * 世界隔离键 格式: 子服标识:世界名
+     * 为空时不启用世界隔离, 开启后仅同服同世界的玩家可见
+     *
+     * @since 3.10.0
+     */
+    private String worldKey;
+
+    /**
      * 来源
      */
     private String source = "PlayerChat";
