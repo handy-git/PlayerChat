@@ -1,6 +1,7 @@
 package cn.handyplus.chat.command.player;
 
 import cn.handyplus.chat.constants.ChatConstants;
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.MuteUtil;
 import cn.handyplus.chat.listener.PlayerChatListener;
 import cn.handyplus.chat.util.PlayerListUtil;
@@ -69,13 +70,11 @@ public class TellCommand implements IHandyCommandEvent {
         playerName = onlinePlayerName.get();
         // 获取消息
         String message = Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "));
+        // 净化玩家输入, 剥离 MiniMessage 标签
+        message = ChatUtil.stripColor(player, message);
         // 发送消息
         if (!PlayerChatListener.sendMsg(player, message, ChatConstants.TELL, playerName)) {
             return;
-        }
-        // 没有颜色代码权限，移除颜色代码
-        if (!sender.hasPermission(ChatConstants.CHAT_COLOR)) {
-            message = BaseUtil.stripColor(message);
         }
         HashMap<String, String> map = MapUtil.of("${player}", playerName, "${message}", message);
         MessageUtil.sendMessage(player, BaseUtil.getLangMsg("sendTell", map));

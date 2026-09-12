@@ -76,13 +76,11 @@ public class PlayerItemChatListener implements Listener {
         if (CollUtil.isEmpty(childList)) {
             return;
         }
+        // 净化玩家输入, 剥离 MiniMessage 标签
+        message = ChatUtil.stripColor(player, message);
         // 聊天频率处理
         if (ChatUtil.chatCheck(player, message)) {
             return;
-        }
-        // 无颜色权限时，仅清理玩家输入的颜色代码
-        if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
-            message = BaseUtil.stripColor(message);
         }
         ItemMeta itemMeta = ItemStackUtil.getItemMeta(itemInMainHand);
 

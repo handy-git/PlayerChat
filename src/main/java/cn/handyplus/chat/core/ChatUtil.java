@@ -361,6 +361,29 @@ public class ChatUtil {
     }
 
     /**
+     * 净化玩家输入
+     *
+     * @param player  发送玩家
+     * @param message 玩家输入
+     * @return 净化后的消息
+     * @since 3.10.0
+     */
+    public static @NotNull String stripColor(@NotNull Player player, @NotNull String message) {
+        if (StrUtil.isEmpty(message)) {
+            return message;
+        }
+        // 无颜色权限: 剥离全部格式
+        if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
+            return BaseUtil.stripColor(message);
+        }
+        // 无 MiniMessage 权限: 仅剥离标签, 保留传统颜色代码
+        if (!player.hasPermission(ChatConstants.CHAT_MINI_MESSAGE)) {
+            return BaseUtil.stripTags(message);
+        }
+        return message;
+    }
+
+    /**
      * 聊天校验处理
      *
      * @param player  玩家

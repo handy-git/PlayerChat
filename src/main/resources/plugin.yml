@@ -24,6 +24,7 @@ permissions:
       playerChat.set: true
       playerChat.look: true
       playerChat.color: true
+      playerChat.miniMessage: true
       playerChat.setColor: true
       playerChat.setChannel: true
       playerChat.channel: true
@@ -57,6 +58,9 @@ permissions:
     default: op
   playerChat.color:
     description: 颜色权限
+    default: op
+  playerChat.miniMessage:
+    description: MiniMessage颜色权限
     default: op
   playerChat.setColor:
     description: 设置玩家自定义类型颜色

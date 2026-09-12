@@ -12,7 +12,6 @@ import cn.handyplus.lib.annotation.HandyListener;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.JsonUtil;
 import cn.handyplus.lib.core.StrUtil;
-import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -66,13 +65,11 @@ public class PlayerChatListener implements Listener {
         if (chatParam == null || CollUtil.isEmpty(chatParam.getChildList())) {
             return false;
         }
+        // 净化玩家输入, 剥离 MiniMessage 标签
+        message = ChatUtil.stripColor(player, message);
         // 聊天校验处理
         if (ChatUtil.chatCheck(player, message)) {
             return false;
-        }
-        // 无颜色权限时，仅清理玩家输入的颜色代码
-        if (!player.hasPermission(ChatConstants.CHAT_COLOR)) {
-            message = BaseUtil.stripColor(message);
         }
         // @处理
         List<String> mentionedPlayers = new ArrayList<>();

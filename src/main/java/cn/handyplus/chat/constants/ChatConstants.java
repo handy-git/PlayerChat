@@ -162,6 +162,13 @@ public final class ChatConstants {
     public static final String CHAT_COLOR = "playerChat.color";
 
     /**
+     * MiniMessage 解析权限
+     *
+     * @since 3.10.0
+     */
+    public static final String CHAT_MINI_MESSAGE = "playerChat.miniMessage";
+
+    /**
      * 玩家颜色变量正则
      */
     public static final Pattern COLOR_VARIABLE_PATTERN = Pattern.compile("\\$\\{([A-Za-z0-9_]+)_color}");
