@@ -83,6 +83,8 @@ public class ChatUtil {
         Set<UUID> nearbyPlayerSet = nearbyEnable ? new HashSet<>(nearbyPlayersPair.getValue()) : Collections.emptySet();
         // 世界隔离键, 为空时不启用
         String worldKey = chatParam.getWorldKey();
+        // 是否需要世界隔离: 本服开启隔离, 或发送端已标记世界隔离
+        boolean needWorldIsolate = ChannelUtil.isWorldIsolate(channel) || StrUtil.isNotEmpty(worldKey);
         // 根据频道发送消息
         for (Player onlinePlayer : ChannelUtil.getChannelPlayer(channel)) {
             // 判断是否开启私信
@@ -91,7 +93,7 @@ public class ChatUtil {
                 continue;
             }
             // 判断是否开启世界隔离, 私信不受世界隔离限制
-            if (!tellPlayer && StrUtil.isNotEmpty(worldKey) && !worldKey.equals(ChannelUtil.getWorldKey(onlinePlayer))) {
+            if (!tellPlayer && needWorldIsolate && !ChannelUtil.getWorldKey(onlinePlayer).equals(worldKey)) {
                 continue;
             }
             // 判断是否开启附近的人
