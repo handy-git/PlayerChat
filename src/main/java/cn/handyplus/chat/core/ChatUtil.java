@@ -117,7 +117,7 @@ public class ChatUtil {
         // 控制台消息
         if (isConsoleMsg) {
             Player sendPlayer = Bukkit.getPlayerExact(param.getPlayerName());
-            String consoleFormat = BaseConstants.CONFIG.getString("consoleFormat", "[${channel}] ${player}: ${message}");
+            String consoleFormat = BaseConstants.CONFIG.getString("consoleFormat", "${channel} ${player}: ${message}");
             if (sendPlayer != null) {
                 consoleFormat = replaceStr(sendPlayer, ChannelUtil.getChannelName(channel), consoleFormat);
             }

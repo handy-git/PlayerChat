@@ -22,7 +22,8 @@ commandAlias:
 firstLoginChatDefault: "default"
 
 # 控制台聊天消息格式, 支持内部变量和PAPI变量
-consoleFormat: "[${channel}] ${player}: ${message}"
+# 频道名变量 ${channel} 已自带括号, 此处无需再加
+consoleFormat: "${channel} ${player}: ${message}"
 
 # 是否开启 AI 审核
 ai:
