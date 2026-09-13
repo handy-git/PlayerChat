@@ -394,6 +394,10 @@ public class ChatUtil {
         if (StrUtil.isEmpty(str)) {
             return str;
         }
+        // 低版本无需转义
+        if (!BaseUtil.supportsComponentApi()) {
+            return str;
+        }
         StringBuilder builder = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
