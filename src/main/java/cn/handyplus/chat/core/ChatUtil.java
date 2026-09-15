@@ -410,9 +410,9 @@ public class ChatUtil {
             if (i + 1 >= str.length()) {
                 continue;
             }
-            // 颜色代码符后插入转义符, 打断颜色代码解析
+            // & 颜色代码符后插入转义符, 打断颜色代码解析
             // 相邻相同字符间插入转义符, 规避预处理器对重复字符的折叠
-            if (c == '&' || c == '§' || str.charAt(i + 1) == c) {
+            if (c == '&' || str.charAt(i + 1) == c) {
                 builder.append('\\');
             }
         }

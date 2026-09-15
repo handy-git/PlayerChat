@@ -96,7 +96,7 @@ public class PlayerItemChatListener implements Listener {
         if (BaseUtil.stripColor(displayName).length() > itemLength) {
             displayName = BaseUtil.stripColor(displayName).substring(0, itemLength) + "...";
         }
-        // 物品名称原样展示, 其中的颜色代码与 MiniMessage 标签不参与解析
+        // 物品名称原样展示, 其中的 & 颜色代码与 MiniMessage 标签不参与解析, § 颜色保留解析
         displayName = ChatUtil.escapeText(displayName);
         String itemText = StrUtil.replace(content, "item", displayName.replace("%", ""));
         itemText = message.replace(format, itemText);
