@@ -394,27 +394,23 @@ public class ChatUtil {
         if (StrUtil.isEmpty(str)) {
             return str;
         }
-        // 低版本无需转义
-        if (!BaseUtil.supportsComponentApi()) {
-            return str;
-        }
+        // 低版本无 MiniMessage 解析器, 只需处理 & 颜色代码
+        boolean componentApi = BaseUtil.supportsComponentApi();
         StringBuilder builder = new StringBuilder(str.length());
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
+            // & 后插入零宽空格打断解析, 保持内容原样展示
+            // 底层 parseColor 仅转换 & 后紧邻的合法颜色码, 故 & 本身得以保留
+            if (c == '&') {
+                builder.append(c).append(ChatConstants.ZERO_WIDTH_SPACE);
+                continue;
+            }
             // < 转义为字面量, 避免被当作 MiniMessage 标签
-            if (c == '<') {
+            if (componentApi && c == '<') {
                 builder.append('\\').append(c);
                 continue;
             }
             builder.append(c);
-            if (i + 1 >= str.length()) {
-                continue;
-            }
-            // & 颜色代码符后插入转义符, 打断颜色代码解析
-            // 相邻相同字符间插入转义符, 规避预处理器对重复字符的折叠
-            if (c == '&' || str.charAt(i + 1) == c) {
-                builder.append('\\');
-            }
         }
         return builder.toString();
     }

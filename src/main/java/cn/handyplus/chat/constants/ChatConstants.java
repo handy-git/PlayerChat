@@ -169,6 +169,13 @@ public final class ChatConstants {
     public static final String CHAT_MINI_MESSAGE = "playerChat.miniMessage";
 
     /**
+     * 零宽空格, 用于打断 & 颜色代码解析且不显示
+     *
+     * @since 3.10.2
+     */
+    public static final char ZERO_WIDTH_SPACE = '\u200B';
+
+    /**
      * 玩家颜色变量正则
      */
     public static final Pattern COLOR_VARIABLE_PATTERN = Pattern.compile("\\$\\{([A-Za-z0-9_]+)_color}");
