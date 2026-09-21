@@ -1,3 +1,5 @@
+
+
 # PlayerChat
 
 -------------------------------------------------------------------------------
@@ -33,7 +35,7 @@ approval.
 
 [![Contrib](https://contrib.rocks/image?repo=handy-git/PlayerChat)](https://github.com/handy-git/PlayerChat/graphs/contributors)
 
-Download Development Versions:
+Download Development Versions (artifacts are retained for 7 days):
 
 [GITHUB ACTIONS](https://github.com/handy-git/PlayerChat/actions)
 
