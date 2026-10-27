@@ -118,6 +118,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "notAirItem", "&8[&c✘&8] &7展示物品为空", null, language);
         // 3.2.4 添加玩家不在线提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerOfflineMsg", "&8[&c✘&8] &7玩家 ${player} 不在线", null, language);
+        // 3.10.4 聊天字数限制提醒
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "chatLengthMsg", "&8[&c✘&8] &7单次发言最多 &a${chatLength} &7个字", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "consoleFormat", "${channel} ${player}: ${message}", Collections.singletonList("控制台聊天消息格式, 支持内部变量和PAPI变量, 频道key变量: ${channelKey}"), "config.yml");
@@ -130,6 +132,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.time", 30, Collections.singletonList("重复或相似聊天限制时间, 单位秒, 0为关闭"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.similarity", 80, Collections.singletonList("相似度百分比, 100为仅完全相同"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.minLength", 4, Collections.singletonList("相似度判断的最短消息长度, 完全相同不受限制"), "config.yml");
+        // 3.10.4 聊天字数限制
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatLength", 100, Collections.singletonList("单次发言最大字数, 0为不限制, 私信和喇叭同样受限"), "config.yml");
         // 1.2.6 增加登录后默认频道设置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "firstLoginChatDefault", "default", Collections.singletonList("玩家第一次登录后的默认频道"), "config.yml");
         // 2.0.6 命令别名

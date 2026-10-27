@@ -423,6 +423,10 @@ public class ChatUtil {
      * @return true 不满足条件
      */
     public static boolean chatCheck(Player player, String message) {
+        // 字数限制处理
+        if (chatLengthCheck(player, message)) {
+            return true;
+        }
         // 内容黑名单处理
         if (blackListCheck(message)) {
             MessageUtil.sendMessage(player, BaseUtil.getLangMsg("blacklistMsg"));
@@ -445,6 +449,29 @@ public class ChatUtil {
         }
         ChatConstants.PLAYER_CHAT_TIME.put(player.getUniqueId(), System.currentTimeMillis());
         return false;
+    }
+
+    /**
+     * 聊天字数校验
+     * 颜色代码与 MiniMessage 标签不计入
+     *
+     * @param player  玩家
+     * @param message 消息
+     * @return true 超过字数限制
+     * @since 3.10.4
+     */
+    public static boolean chatLengthCheck(@NotNull Player player, @NotNull String message) {
+        int chatLength = BaseConstants.CONFIG.getInt("chatLength", 0);
+        if (chatLength <= 0) {
+            return false;
+        }
+        // 剥离颜色代码与 MiniMessage 标签后再计算字数
+        String plainText = BaseUtil.stripColor(message);
+        if (plainText.length() <= chatLength) {
+            return false;
+        }
+        MessageUtil.sendMessage(player, BaseUtil.getLangMsg("chatLengthMsg").replace("${chatLength}", chatLength + ""));
+        return true;
     }
 
     /**

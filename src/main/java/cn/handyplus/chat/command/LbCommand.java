@@ -64,6 +64,10 @@ public class LbCommand implements TabExecutor {
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("blacklistMsg"));
             return true;
         }
+        // 字数限制处理, 需在扣除喇叭数量前校验
+        if (BaseUtil.isPlayer(sender) && ChatUtil.chatLengthCheck((Player) sender, originalMessage.trim())) {
+            return true;
+        }
         // 校验玩家
         Player player = null;
         if (BaseUtil.isPlayer(sender)) {
