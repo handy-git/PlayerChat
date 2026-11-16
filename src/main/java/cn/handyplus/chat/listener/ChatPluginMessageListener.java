@@ -9,7 +9,10 @@ import cn.handyplus.chat.util.PlayerListUtil;
 import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
+import cn.handyplus.lib.core.MapUtil;
+import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
+import cn.handyplus.lib.util.HandyConfigUtil;
 import cn.handyplus.lib.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -51,14 +54,17 @@ public class ChatPluginMessageListener implements PluginMessageListener {
      */
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] message) {
+        // DEBUG消息: 打印收到的通道与报文长度
+        MessageUtil.sendConsoleDebugMessage("&e[PlayerChat] 收到BC消息 channel=" + channel + " len=" + message.length);
+        // 解析并写回子服标识
+        this.saveServerName(message);
         // 自定义消息处理
-        String server = BaseConstants.CONFIG.getString("server");
-        MessageUtil.sendConsoleDebugMessage("子服:" + server + "收到消息");
+        String server = BaseConstants.CONFIG.getString("server", ChatConstants.DEFAULT_SERVER);
         // 设置玩家列表
         List<String> playerList = BcUtil.getPlayerList(message);
         if (CollUtil.isNotEmpty(playerList)) {
             PlayerListUtil.replaceOnlinePlayers(playerList);
-            MessageUtil.sendConsoleDebugMessage("当前BC全服在线玩家列表:" + ChatConstants.PLAYER_LIST);
+            MessageUtil.sendConsoleDebugMessage("&e[PlayerChat] 当前BC全服在线玩家列表:" + ChatConstants.PLAYER_LIST);
         }
         Optional<BcUtil.BcMessageParam> paramOptional = BcUtil.getParamByForward(message);
         if (!paramOptional.isPresent()) {
@@ -83,11 +89,28 @@ public class ChatPluginMessageListener implements PluginMessageListener {
         }
         // 判断是否包含该子服
         if (!serverList.contains(server)) {
-            MessageUtil.sendConsoleDebugMessage(server + "子服不发消息");
+            MessageUtil.sendConsoleDebugMessage("&e[PlayerChat] " + server + "子服不发该喇叭消息");
             return;
         }
         // 发送消息
         HornUtil.sendMsg(null, bcMessageParam);
+    }
+
+    /**
+     * 解析子服标识并写回配置
+     *
+     * @param message 消息
+     * @since 3.10.6
+     */
+    private void saveServerName(byte[] message) {
+        Optional<String> serverNameOptional = BcUtil.getServerName(message);
+        if (!serverNameOptional.isPresent()) {
+            return;
+        }
+        String serverName = serverNameOptional.get();
+        // 写回配置文件, 之后各处正常读取该配置即可
+        HandyConfigUtil.setPath(BaseConstants.CONFIG, "server", serverName, "config.yml");
+        MessageUtil.sendConsoleMessage(BaseUtil.getLangMsg("getServerNameMsg", MapUtil.of("${serverName}", serverName)));
     }
 
 }

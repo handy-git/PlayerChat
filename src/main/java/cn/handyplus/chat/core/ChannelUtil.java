@@ -80,7 +80,7 @@ public class ChannelUtil {
      * @since 3.10.0
      */
     public static String getWorldKey(Player player) {
-        return buildWorldKey(BaseConstants.CONFIG.getString("server", ""), player.getWorld().getName());
+        return buildWorldKey(BaseConstants.CONFIG.getString("server", ChatConstants.DEFAULT_SERVER), player.getWorld().getName());
     }
 
     /**

@@ -28,6 +28,13 @@ public final class ChatConstants {
     public final static String DEFAULT = "default";
 
     /**
+     * 子服标识占位默认值, 玩家登录时若为该值则自动向代理获取真实子服名并写回配置
+     *
+     * @since 3.10.6
+     */
+    public final static String DEFAULT_SERVER = "default";
+
+    /**
      * 私信频道
      */
     public static final String TELL = "tell";

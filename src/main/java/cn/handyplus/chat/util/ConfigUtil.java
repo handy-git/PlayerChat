@@ -120,6 +120,8 @@ public class ConfigUtil {
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "playerOfflineMsg", "&8[&c✘&8] &7玩家 ${player} 不在线", null, language);
         // 3.10.4 聊天字数限制提醒
         HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "chatLengthMsg", "&8[&c✘&8] &7单次发言最多 &a${chatLength} &7个字", null, language);
+        // 3.10.6 子服标识自动获取
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.LANG_CONFIG, "getServerNameMsg", "&8[&a✔&8] &7已自动识别并写入子服名: &a${serverName}", null, language);
         HandyConfigUtil.loadLangConfig(true);
         // 1.0.7 添加聊天频率配置和黑名单配置
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "consoleFormat", "${channel} ${player}: ${message}", Collections.singletonList("控制台聊天消息格式, 支持内部变量和PAPI变量, 频道key变量: ${channelKey}"), "config.yml");

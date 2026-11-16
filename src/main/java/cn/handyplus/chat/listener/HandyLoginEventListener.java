@@ -106,7 +106,13 @@ public class HandyLoginEventListener implements Listener {
     public void getPlayerList(HandyLoginEvent event) {
         String name = event.getPlayer().getName();
         PlayerListUtil.addOnlinePlayer(name);
-        BcUtil.sendPlayerList();
+        // 延迟发送获取玩家列表消息
+        HandySchedulerUtil.runTaskLater(BcUtil::sendPlayerList, 20);
+        // 子服标识仍为占位默认值时, 向代理获取真实子服名
+        String server = BaseConstants.CONFIG.getString("server", ChatConstants.DEFAULT_SERVER);
+        if (ChatConstants.DEFAULT_SERVER.equals(server)) {
+            HandySchedulerUtil.runTaskLater(BcUtil::sendGetServer, 30);
+        }
     }
 
 }
