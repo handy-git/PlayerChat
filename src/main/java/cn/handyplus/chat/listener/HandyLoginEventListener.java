@@ -110,7 +110,7 @@ public class HandyLoginEventListener implements Listener {
         HandySchedulerUtil.runTaskLater(BcUtil::sendPlayerList, 20);
         // 子服标识仍为占位默认值时, 向代理获取真实子服名
         String server = BaseConstants.CONFIG.getString("server", ChatConstants.DEFAULT_SERVER);
-        if (ChatConstants.DEFAULT_SERVER.equals(server)) {
+        if (ChatConstants.DEFAULT_SERVER.equals(server) && !ChatConstants.SERVER_NAME_DETECTED) {
             HandySchedulerUtil.runTaskLater(BcUtil::sendGetServer, 30);
         }
     }

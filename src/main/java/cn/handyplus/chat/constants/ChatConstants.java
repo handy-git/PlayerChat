@@ -35,6 +35,13 @@ public final class ChatConstants {
     public final static String DEFAULT_SERVER = "default";
 
     /**
+     * 本次会话是否已收到代理 GetServer 回包, 避免真实子服名等于占位值时重复请求
+     *
+     * @since 3.10.6
+     */
+    public static volatile boolean SERVER_NAME_DETECTED = false;
+
+    /**
      * 私信频道
      */
     public static final String TELL = "tell";

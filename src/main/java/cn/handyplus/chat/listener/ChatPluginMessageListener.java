@@ -10,6 +10,7 @@ import cn.handyplus.lib.constants.BaseConstants;
 import cn.handyplus.lib.core.CollUtil;
 import cn.handyplus.lib.core.DateUtil;
 import cn.handyplus.lib.core.MapUtil;
+import cn.handyplus.lib.core.StrUtil;
 import cn.handyplus.lib.util.BaseUtil;
 import cn.handyplus.lib.util.BcUtil;
 import cn.handyplus.lib.util.HandyConfigUtil;
@@ -98,6 +99,7 @@ public class ChatPluginMessageListener implements PluginMessageListener {
 
     /**
      * 解析子服标识并写回配置
+     * 仅当配置仍是占位默认值且解析值有效并发生变化时才写回, 避免覆盖管理员手动配置和重复写盘
      *
      * @param message 消息
      * @since 3.10.6
@@ -108,9 +110,15 @@ public class ChatPluginMessageListener implements PluginMessageListener {
             return;
         }
         String serverName = serverNameOptional.get();
+        // 已收到代理 GetServer 回包, 本次会话无需再重复请求
+        ChatConstants.SERVER_NAME_DETECTED = true;
+        String current = BaseConstants.CONFIG.getString("server", ChatConstants.DEFAULT_SERVER);
+        if (StrUtil.isEmpty(serverName) || !ChatConstants.DEFAULT_SERVER.equals(current) || serverName.equals(current)) {
+            return;
+        }
         // 写回配置文件, 之后各处正常读取该配置即可
         HandyConfigUtil.setPath(BaseConstants.CONFIG, "server", serverName, "config.yml");
-        MessageUtil.sendConsoleMessage(BaseUtil.getLangMsg("getServerNameMsg", MapUtil.of("${serverName}", serverName)));
+        MessageUtil.sendConsoleMessage(BaseUtil.getLangMsg("getServerNameMsg", MapUtil.of("${detectedServer}", serverName)));
     }
 
 }

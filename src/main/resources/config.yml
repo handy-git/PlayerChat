@@ -2,6 +2,7 @@
 language: zh_CN
 
 # 子服标识，群组服需先配置这个
+# 保持 default 时会在玩家进入后自动获取真实子服名并写回
 server: "default"
 
 # 子服自定义名称
