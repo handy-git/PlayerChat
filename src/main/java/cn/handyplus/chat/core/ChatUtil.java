@@ -423,6 +423,10 @@ public class ChatUtil {
      * @return true 不满足条件
      */
     public static boolean chatCheck(Player player, String message) {
+        // 免检权限
+        if (hasBypassPermission(player)) {
+            return false;
+        }
         // 字数限制处理
         if (chatLengthCheck(player, message)) {
             return true;
@@ -476,6 +480,7 @@ public class ChatUtil {
 
     /**
      * 重复或相似聊天校验
+     * 在限制时间内允许连续重复发送 repeatChat.count 次, 超出后拦截
      *
      * @param player  玩家
      * @param message 消息
@@ -486,6 +491,8 @@ public class ChatUtil {
         if (repeatTime <= 0) {
             return false;
         }
+        // 允许连续重复发送的最大次数
+        int maxCount = Math.max(1, BaseConstants.CONFIG.getInt("repeatChat.count", 1));
         long now = System.currentTimeMillis();
         String currentMessage = StrUtil.toLowerCase(StrUtil.deleteWhitespace(BaseUtil.stripColor(message)));
         Pair<String, Long> lastChat = ChatConstants.PLAYER_LAST_CHAT.get(player.getUniqueId());
@@ -496,12 +503,32 @@ public class ChatUtil {
             boolean sameMessage = currentMessage.equals(lastMessage);
             boolean similarMessage = currentMessage.length() >= minLength && lastMessage.length() >= minLength && getSimilarity(currentMessage, lastMessage) >= similarity;
             if (sameMessage || similarMessage) {
+                // 未超出允许次数则放行并累加
+                int repeatCount = ChatConstants.PLAYER_REPEAT_COUNT.getOrDefault(player.getUniqueId(), 1);
+                if (repeatCount < maxCount) {
+                    ChatConstants.PLAYER_REPEAT_COUNT.put(player.getUniqueId(), repeatCount + 1);
+                    ChatConstants.PLAYER_LAST_CHAT.put(player.getUniqueId(), Pair.of(currentMessage, now));
+                    return false;
+                }
                 MessageUtil.sendMessage(player, BaseUtil.getLangMsg("repeatChatMsg"));
                 return true;
             }
         }
+        // 消息内容变化或超出限制时间, 重置重复次数
+        ChatConstants.PLAYER_REPEAT_COUNT.remove(player.getUniqueId());
         ChatConstants.PLAYER_LAST_CHAT.put(player.getUniqueId(), Pair.of(currentMessage, now));
         return false;
+    }
+
+    /**
+     * 是否拥有聊天免检权限
+     *
+     * @param player 玩家
+     * @return true 免检
+     * @since 3.10.7
+     */
+    public static boolean hasBypassPermission(@NotNull Player player) {
+        return player.hasPermission(ChatConstants.CHAT_BYPASS);
     }
 
     /**

@@ -95,6 +95,14 @@ public final class ChatConstants {
     public static final Map<UUID, Pair<String, Long>> PLAYER_LAST_CHAT = new ConcurrentHashMap<>();
 
     /**
+     * 玩家连续重复发送的次数
+     * key: 玩家UUID, value: 连续重复次数
+     *
+     * @since 3.10.7
+     */
+    public static final Map<UUID, Integer> PLAYER_REPEAT_COUNT = new ConcurrentHashMap<>();
+
+    /**
      * 玩家昵称缓存
      *
      * @since 2.0.5
@@ -181,6 +189,13 @@ public final class ChatConstants {
      * @since 3.10.0
      */
     public static final String CHAT_MINI_MESSAGE = "playerChat.miniMessage";
+
+    /**
+     * 免检权限, 拥有后跳过字数, 间隔, 重复, 黑名单, 禁言和 AI 审核
+     *
+     * @since 3.10.7
+     */
+    public static final String CHAT_BYPASS = "playerChat.bypass";
 
     /**
      * 零宽空格, 用于打断 & 颜色代码解析且不显示

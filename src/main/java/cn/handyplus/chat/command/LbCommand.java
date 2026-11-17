@@ -59,13 +59,15 @@ public class LbCommand implements TabExecutor {
             message.append(args[i]).append(" ");
         }
         String originalMessage = message.toString();
+        // 免检权限, 跳过黑名单和字数限制
+        boolean bypass = BaseUtil.isPlayer(sender) && ChatUtil.hasBypassPermission((Player) sender);
         // 内容黑名单处理
-        if (ChatUtil.blackListCheck(originalMessage)) {
+        if (!bypass && ChatUtil.blackListCheck(originalMessage)) {
             MessageUtil.sendMessage(sender, BaseUtil.getLangMsg("blacklistMsg"));
             return true;
         }
         // 字数限制处理, 需在扣除喇叭数量前校验
-        if (BaseUtil.isPlayer(sender) && ChatUtil.chatLengthCheck((Player) sender, originalMessage.trim())) {
+        if (!bypass && BaseUtil.isPlayer(sender) && ChatUtil.chatLengthCheck((Player) sender, originalMessage.trim())) {
             return true;
         }
         // 校验玩家

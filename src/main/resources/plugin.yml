@@ -1,6 +1,6 @@
 name: PlayerChat
 main: cn.handyplus.chat.PlayerChat
-version: 3.10.6
+version: 3.10.7
 author: handy
 api-version: 1.13
 softdepend: [ PlaceholderAPI, DiscordSRV, AuthMe, CatSeedLogin, OauthLogin ]
@@ -37,6 +37,7 @@ permissions:
       playerChat.vote: true
       playerChat.convert: true
       playerChat.ai.ignore: true
+      playerChat.bypass: true
       playerChat.nick: true
       playerChat.nick.other: true
       playerChat.mute: true
@@ -109,6 +110,9 @@ permissions:
     default: op
   playerChat.ai.ignore:
     description: 忽略AI审核的权限
+    default: op
+  playerChat.bypass:
+    description: 免检权限
     default: op
   playerChat.nick:
     description: 设置自己的昵称

@@ -133,6 +133,7 @@ public class ConfigUtil {
         // 重复或相似聊天限制
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.time", 30, Collections.singletonList("重复或相似聊天限制时间, 单位秒, 0为关闭"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.similarity", 80, Collections.singletonList("相似度百分比, 100为仅完全相同"), "config.yml");
+        HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.count", 2, Collections.singletonList("限制时间内允许连续重复发送的次数"), "config.yml");
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "repeatChat.minLength", 4, Collections.singletonList("相似度判断的最短消息长度, 完全相同不受限制"), "config.yml");
         // 3.10.4 聊天字数限制
         HandyConfigUtil.setPathIsNotContains(BaseConstants.CONFIG, "chatLength", 100, Collections.singletonList("单次发言最大字数, 0为不限制, 私信和喇叭同样受限"), "config.yml");

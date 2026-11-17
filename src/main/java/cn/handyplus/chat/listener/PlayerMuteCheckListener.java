@@ -1,5 +1,6 @@
 package cn.handyplus.chat.listener;
 
+import cn.handyplus.chat.core.ChatUtil;
 import cn.handyplus.chat.core.MuteUtil;
 import cn.handyplus.lib.annotation.HandyListener;
 import org.bukkit.entity.Player;
@@ -28,6 +29,10 @@ public class PlayerMuteCheckListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
+        // 拥有免检权限则跳过禁言检查
+        if (ChatUtil.hasBypassPermission(player)) {
+            return;
+        }
         // 检查是否被禁言
         if (MuteUtil.checkMute(player)) {
             event.setCancelled(true);

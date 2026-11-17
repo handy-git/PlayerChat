@@ -48,6 +48,7 @@ public class PlayerQuitEventListener implements Listener {
         ChatConstants.PLAYER_PLUGIN_CHANNEL.remove(player.getUniqueId());
         ChatConstants.PLAYER_CHAT_TIME.remove(player.getUniqueId());
         ChatConstants.PLAYER_LAST_CHAT.remove(player.getUniqueId());
+        ChatConstants.PLAYER_REPEAT_COUNT.remove(player.getUniqueId());
         PlayerListUtil.removeOnlinePlayer(player.getName());
         ChatConstants.PLAYER_IGNORE_MAP.remove(player.getUniqueId());
         ChatConstants.PLAYER_IGNORE_WHITE_MAP.remove(player.getUniqueId());
